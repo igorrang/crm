@@ -40,7 +40,7 @@ export const columns: ColumnDef<Payment>[] = [
         aria-label="Select all"
       />
     ),
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -53,7 +53,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "Data_de_Inicio",
     header: "Data de Inicio",
-    cell: ({ row }) => (
+     Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("Data_de_Inicio")}</div>
     ),
   },
@@ -61,12 +61,12 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "Nome",
     header: "nome",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
+    Cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
   },
   {
     accessorKey: "Contato",
     header: "Contato",
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("Contato")}</div>
     ),
   },
@@ -74,7 +74,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "Anuncio",
     header: "Anuncio",
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("Anuncio")}</div>
     ),
   },
@@ -82,28 +82,28 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "observacoes",
     header: "Observacoes",
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("observacoes")}</div>
     ),
   },
   {
     accessorKey: "Status",
     header: "Status",
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("Status")}</div>
     ),
   },
   {
     accessorKey: "valor_fichas",
     header: "Valor_Fichas",
-    cell: ({ row }) => (
+    Cell: ({ row }) => (
       <div className="capitalize">{row.getValue("valor_fichas")}</div>
     ),
   },
   {
     id: "editar",
     enableHiding: false,
-    cell: ({ row }) => {
+    Cell: ({ row }) => {
 
       const [dataInicio, setDataInicio] = useState('')
       const [nome, setNome] = useState('')
@@ -226,7 +226,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
+    Cell: ({ row }) => {
       const payment = row.original;
 
       return (
@@ -394,7 +394,7 @@ export function DataTable() {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
-                        cell.column.columnDef.cell,
+                        cell.column.columnDef.Cell,
                         cell.getContext()
                       )}
                     </TableCell>
