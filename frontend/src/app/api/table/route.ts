@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://localhost:5050/tables', body);
+    const res = await axios.post('http://localhost:8000/tables', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {

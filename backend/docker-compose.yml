@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app
+
+# coloque em todos os containers essa network para eles se enxergarem
+networks:
+  app:
+    driver: bridge

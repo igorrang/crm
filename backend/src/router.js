@@ -14,4 +14,5 @@ router.post('/tables', tableConstrollers.postTable)
 router.put('/tables/:tableName/:rowId', tableConstrollers.putTable)
 router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
 
+console.log(this.delete)
 module.exports = router

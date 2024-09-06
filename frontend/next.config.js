@@ -4,4 +4,7 @@ const nextConfig = {
     images: { unoptimized: true },
 };
 
-export default nextConfig;
+module.exports = {
+  // ... rest of the configuration.
+  output: "standalone",
+};

@@ -7,4 +7,7 @@ const connection = mysql.createPool({
     database:'botecobrasil'
 })
 
+console.log(mysql)
+console.log(connection)
+
 module.exports = connection
