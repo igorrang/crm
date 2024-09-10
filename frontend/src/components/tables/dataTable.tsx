@@ -26,95 +26,20 @@ export type Payment = {
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
   ultimaAtualizacao: string;
 };
+const EditDialog = ({ row }: {row: any}) => {
+  const [dataInicio, setDataInicio] = useState();
+  const [nome, setNome] = useState('');
+  const [contato, setContato] = useState('');
+  const [anuncio, setAnuncio] = useState('');
+  const [observacoes, setObservacoes] = useState('');
+  const [valorFichas, setValorFichas] = useState('');
+  const [status, setStatus] = useState('');
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    Cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "Data_de_Inicio",
-    header: "Data de Inicio",
-     Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Data_de_Inicio")}</div>
-    ),
-  },
+  // Aqui você pode usar dataInicio, setDataInicio, nome, setNome, contato, setContato, anuncio, setAnuncio, observacoes, setObservacoes, valorFichas, setValorFichas, status, setStatus
+  // ...
 
-  {
-    accessorKey: "Nome",
-    header: "nome",
-    Cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
-  },
-  {
-    accessorKey: "Contato",
-    header: "Contato",
-    Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Contato")}</div>
-    ),
-  },
-
-  {
-    accessorKey: "Anuncio",
-    header: "Anuncio",
-    Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Anuncio")}</div>
-    ),
-  },
-
-  {
-    accessorKey: "observacoes",
-    header: "Observacoes",
-    Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("observacoes")}</div>
-    ),
-  },
-  {
-    accessorKey: "Status",
-    header: "Status",
-    Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Status")}</div>
-    ),
-  },
-  {
-    accessorKey: "valor_fichas",
-    header: "Valor_Fichas",
-    Cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("valor_fichas")}</div>
-    ),
-  },
-  {
-    id: "editar",
-    enableHiding: false,
-    Cell: ({ row }) => {
-
-      const [dataInicio, setDataInicio] = useState('')
-      const [nome, setNome] = useState('')
-      const [contato, setContato] = useState('')
-      const [anuncio, setAnuncio] = useState('')
-      const [observacoes, setObservacoes] = useState('')
-      const [valorFichas, setValorFichas] = useState('')
-      const [status, setStatus] = useState('')
-      return (
-        
-        <Dialog>
+  return (
+    <Dialog>
       <DialogTrigger asChild>
         <Button variant="clean">Editar</Button>
       </DialogTrigger>
@@ -135,7 +60,6 @@ export const columns: ColumnDef<Payment>[] = [
                 id="dataInicio"
                 className=""
                 value={dataInicio}
-                onChange={(e) => setDataInicio(e.target.value)}
                 required
               />
             </div>
@@ -220,13 +144,94 @@ export const columns: ColumnDef<Payment>[] = [
         </form>
       </DialogContent>
     </Dialog>
-      );
-    },
+  );
+};
+
+
+export const columns: ColumnDef<Payment>[] = [
+
+
+    {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "Data_de_Inicio",
+    header: "Data de Inicio",
+     cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("Data_de_Inicio")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "Nome",
+    header: "nome",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
+  },
+  {
+    accessorKey: "Contato",
+    header: "Contato",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("Contato")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "Anuncio",
+    header: "Anuncio",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("Anuncio")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "observacoes",
+    header: "Observacoes",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("observacoes")}</div>
+    ),
+  },
+  {
+    accessorKey: "Status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("Status")}</div>
+    ),
+  },
+  {
+    accessorKey: "valor_fichas",
+    header: "Valor_Fichas",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("valor_fichas")}</div>
+    ),
+  },
+  {
+    id: "editar",
+    enableHiding: false,
+    cell: ({ row }) => <EditDialog row={row} />
   },
   {
     id: "actions",
     enableHiding: false,
-    Cell: ({ row }) => {
+    cell: ({ row }) => {
       const payment = row.original;
 
       return (
@@ -256,6 +261,8 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
 ];
+
+
 
 export function DataTable() {
   
@@ -394,7 +401,7 @@ export function DataTable() {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
-                        cell.column.columnDef.Cell,
+                        cell.column.columnDef.cell,
                         cell.getContext()
                       )}
                     </TableCell>

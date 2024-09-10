@@ -1,51 +1,43 @@
 FROM node:20-alpine AS base
 
-# 1. Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+
+# Adiciona lib para compatibilidade devido ao 'musl'
 RUN apk add --no-cache libc6-compat
-
-WORKDIR /Users/igorrangelkonvictus/crm/frontend/package.json
-
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    elif [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then apk add --no-cache corepack && corepack enable pnpm && pnpm i; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
-
-
-# 2. Rebuild the source code only when needed
-FROM base AS builder
 WORKDIR /app
-COPY --from=deps node_modules ./node_modules
-COPY . .
-# This will do the trick, use the corresponding env file for each environment.
+
+COPY package.json package-lock.json* ./
+RUN npm ci
+
 COPY . .
 RUN npm run build
 
-# 3. Production image, copy all the files and run next
-FROM base AS runner
+# Imagem de produção com todas as configurações necessárias
+FROM base AS production
 WORKDIR /app
 
+ENV NODE_ENV production
+ENV NEXT_SHARP_PATH "/app/node_modules/sharp"
 
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-RUN addgroup -g 1001 -S nodejs
+COPY --from=deps /app/public ./public
 
-RUN adduser -S nextjs -u 1001
+# Permissões para poder usar corretamente o prerender do Next.js
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
-COPY --from=builder /app/public ./public
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-
-
+COPY --from=deps /app/next.config.mjs ./
+COPY --from=deps --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=deps --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 3000
 
+ENV PORT 3000
+ENV HOSTNAME "92.112.179.19"
 
-CMD ["npm","run","dev"]
+# Standalone output para não precisar usar todas as libs dentro do node_modules
+CMD ["node", "server.js"]
