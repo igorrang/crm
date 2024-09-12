@@ -37,7 +37,7 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT 3000
-ENV HOSTNAME "92.112.179.19"
+ENV HOSTNAME "127.0.1.1 "
 
 # Standalone output para não precisar usar todas as libs dentro do node_modules
 CMD ["node", "server.js"]
