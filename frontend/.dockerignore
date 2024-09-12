@@ -2,15 +2,7 @@ Dockerfile
 .dockerignore
 node_modules
 npm-debug.log
-README.mdDockerfile
-.dockerignore
-node_modules
-npm-debug.log
 README.md
-.next
-!.next/static
-!.next/standalone
-.git
 .next
 !.next/static
 !.next/standalone

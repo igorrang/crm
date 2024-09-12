@@ -2,17 +2,33 @@ version: '3'
 services:
   app:
     image: igormrangel/frontend
+    container_name: frontend-app
+    restart: always  # Certifica-se de que o container reinicie em caso de falhas
+    ports:
+      - "3000:3000"  # Exponha a porta 3000 para acesso externo
+    environment:
+      - NODE_ENV=production
+      - HOSTNAME=127.0.0.1
+      - PORT=3000
     networks:
       - app-network
+    expose:
+      - "3000"  # Exponha a porta interna para o NGINX
+    volumes:
+      - .:/app  # Certifique-se de que este volume está apontando para o local correto
 
   nginx:
     image: nginx:latest
+    container_name: nginx-proxy
     ports:
-      - "80:80"
+      - "80:80"  # Exponha a porta 80 para o público
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Arquivo de configuração do NGINX
+    depends_on:
+      - app  # O NGINX aguarda o container 'app' inicializar antes de rodar
     networks:
       - app-network
 
 networks:
   app-network:
+    driver: bridge
