@@ -17,18 +17,7 @@ services:
     volumes:
       - .:/app  # Certifique-se de que este volume está apontando para o local correto
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx-proxy
-    ports:
-      - "80:80"  # Exponha a porta 80 para o público
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # Arquivo de configuração do NGINX
-    depends_on:
-      - app  # O NGINX aguarda o container 'app' inicializar antes de rodar
-    networks:
-      - app-network
-
+  
 networks:
   app-network:
     driver: bridge
