@@ -1,7 +1,17 @@
 version: '3'
 services:
+
+  backend:
+    image: ghcr.io/igorrang/exemplo-backend:v1.0.1
+    container_name: backend-app
+    restart: always  # Certifica-se de que o container reinicie em caso de falhas
+    ports:
+      - "5050:5050"  # Exponha a porta 3001 para acesso externo
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
   app:
-    image: igormrangel/frontend
+    image: ghcr.io/igorrang/exemplo-production:v1.0.1
     container_name: frontend-app
     restart: always  # Certifica-se de que o container reinicie em caso de falhas
     ports:
