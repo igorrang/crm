@@ -275,14 +275,14 @@ export function DataTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const inserirDados = async () => {
-    const data = '2022/02/05'
-    const nome = 'Igor muito muito feio'
-    const contato = '51 993293152'
-    const anuncio = 'Instagran'
-    const observacoes = 'Ricu'
-    const valor_fichas = '322'
-    const status = 'Feitu'
-    const res = await axios.post("/api/table", {data, nome, contato, anuncio, observacoes, valor_fichas, status})
+    const dataInicio = '2022/02/05'
+    const nome = 'Marcos'
+    const origem = 'Bio Instagram'
+    const observacao = 'Entrar em contato assim que possivel'
+    const valorFichas = 3020
+    const status = 'Processando'
+    const ultimaAtualizacao = '30/05/2006'
+    const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFichas, status, ultimaAtualizacao})
     console.log(res.data);
   }
 

@@ -3,7 +3,7 @@ connection = require('./connectionDois')
 const getTable = async () => {
     try {
         // Codigo sql
-        const sql = `SELECT * FROM agosto`
+        const sql = `SELECT * FROM cliente`
         // Query banco
         const [query] = await connection.execute(sql)
         console.log("Query result no backend:", query)
@@ -15,18 +15,17 @@ const getTable = async () => {
 }
 const postTable = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles
-    const {data_inicio} = data
+    const {dataInicio} = data
     const {nome} = data
-    const {contato} = data
-    const {anuncio} = data
-    const {observacoes} = data
-    const {valor_fichas} = data
+    const {origem} = data
+    const {observacao} = data
+    const {valorFichas} = data
     const {status} = data
+    const {ultimaAtualizacao} = data
 
     try {
         // Codigo sql
-        const sql = `INSERT INTO agosto VALUES ('${data_inicio}', '${nome}', '${contato}', '${anuncio}', '${observacoes}', '${valor_fichas}', '${status}')`
-        console.log("SQL query:", sql);
+        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', '${valorFichas}', '${status}', '${ultimaAtualizacao}')`
         // Query banco
         const [query] = await connection.execute(sql)
         console.log("Query result:", query)

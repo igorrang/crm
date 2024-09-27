@@ -8,11 +8,11 @@ const tableConstrollers = require('./controllers/tableControllers')
 router.get("/validacaoLogin", clientesControllers.getCliente)
 router.post("/validacaoLogin", clientesControllers.postCliente)
 
-// Codigo Igor:
+// // Codigo Igor:
 router.get('/tables', tableConstrollers.getTable)
 router.post('/tables', tableConstrollers.postTable)
-router.put('/tables/:tableName/:rowId', tableConstrollers.putTable)
-router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
+// router.put('/tables/:tableName/:rowId', tableConstrollers.putTable)
+// router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
 
-console.log(this.delete)
+// console.log(this.delete)
 module.exports = router
