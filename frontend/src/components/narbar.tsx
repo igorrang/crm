@@ -9,23 +9,24 @@ import { SiMicrosoftexcel } from "react-icons/si";
 
 export default function Navbar() {
   return (
-    <div className="w-[80px] py-20 hidden lg:flex flex-col items-center shadow-black shadow-xl bg-primary/90 animate-items-appear">
+    <div className="w-[110px] h-[600px] my-20 mx-4 px-5 rounded-[100px] hidden lg:flex flex-col justify-center items-center bg-primary/90 shadow-xl">
       <div className="my-3 flex flex-col items-center justify-center text-white">
         <Link href="/Planilha" className="flex flex-col items-center">
-          <SiMicrosoftexcel className="text-[35px]" />
-          <h1 className="text-[10px] font-bold">PLANILHA</h1>
+          <img src="/Planilha.png" alt="" className="w-[70px]"/>
+          <h1 className="text-[15px] font-bold">PLANILHA</h1>
+        </Link>
+      </div>
+      <div className="my-3 flex flex-col items-center justify-center text-white">
+        <Link href="/Conta" className="flex flex-col items-center">
+          
+          <img src="/contaUsuario.png" alt="" className="w-[65px]"/>
+          <h1 className="text-[15px] font-bold">CONTA</h1>
         </Link>
       </div>
       <div className="my-3 flex flex-col items-center justify-center text-white">
         <Link href="/" className="flex flex-col items-center">
-          <IoMdContact className="text-[35px]" />
-          <h1 className="text-[10px] font-bold">CONTA</h1>
-        </Link>
-      </div>
-      <div className="my-3 flex flex-col items-center justify-center text-white">
-        <Link href="/" className="flex flex-col items-center">
-          <IoLogOutSharp className="text-[35px]" />
-          <h1 className="text-[10px] font-bold">SAIR</h1>
+          <IoLogOutSharp className="text-[60px]" />
+          <h1 className="text-[15px] font-bold">SAIR</h1>
         </Link>
       </div>
     </div>

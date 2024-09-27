@@ -64,7 +64,7 @@ export default function VerCliente() {
             <div className="w-[80%] mt-3">
               <TituloSecundario texto="Adicione um comentário" />
               <form action="" className="flex justify-between items-end">
-                <textarea name="" id= "" className=" h-[100px] w-[90%] rounded-2xl border shadow-md overflow-auto"></textarea>
+                <textarea name="" id="" className=" h-[100px] w-[90%] rounded-2xl border shadow-md overflow-auto"></textarea>
                 <input type="submit" className=" w-[90px] h-[40px] rounded-xl text-[18px] text-white bg-primary hover:bg-green-600 " />
               </form>
             </div>

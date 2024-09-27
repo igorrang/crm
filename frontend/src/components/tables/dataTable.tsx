@@ -12,146 +12,39 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import Link from "next/link";
 import { Label } from "../ui/label";
 
+const data: Payment[] = [
+  {
+    id: "m5gr84i9",
+    dataInicio: "30/05/2024",
+    nome: "Marcos",
+    anuncio: "Bio do Instagram",
+    observacoes: "Cliente quase aprovando",
+    valorFichas: "R$ 1000,00",
+    status: "Processando",
+  },
+  {
+    id: "m59",
+    dataInicio: "32/05/2024",
+    nome: "Miguel",
+    anuncio: "Bio do Instagram",
+    observacoes: "Cliente quase Julio",
+    valorFichas: "R$ 1200,00",
+    status: "Processando",
+  },
+]
+
 export type Payment = {
   id: string;
   dataInicio: string;
   nome: string;
-  contato: string;
-  tipo: string;
-  Anuncio: string;
-  descricaoServico: string;
+  anuncio: string;
   observacoes: string;
-  valor: string;
-  
+  valorFichas: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
-  ultimaAtualizacao: string;
 };
-const EditDialog = ({ row }: {row: any}) => {
-  const [dataInicio, setDataInicio] = useState();
-  const [nome, setNome] = useState('');
-  const [contato, setContato] = useState('');
-  const [anuncio, setAnuncio] = useState('');
-  const [observacoes, setObservacoes] = useState('');
-  const [valorFichas, setValorFichas] = useState('');
-  const [status, setStatus] = useState('');
-
-  // Aqui você pode usar dataInicio, setDataInicio, nome, setNome, contato, setContato, anuncio, setAnuncio, observacoes, setObservacoes, valorFichas, setValorFichas, status, setStatus
-  // ...
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="clean">Editar</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[625px]">
-        <DialogHeader>
-          <DialogTitle>Editar</DialogTitle>
-          <DialogDescription>
-            Editar dados do cliente
-          </DialogDescription>
-        </DialogHeader>
-        <form action="" className="grid grid-cols-2 gap-4 py-4">
-          <div>
-            <div className=" items-center gap-4">
-              <Label htmlFor="dataInicio" className="text-right">
-                Data de Inicio
-              </Label>
-              <Input
-                id="dataInicio"
-                className=""
-                value={dataInicio}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="nome" className="text-right">
-                Nome
-              </Label>
-              <Input
-                id="nome"
-                className=""
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="contato" className="text-right">
-                Contato
-              </Label>
-              <Input
-                id="contato"
-                className=""
-                value={contato}
-                onChange={(e) => setContato(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="anuncio" className="text-right">
-                Anuncio
-              </Label>
-              <Input
-                id="anuncio"
-                className=""
-                value={anuncio}
-                onChange={(e) => setAnuncio(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <div className="items-center gap-4">
-              <Label htmlFor="observacoes" className="text-right">
-                Observacoes
-              </Label>
-              <Input
-                id="observacoes"
-                className=""
-                value={observacoes}
-                onChange={(e) => setObservacoes(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="valorFichas" className="text-right">
-                Valor Fichas
-              </Label>
-              <Input
-                id="valorFichas"
-                className=""
-                value={valorFichas}
-                onChange={(e) => setValorFichas(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="status" className="text-right">
-                Status
-              </Label>
-              <Input
-                id="status"
-                className=""
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                required
-              />
-            </div>
-          <DialogFooter className="mt-24">
-            <Button type="submit">Confirmar</Button>
-          </DialogFooter>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
 
 export const columns: ColumnDef<Payment>[] = [
-
-
-    {
+  {
     id: "select",
     header: ({ table }) => (
       <Checkbox
@@ -174,34 +67,24 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "Data_de_Inicio",
+    accessorKey: "dataInicio",
     header: "Data de Inicio",
-     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Data_de_Inicio")}</div>
-    ),
-  },
-
-  {
-    accessorKey: "Nome",
-    header: "nome",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
-  },
-  {
-    accessorKey: "Contato",
-    header: "Contato",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Contato")}</div>
+      <div className="capitalize">{row.getValue("dataInicio")}</div>
     ),
   },
-
   {
-    accessorKey: "Anuncio",
+    accessorKey: "nome",
+    header: "Nome",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("nome")}</div>,
+  },
+  {
+    accessorKey: "anuncio",
     header: "Anuncio",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Anuncio")}</div>
+      <div className="capitalize">{row.getValue("anuncio")}</div>
     ),
   },
-
   {
     accessorKey: "observacoes",
     header: "Observacoes",
@@ -210,23 +93,141 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "Status",
+    accessorKey: "valorFichas",
+    header: "Valor das fichas",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("valorFichas")}</div>
+    ),
+  },
+  {
+    accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Status")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
   {
-    accessorKey: "valor_fichas",
-    header: "Valor_Fichas",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("valor_fichas")}</div>
-    ),
-  },
-  {
-    id: "editar",
+    id: "id",
+    accessorKey: "id",
+    header: "Editar",
     enableHiding: false,
-    cell: ({ row }) => <EditDialog row={row} />
+    cell: ({ row }) => {
+
+      // variaveis pra receber o valor de cada coluna e imprimir no input
+      const [identificador, setIdentificador] = useState('')
+      const [dataInicio, setDataInicio] = useState('')
+      const [nome, setNome] = useState('')
+      const [anuncio, setAnuncio] = useState('')
+      const [observacoes, setObservacoes] = useState('')
+      const [valorFichas, setValorFichas] = useState('')
+      const [status, setStatus] = useState('')
+      
+      // Pega o valor da coluna de cada linha e imprime no campo do input
+      useEffect(() => {
+        setIdentificador(row.getValue("id") || '');
+        setDataInicio(row.getValue("dataInicio") || '');
+        setNome(row.getValue("nome") || '');
+        setAnuncio(row.getValue("anuncio") || '');
+        setObservacoes(row.getValue("observacoes") || '');
+        setValorFichas(row.getValue("valorFichas") || '');
+        setStatus(row.getValue("status") || '');
+      }, [row]);
+    
+      return (  
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="clean">Editar</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle>Editar</DialogTitle>
+            <DialogDescription>Editar dados do cliente</DialogDescription>
+          </DialogHeader>
+          <form action="" className="">
+            
+            <div className="grid grid-cols-2 gap-4 py-4">
+              <div>
+                <div className=" items-center gap-4">
+                  <Input
+                    id="identificador"
+                    className="hidden"
+                    value={identificador} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setIdentificador(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className=" items-center gap-4">
+                  <Label htmlFor="dataInicio" className="text-right"> Data de Inicio </Label>
+                  <Input
+                    id="dataInicio"
+                    className=""
+                    value={dataInicio} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setDataInicio(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="nome" className="text-right"> Nome </Label>
+                  <Input
+                    id="nome"
+                    className=""
+                    value={nome} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setNome(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="anuncio" className="text-right"> Anuncio </Label>
+                  <Input
+                    id="anuncio"
+                    className=""
+                    value={anuncio} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setAnuncio(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="observacoes" className="text-right"> Observacoes </Label>
+                  <Input
+                    id="observacoes"
+                    className=""
+                    value={observacoes} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setObservacoes(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
+                  <Input
+                    id="valorFichas"
+                    className=""
+                    value={valorFichas} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setValorFichas(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="status" className="text-right"> Status </Label>
+                  <Input
+                    id="status"
+                    className=""
+                    value={status} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setStatus(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+              <DialogFooter className="mt-24">
+                <Button type="submit">Confirmar</Button>
+              </DialogFooter>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+      );
+    },
   },
   {
     id: "actions",
@@ -262,11 +263,9 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-
-
 export function DataTable() {
   
-  const [data, setData] = useState<Payment[]>([]);
+  // const [data, setData] = useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -287,18 +286,17 @@ export function DataTable() {
     console.log(res.data);
   }
 
-  const listarDados = async () => {
-        const res = await axios.get("/api/table");
-        setData(res.data); // Atualiza o estado com os dados recebidos
-    
-};
+//   const listarDados = async () => {
+//         const res = await axios.get("/api/table");
+//         setData(res.data); // Atualiza o estado com os dados recebidos 
+//   };
 
 
 
 
   useEffect( () => {
     // inserirDados();
-    listarDados();
+    // listarDados();
   },[])
     
   
@@ -336,10 +334,18 @@ export function DataTable() {
           className="max-w-[300px] mr-2"
         />
         <Input
-          placeholder="Filtrar por emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrar por anuncio..."
+          value={(table.getColumn("anuncio")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("anuncio")?.setFilterValue(event.target.value)
+          }
+          className="max-w-[300px] mr-2"
+        />
+        <Input
+          placeholder="Filtrar por data de inicio..."
+          value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("dataInicio")?.setFilterValue(event.target.value)
           }
           className="max-w-[300px] mr-2"
         />

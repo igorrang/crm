@@ -13,27 +13,13 @@ export default function Index() {
       <div className="flex">
         <Navbar></Navbar>
 
-        <div className="w-full h-[90vh] flex flex-col justify-center items-center text-primary">
-          <div className="flex flex-col lg:flex-row">
-            <Link href="/" className="">
-              <IoMdContact className="text-[300px]" />
-            </Link>
+        <div className="w-full h-[90.3vh] flex flex-col justify-center items-center text-primary">
+          <div className="flex flex-col md:flex-row">
             <Link href="/Planilha" className="">
-              <SiMicrosoftexcel className="text-[300px]" />
+              <img src="/Planilha.png" alt="" className="w-[240px] mx-10 my-5"/>
             </Link>
-            <Link href="/" className="">
-              <IoMdContact className="text-[300px]" />
-            </Link>
-          </div>
-          <div className="flex flex-col lg:flex-row">
-            <Link href="/" className="">
-              <IoMdContact className="text-[300px]" />
-            </Link>
-            <Link href="/" className="">
-              <IoMdContact className="text-[300px]" />
-            </Link>
-            <Link href="/" className="">
-              <IoMdContact className="text-[300px]" />
+            <Link href="/Conta" className="">
+              <img src="/contaUsuario.png" alt="" className="w-[230px] mx-10 my-5"/>
             </Link>
           </div>
         </div>

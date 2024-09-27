@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Use 'next/navigation' para Next.js 13+ Client Components
 import React from 'react';
 import { Button } from '../ui/button';
-import Image from 'next/image';
 
 export default function CardLogin() {
   const router = useRouter(); //Component que renderiza paginas no next
@@ -48,11 +47,9 @@ export default function CardLogin() {
   return (
     <div className="flex flex-col items-center justify-center md:flex-row mt-20 md:mt-0 z-40 md:h-[400px] rounded-2xl shadow-[rgba(0,_0,_0,_0)_0px_0px_0px_2px,_rgba(0,_0,_0,_0.4)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]">
       <div className="flex items-center">
-        <Image
-          src={"/KonvictusLogoWhite.png"}
-          alt={""}
-          width={150}
-          height={150}
+        <img
+          src="/KonvictusLogoWhite.png"
+          alt=""
           className="w-[150px] h-[150px] m-10"
         />
       </div>

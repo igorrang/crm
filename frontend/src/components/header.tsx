@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IoMenuOutline } from "react-icons/io5";
+import { IoMenuOutline, IoLogOutSharp } from "react-icons/io5";
 
 import { Button } from "./ui/button";
 
@@ -11,7 +11,7 @@ const Header = ({  }) => {
 
   return (
     <div className="w-full py-5 z-50 flex justify-between  items-center bg-primary relative  text-white animate-items-appear">
-      <Link href="/" className="ml-[10%] ">
+      <Link href="/Principal" className="ml-[10%] ">
         <Image
           src="/KonvictusLogoEscrita.png"
           alt="logo"
@@ -21,10 +21,10 @@ const Header = ({  }) => {
         />
       </Link>
       <nav className="hidden lg:flex  lg:mr-[10%] gap-x-8">
-        <Link href="/" className="transition duration-300 hover:text-gray-300">
+        <Link href="/Conta" className="">
           Conta
         </Link>
-        <Link href="/" className="transition duration-300 hover:text-gray-300">
+        <Link href="/" className="">
           Sair
         </Link>
       </nav>
@@ -37,19 +37,21 @@ const Header = ({  }) => {
         <div className="lg:hidden  absolute top-full left-0 w-full bg-primary p-4 rounded-b-2xl  shadow-md ">
           <ul className="flex flex-col gap-y-2 ">
             <li>
-              <Link
-                href="/"
-                className="transition duration-300 hover:text-gray-300"
-              >
-                Conta
+              <Link href="/Planilha" className="flex justify-between items-center my-2">
+                Planilha
+                <img src="/Planilha.png" alt="" className="w-[30px]"/>
               </Link>
             </li>
             <li>
-              <Link
-                href="/"
-                className="transition duration-300 hover:text-gray-300"
-              >
+              <Link href="/Conta" className="flex justify-between items-center my-2">
+                Conta
+                <img src="/contaUsuario.png" alt="" className="w-[30px]"/>
+              </Link>
+            </li>
+            <li>
+              <Link href="/" className="flex justify-between items-center my-2">
                 Sair
+                <IoLogOutSharp  className="text-[30px]" />
               </Link>
             </li>
           </ul>

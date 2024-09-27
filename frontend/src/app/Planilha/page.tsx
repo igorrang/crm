@@ -3,6 +3,7 @@
 import DialogCadastrarCliente from "@/components/dialogCadastrarCliente";
 import Header from "@/components/header";
 import Navbar from "@/components/narbar";
+import { DataTable } from "@/components/tables/dataTable";
 
 import {
   Breadcrumb,
@@ -17,7 +18,6 @@ import Link from "next/link";
 import { IoMdContact } from "react-icons/io";
 import { IoLogOutSharp } from "react-icons/io5";
 import { SiMicrosoftexcel } from "react-icons/si";
-import  {DataTable} from "@/components/tables/dataTable";
 
 
 export default function Planilha() {
