@@ -17,19 +17,21 @@ const data: Payment[] = [
     id: "m5gr84i9",
     dataInicio: "30/05/2024",
     nome: "Marcos",
-    anuncio: "Bio do Instagram",
+    origem: "Bio do Instagram",
     observacoes: "Cliente quase aprovando",
     valorFichas: "R$ 1000,00",
     status: "Processando",
+    ultimaAtualizacao: "20/02/2024"
   },
   {
     id: "m59",
     dataInicio: "32/05/2024",
     nome: "Miguel",
-    anuncio: "Bio do Instagram",
+    origem: "Bio do Instagram",
     observacoes: "Cliente quase Julio",
     valorFichas: "R$ 1200,00",
     status: "Processando",
+    ultimaAtualizacao: "30/02/2024"
   },
 ]
 
@@ -37,10 +39,11 @@ export type Payment = {
   id: string;
   dataInicio: string;
   nome: string;
-  anuncio: string;
+  origem: string;
   observacoes: string;
   valorFichas: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
+  ultimaAtualizacao: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -79,10 +82,10 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue("nome")}</div>,
   },
   {
-    accessorKey: "anuncio",
-    header: "Anuncio",
+    accessorKey: "origem",
+    header: "Origem",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("anuncio")}</div>
+      <div className="capitalize">{row.getValue("origem")}</div>
     ),
   },
   {
@@ -107,6 +110,13 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
+    accessorKey: "ultimaAtualizacao",
+    header: "Ultima Atualização",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("ultimaAtualizacao")}</div>
+    ),
+  },
+  {
     id: "id",
     accessorKey: "id",
     header: "Editar",
@@ -117,20 +127,22 @@ export const columns: ColumnDef<Payment>[] = [
       const [identificador, setIdentificador] = useState('')
       const [dataInicio, setDataInicio] = useState('')
       const [nome, setNome] = useState('')
-      const [anuncio, setAnuncio] = useState('')
+      const [origem, setOrigem] = useState('')
       const [observacoes, setObservacoes] = useState('')
       const [valorFichas, setValorFichas] = useState('')
       const [status, setStatus] = useState('')
+      const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
       
       // Pega o valor da coluna de cada linha e imprime no campo do input
       useEffect(() => {
         setIdentificador(row.getValue("id") || '');
         setDataInicio(row.getValue("dataInicio") || '');
         setNome(row.getValue("nome") || '');
-        setAnuncio(row.getValue("anuncio") || '');
+        setOrigem(row.getValue("origem") || '');
         setObservacoes(row.getValue("observacoes") || '');
         setValorFichas(row.getValue("valorFichas") || '');
         setStatus(row.getValue("status") || '');
+        setUltimaAtualizacao(row.getValue("ultimaAtualizacao") || '');
       }, [row]);
     
       return (  
@@ -177,12 +189,12 @@ export const columns: ColumnDef<Payment>[] = [
                   />
                 </div>
                 <div className="items-center gap-4">
-                  <Label htmlFor="anuncio" className="text-right"> Anuncio </Label>
+                  <Label htmlFor="origem" className="text-right"> Origem </Label>
                   <Input
-                    id="anuncio"
+                    id="origem"
                     className=""
-                    value={anuncio} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setAnuncio(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    value={origem} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setOrigem(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
@@ -215,6 +227,16 @@ export const columns: ColumnDef<Payment>[] = [
                     className=""
                     value={status} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setStatus(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="ultimaAtualizacao" className="text-right"> Ultima Atualizacao </Label>
+                  <Input
+                    id="ultimaAtualizacao"
+                    className=""
+                    value={ultimaAtualizacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setUltimaAtualizacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
@@ -278,11 +300,12 @@ export function DataTable() {
     const data = '2022/02/05'
     const nome = 'Igor muito muito feio'
     const contato = '51 993293152'
-    const anuncio = 'Instagran'
+    const origem = 'Instagran'
     const observacoes = 'Ricu'
     const valor_fichas = '322'
     const status = 'Feitu'
-    const res = await axios.post("/api/table", {data, nome, contato, anuncio, observacoes, valor_fichas, status})
+    const ultimaAtualizacao = '30/05/2006'
+    const res = await axios.post("/api/table", {data, nome, contato, origem, observacoes, valor_fichas, status})
     console.log(res.data);
   }
 
@@ -334,10 +357,10 @@ export function DataTable() {
           className="max-w-[300px] mr-2"
         />
         <Input
-          placeholder="Filtrar por anuncio..."
-          value={(table.getColumn("anuncio")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrar por origem..."
+          value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("anuncio")?.setFilterValue(event.target.value)
+            table.getColumn("origem")?.setFilterValue(event.target.value)
           }
           className="max-w-[300px] mr-2"
         />
