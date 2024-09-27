@@ -21,7 +21,7 @@ export default function CardDadosCliente() {
             </div>
           </CardHeader>
           <CardContent className="w-full flex flex-col "> 
-            <DadosCliente dataInicio="30/05/2024" anuncio="Bio Instagram" observacoes="Sucesso garantido" valorFichas="R$ 1000,00" status="Sucesso"></DadosCliente>
+            <DadosCliente dataInicio="30/05/2024" anuncio="Bio Instagram" observacoes="Sucesso garantido" valorFichas="R$ 1000,00" status="Sucesso" ultimaAtualizacao="30/05/2006"></DadosCliente>
           </CardContent>    
         </Card>
       

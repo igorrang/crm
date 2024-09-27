@@ -8,9 +8,10 @@ export interface dadosClienteProps {
   observacoes: string;
   valorFichas: string;
   status: string;
+  ultimaAtualizacao: string;
 }
 
-export default function DadosCliente({ dataInicio, anuncio, observacoes, valorFichas, status }: dadosClienteProps) {
+export default function DadosCliente({ dataInicio, anuncio, observacoes, valorFichas, status, ultimaAtualizacao }: dadosClienteProps) {
   return (
     <div>
       <div className="mt-4 bg-primary/85 py-4 px-3 rounded-[10px]">
@@ -32,6 +33,10 @@ export default function DadosCliente({ dataInicio, anuncio, observacoes, valorFi
       <div className="mt-4 bg-primary/85 py-4 px-3 rounded-[10px]">
         <CardDescription className="font-black text-white text-[16px]">Status</CardDescription>
         <CardDescription className="mt-1 text-white text-[16px]">{status}</CardDescription>
+      </div>
+      <div className="mt-4 bg-primary/85 py-4 px-3 rounded-[10px]">
+        <CardDescription className="font-black text-white text-[16px]">Ultima Atualizacao</CardDescription>
+        <CardDescription className="mt-1 text-white text-[16px]">{ultimaAtualizacao}</CardDescription>
       </div>
     </div>
   );

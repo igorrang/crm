@@ -21,6 +21,7 @@ export default function DialogEditarCliente() {
   const [observacoes, setObservacoes] = useState('')
   const [valorFichas, setValorFichas] = useState('')
   const [status, setStatus] = useState('')
+  const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
 
   return (
     <Dialog>
@@ -104,6 +105,16 @@ export default function DialogEditarCliente() {
                     className=""
                     value={status} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setStatus(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    required
+                  />
+                </div>
+                <div className="items-center gap-4">
+                  <Label htmlFor="ultimaAtualizacao" className="text-right"> Ultima Atualizacao </Label>
+                  <Input
+                    id="ultimaAtualizacao"
+                    className=""
+                    value={ultimaAtualizacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setUltimaAtualizacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
