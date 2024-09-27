@@ -13,26 +13,7 @@ import Link from "next/link";
 import { Label } from "../ui/label";
 
 const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    dataInicio: "30/05/2024",
-    nome: "Marcos",
-    origem: "Bio do Instagram",
-    observacoes: "Cliente quase aprovando",
-    valorFichas: "R$ 1000,00",
-    status: "Processando",
-    ultimaAtualizacao: "20/02/2024"
-  },
-  {
-    id: "m59",
-    dataInicio: "32/05/2024",
-    nome: "Miguel",
-    origem: "Bio do Instagram",
-    observacoes: "Cliente quase Julio",
-    valorFichas: "R$ 1200,00",
-    status: "Processando",
-    ultimaAtualizacao: "30/02/2024"
-  },
+  
 ]
 
 export type Payment = {
@@ -287,43 +268,34 @@ export const columns: ColumnDef<Payment>[] = [
 
 export function DataTable() {
   
-  // const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const inserirDados = async () => {
     const data = '2022/02/05'
     const nome = 'Igor muito muito feio'
     const contato = '51 993293152'
-    const origem = 'Instagran'
+    const anuncio = 'Instagran'
     const observacoes = 'Ricu'
     const valor_fichas = '322'
     const status = 'Feitu'
-    const ultimaAtualizacao = '30/05/2006'
-    const res = await axios.post("/api/table", {data, nome, contato, origem, observacoes, valor_fichas, status})
+    const res = await axios.post("/api/table", {data, nome, contato, anuncio, observacoes, valor_fichas, status})
     console.log(res.data);
   }
 
-//   const listarDados = async () => {
-//         const res = await axios.get("/api/table");
-//         setData(res.data); // Atualiza o estado com os dados recebidos 
-//   };
-
-
-
-
+  const listarDados = async () => {
+    const res = await axios.get("/api/table");
+    setData(res.data); // Atualiza o estado com os dados recebidos
+  };
+  
   useEffect( () => {
     // inserirDados();
-    // listarDados();
+    listarDados();
   },[])
     
-  
-  
 
   const table = useReactTable({
     data,
