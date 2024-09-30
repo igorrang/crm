@@ -298,19 +298,21 @@ export const columns: ColumnDef<Payment>[] = [
 
 export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
 
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Payment[]>([]); // UseState resposavel por listar as linhas da tabela
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  // Função para listar os dados da tabela assim que entrar na pagina da planilha
   const listarDados = async () => {
     const res = await axios.get("/api/table");
     setData(res.data); // Atualiza o estado com os dados recebidos
   };
   
+  // Inicia uma função ao carregar a pagina
   useEffect( () => {
-    listarDados();
+    listarDados(); 
   },[])
     
 
@@ -333,27 +335,28 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     },
   });
 
+  // esse date corresponde ao valor de quando filtrar uma data ate outra data
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 20),
   })
 
+  // Função que realizará o filtro de uma data ate outra data e carregar todos dados correspondentes
   const filtroDataFromTo = async () => {
-    const dateFrom = date?.from
-    const dateTo = date?.to
+    const dateFrom = date?.from // Pegando a data inicial do filtro
+    const dateTo = date?.to // Pegando a data final do filtro
     
     const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
     setData(res.data)
   }
-
-  console.log(date?.from)
-  console.log(date?.to)
   
   return (
     <div className="w-full">      
 
       <div className="flex items-center py-4">
       <div className={cn("grid gap-2", className)}>
+      
+      {/* Popover para filtrar os dados de uma data ate outra data */}
       <Popover>
         <PopoverTrigger asChild>
           <Button
