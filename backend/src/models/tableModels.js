@@ -44,7 +44,7 @@ const putTable = async (newData) => {
     const {valorFicha} = newData
     const {status} = newData
     const {ultimaAtualizacao} = newData
-    console.log(identificador, dataInicio, nome);
+   
     
     try{
         const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id = '${identificador}'`;
