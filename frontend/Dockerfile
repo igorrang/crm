@@ -1,43 +1,30 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine AS builder
 
-FROM base AS deps
+WORKDIR /src
 
-# Adiciona lib para compatibilidade devido ao 'musl'
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
+COPY package*.json ./
 
-COPY package.json package-lock.json* ./
-RUN npm ci
+RUN npm install
 
 COPY . .
+
 RUN npm run build
 
-# Imagem de produção com todas as configurações necessárias
-FROM base AS production
-WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_SHARP_PATH "/app/node_modules/sharp"
+FROM node:20-alpine AS production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
 
-COPY --from=deps /app/public ./public
 
-# Permissões para poder usar corretamente o prerender do Next.js
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+COPY --from=builder /src/.next ./.next
+COPY --from=builder /src/node_modules ./node_modules
+COPY --from=builder /src/package.json ./package.json
+COPY ./src/ecosystem.config.js .
 
-COPY --from=deps /app/next.config.mjs ./
-COPY --from=deps --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=deps --chown=nextjs:nodejs /app/.next/static ./.next/static
+RUN npm install pm2 -g .
 
-USER nextjs
+
+ENV HOSTNAME="0.0.0.0"
 
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-# Standalone output para não precisar usar todas as libs dentro do node_modules
-CMD ["node", "server.js"]
+CMD ["pm2-runtime","start","ecosystem.config.js"]
