@@ -338,6 +338,14 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     to: addDays(new Date(), 20),
   })
 
+  const filtroDataFromTo = async () => {
+    const dateFrom = date?.from
+    const dateTo = date?.to
+    
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
+  }
+
   console.log(date?.from)
   console.log(date?.to)
   
@@ -381,7 +389,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
             numberOfMonths={2}
           />
           <div className="flex justify-end mx-4 my-2">
-            <Button>Filtrar</Button>
+            <Button onClick={filtroDataFromTo}>Filtrar</Button>
           </div>
         </PopoverContent>
       </Popover>
