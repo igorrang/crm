@@ -126,6 +126,29 @@ export const columns: ColumnDef<Payment>[] = [
         setUltimaAtualizacao(row.getValue("ultimaAtualizacao") || '');
       }, [row]);
     
+      const editandoCliente = async (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        
+        console.log({identificador, dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+        
+        try {
+          const res = await axios.put("/api/table", {identificador, dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+          console.log(res.data);  // Verificar a resposta do backend
+            // Verifique se a requisição foi bem-sucedida
+            if (res.status === 200) {
+              console.log('Cliente cadastrado com sucesso!');
+              // Usar router.push para redirecionar e recarregar a página
+              window.location.reload()
+    
+            } else {
+              console.error('Erro ao cadastrar cliente:', res.statusText);
+            }
+        } catch (error) {
+          console.error('Error posting client data:', error);
+        }
+      };
+
       return (  
       <Dialog>
         <DialogTrigger asChild>
@@ -136,7 +159,7 @@ export const columns: ColumnDef<Payment>[] = [
             <DialogTitle>Editar</DialogTitle>
             <DialogDescription>Editar dados do cliente</DialogDescription>
           </DialogHeader>
-          <form action="" className="">
+          <form onSubmit={editandoCliente} className="">
             
             <div className="grid grid-cols-2 gap-4 py-4">
               <div>
@@ -267,24 +290,11 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTable() {
-  
   const [data, setData] = useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
-  // const inserirDados = async () => {
-  //   const dataInicio = '2022/02/05'
-  //   const nome = 'Miguel'
-  //   const origem = 'Bio Instagram'
-  //   const observacao = 'Entrar em contato assim que possivel'
-  //   const valorFicha = 3020
-  //   const status = 'Processando'
-  //   const ultimaAtualizacao = '30/05/2006'
-  //   const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao})
-    
-  // }
 
   const listarDados = async () => {
     const res = await axios.get("/api/table");

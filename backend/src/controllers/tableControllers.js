@@ -13,11 +13,9 @@ const postTable = async (req, res) => {
 }
 
 const putTable = async (req,res) => {
-    const tableName = req.params.tableName;
-    const rowId = req.params.rowId
     const newData = req.body
 
-    const table = await tableModels.putTable(newData, tableName, rowId)
+    const table = await tableModels.putTable(newData)
     return res.status(200).json(table)
 }
 

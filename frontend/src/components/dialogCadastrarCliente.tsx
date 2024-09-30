@@ -11,7 +11,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from 'next/router';
  
 export default function DialogCadastrarCliente() {
   const [dataInicio, setDataInicio] = useState('')
@@ -21,11 +22,30 @@ export default function DialogCadastrarCliente() {
   const [valorFicha, setValorFicha] = useState('')
   const [status, setStatus] = useState('')
   const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
+  
+  
+  const cadastrandoCliente = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const cadastrandoCliente = async () => {
-      const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao})
-      
+    
+    console.log({dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+    
+    try {
+      const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+      console.log(res.data);  // Verificar a resposta do backend
+        // Verifique se a requisição foi bem-sucedida
+        if (res.status === 200) {
+          console.log('Cliente cadastrado com sucesso!');
+          // Usar router.push para redirecionar e recarregar a página
+          window.location.reload()
+
+        } else {
+          console.error('Erro ao cadastrar cliente:', res.statusText);
+        }
+    } catch (error) {
+      console.error('Error posting client data:', error);
     }
+  };
 
   return (
     <Dialog>
@@ -39,7 +59,7 @@ export default function DialogCadastrarCliente() {
             Insira os dados do cliente e logo após confirme para cadastrar um cliente
           </DialogDescription>
         </DialogHeader>
-        <form action="" className="grid grid-cols-2 gap-4 py-4">
+        <form onSubmit={cadastrandoCliente} className="grid grid-cols-2 gap-4 py-4">
           <div>
             <div className=" items-center gap-4">
               <Label htmlFor="dataInicio" className="text-right">
@@ -47,6 +67,7 @@ export default function DialogCadastrarCliente() {
               </Label>
               <Input
                 id="dataInicio"
+                type="date"
                 className=""
                 value={dataInicio}
                 onChange={(e) => setDataInicio(e.target.value)}
@@ -116,11 +137,12 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="valorFichas" className="text-right">
+              <Label htmlFor="ultimaAtualizacao" className="text-right">
                 Ultima Atualizacao
               </Label>
               <Input
-                id="valorFichas"
+                id="ultimaAtualizacao"
+                type="date"
                 className=""
                 value={ultimaAtualizacao}
                 onChange={(e) => setUltimaAtualizacao(e.target.value)}
@@ -128,7 +150,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
           <DialogFooter className="mt-24">
-            <Button type="submit" onClick={cadastrandoCliente}>Confirmar</Button>
+            <Button type="submit" >Confirmar</Button>
           </DialogFooter>
           </div>
         </form>

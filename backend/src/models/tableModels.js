@@ -22,8 +22,6 @@ const postTable = async (data) => {
     const {valorFicha} = data
     const {status} = data
     const {ultimaAtualizacao} = data
-
-    console.log(dataInicio);
     
     try {
         // Codigo sql
@@ -37,11 +35,17 @@ const postTable = async (data) => {
     }
 }
 
-const putTable = async (newData, tableName, oldName) => {
-    const {Data_de_Inicio, nome, Contato,Anuncio, observacoes,valor_fichas,Status} = newData
+const putTable = async (newData) => {
+    const {dataInicio} = newData
+    const {nome} = newData
+    const {origem} = newData
+    const {observacao} = newData
+    const {valorFicha} = newData
+    const {status} = newData
+    const {ultimaAtualizacao} = newData
     try{
-        const sql = `UPDATE \`${tableName}\` SET Data_de_Inicio = ?, nome = ?, Contato = ?, Anuncio = ?, observacoes = ?, valor_fichas = ?, Status = ? WHERE nome = ?`;
-        const [rows ] = await connection.execute(sql, [Data_de_Inicio, nome, Contato, Anuncio, observacoes, valor_fichas, Status , oldName]);
+        const sql = `UPDATE cliente SET dataInicio = ${dataInicio}, nome = ${nome}, Contato = ${origem}, Anuncio = ${observacao}, observacoes = ${valorFicha}, valor_fichas = ${status}, Status = ${ultimaAtualizacao} WHERE nome = ?`;
+        const [rows ] = await connection.execute(sql, [dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao]);
         return rows;
     }  catch {
         return 'Erro na query com o banco de dados'
