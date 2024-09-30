@@ -19,16 +19,17 @@ const postTable = async (data) => {
     const {nome} = data
     const {origem} = data
     const {observacao} = data
-    const {valorFichas} = data
+    const {valorFicha} = data
     const {status} = data
     const {ultimaAtualizacao} = data
 
+    console.log(dataInicio);
+    
     try {
         // Codigo sql
-        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', '${valorFichas}', '${status}', '${ultimaAtualizacao}')`
+        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', '${valorFicha}', '${status}', '${ultimaAtualizacao}')`
         // Query banco
         const [query] = await connection.execute(sql)
-        console.log("Query result:", query)
         return query
     } catch (err) {
         console.error("Error:", err);

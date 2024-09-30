@@ -10,16 +10,23 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import axios from "axios"
 import { useState } from "react"
  
 export default function DialogCadastrarCliente() {
   const [dataInicio, setDataInicio] = useState('')
   const [nome, setNome] = useState('')
-  const [contato, setContato] = useState('')
-  const [anuncio, setAnuncio] = useState('')
-  const [observacoes, setObservacoes] = useState('')
-  const [valorFichas, setValorFichas] = useState('')
+  const [origem, setOrigem] = useState('')
+  const [observacao, setObservacao] = useState('')
+  const [valorFicha, setValorFicha] = useState('')
   const [status, setStatus] = useState('')
+  const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
+
+  const cadastrandoCliente = async () => {
+      const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao})
+      
+    }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -60,25 +67,25 @@ export default function DialogCadastrarCliente() {
             </div>
             <div className="items-center gap-4">
               <Label htmlFor="contato" className="text-right">
-                Contato
+                Origem
               </Label>
               <Input
-                id="contato"
+                id="origem"
                 className=""
-                value={contato}
-                onChange={(e) => setContato(e.target.value)}
+                value={origem}
+                onChange={(e) => setOrigem(e.target.value)}
                 required
               />
             </div>
             <div className="items-center gap-4">
               <Label htmlFor="anuncio" className="text-right">
-                Anuncio
+                Observacao
               </Label>
               <Input
-                id="anuncio"
+                id="observacao"
                 className=""
-                value={anuncio}
-                onChange={(e) => setAnuncio(e.target.value)}
+                value={observacao}
+                onChange={(e) => setObservacao(e.target.value)}
                 required
               />
             </div>
@@ -86,25 +93,13 @@ export default function DialogCadastrarCliente() {
           <div>
             <div className="items-center gap-4">
               <Label htmlFor="observacoes" className="text-right">
-                Observacoes
+                Valor das Fichas
               </Label>
               <Input
-                id="observacoes"
+                id="valorFicha"
                 className=""
-                value={observacoes}
-                onChange={(e) => setObservacoes(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="valorFichas" className="text-right">
-                Valor Fichas
-              </Label>
-              <Input
-                id="valorFichas"
-                className=""
-                value={valorFichas}
-                onChange={(e) => setValorFichas(e.target.value)}
+                value={valorFicha}
+                onChange={(e) => setValorFicha(e.target.value)}
                 required
               />
             </div>
@@ -120,8 +115,20 @@ export default function DialogCadastrarCliente() {
                 required
               />
             </div>
+            <div className="items-center gap-4">
+              <Label htmlFor="valorFichas" className="text-right">
+                Ultima Atualizacao
+              </Label>
+              <Input
+                id="valorFichas"
+                className=""
+                value={ultimaAtualizacao}
+                onChange={(e) => setUltimaAtualizacao(e.target.value)}
+                required
+              />
+            </div>
           <DialogFooter className="mt-24">
-            <Button type="submit">Confirmar</Button>
+            <Button type="submit" onClick={cadastrandoCliente}>Confirmar</Button>
           </DialogFooter>
           </div>
         </form>

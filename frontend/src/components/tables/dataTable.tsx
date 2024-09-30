@@ -21,8 +21,8 @@ export type Payment = {
   dataInicio: string;
   nome: string;
   origem: string;
-  observacoes: string;
-  valorFichas: string;
+  observacao: string;
+  valorFicha: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
   ultimaAtualizacao: string;
 };
@@ -70,17 +70,17 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "observacoes",
-    header: "Observacoes",
+    accessorKey: "observacao",
+    header: "Observação",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("observacoes")}</div>
+      <div className="capitalize">{row.getValue("observacao")}</div>
     ),
   },
   {
-    accessorKey: "valorFichas",
+    accessorKey: "valorFicha",
     header: "Valor das fichas",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("valorFichas")}</div>
+      <div className="capitalize">{row.getValue("valorFicha")}</div>
     ),
   },
   {
@@ -109,8 +109,8 @@ export const columns: ColumnDef<Payment>[] = [
       const [dataInicio, setDataInicio] = useState('')
       const [nome, setNome] = useState('')
       const [origem, setOrigem] = useState('')
-      const [observacoes, setObservacoes] = useState('')
-      const [valorFichas, setValorFichas] = useState('')
+      const [observacao, setObservacao] = useState('')
+      const [valorFicha, setValorFicha] = useState('')
       const [status, setStatus] = useState('')
       const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
       
@@ -120,8 +120,8 @@ export const columns: ColumnDef<Payment>[] = [
         setDataInicio(row.getValue("dataInicio") || '');
         setNome(row.getValue("nome") || '');
         setOrigem(row.getValue("origem") || '');
-        setObservacoes(row.getValue("observacoes") || '');
-        setValorFichas(row.getValue("valorFichas") || '');
+        setObservacao(row.getValue("observacao") || '');
+        setValorFicha(row.getValue("valorFicha") || '');
         setStatus(row.getValue("status") || '');
         setUltimaAtualizacao(row.getValue("ultimaAtualizacao") || '');
       }, [row]);
@@ -186,8 +186,8 @@ export const columns: ColumnDef<Payment>[] = [
                   <Input
                     id="observacoes"
                     className=""
-                    value={observacoes} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setObservacoes(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    value={observacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setObservacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
@@ -196,8 +196,8 @@ export const columns: ColumnDef<Payment>[] = [
                   <Input
                     id="valorFichas"
                     className=""
-                    value={valorFichas} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setValorFichas(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                    value={valorFicha} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                    onChange={(e) => setValorFicha(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
@@ -274,17 +274,17 @@ export function DataTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const inserirDados = async () => {
-    const dataInicio = '2022/02/05'
-    const nome = 'Marcos'
-    const origem = 'Bio Instagram'
-    const observacao = 'Entrar em contato assim que possivel'
-    const valorFichas = 3020
-    const status = 'Processando'
-    const ultimaAtualizacao = '30/05/2006'
-    const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFichas, status, ultimaAtualizacao})
-    console.log(res.data);
-  }
+  // const inserirDados = async () => {
+  //   const dataInicio = '2022/02/05'
+  //   const nome = 'Miguel'
+  //   const origem = 'Bio Instagram'
+  //   const observacao = 'Entrar em contato assim que possivel'
+  //   const valorFicha = 3020
+  //   const status = 'Processando'
+  //   const ultimaAtualizacao = '30/05/2006'
+  //   const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao})
+    
+  // }
 
   const listarDados = async () => {
     const res = await axios.get("/api/table");
@@ -292,7 +292,6 @@ export function DataTable() {
   };
   
   useEffect( () => {
-    // inserirDados();
     listarDados();
   },[])
     
