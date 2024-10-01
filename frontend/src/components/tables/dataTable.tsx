@@ -174,31 +174,31 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "Data_de_Inicio",
+    accessorKey: "data_de_inicio",
     header: "Data de Inicio",
      cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Data_de_Inicio")}</div>
+      <div className="capitalize">{row.getValue("data_de_inicio")}</div>
     ),
   },
 
   {
-    accessorKey: "Nome",
+    accessorKey: "nome",
     header: "nome",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("Nome")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("nome")}</div>,
   },
   {
-    accessorKey: "Contato",
+    accessorKey: "contato",
     header: "Contato",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Contato")}</div>
+      <div className="capitalize">{row.getValue("contato")}</div>
     ),
   },
 
   {
-    accessorKey: "Anuncio",
+    accessorKey: "anuncio",
     header: "Anuncio",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Anuncio")}</div>
+      <div className="capitalize">{row.getValue("anuncio")}</div>
     ),
   },
 
@@ -210,10 +210,10 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "Status",
+    accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("Status")}</div>
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
   {

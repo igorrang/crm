@@ -1,13 +1,11 @@
-const mysql = require('mysql2/promise')
+//const mysql = require('mysql2/promise')
+const { Pool } = require('pg');
+const connectionDois = new Pool({
+    host: 'localhost',
+    user: 'postgres',
+    password: '12345678',
+    database:'botecobrasil',
+    port: 5332,
+});
 
-const connection = mysql.createPool({
-    host: 'Mac-mini-de-igor.local',
-    user: 'root',
-    password: '12345',
-    database:'botecobrasil'
-})
-
-console.log(mysql)
-console.log(connection)
-
-module.exports = connection
+module.exports = connectionDois
