@@ -1,7 +1,6 @@
 services:
   postgres:
-    image: postgres
-    container_name: meu-postgres
+    image: igormrangel/post:latest3
     ports:
       - "5332:5332"  # Mapeando a porta 5332 no host para a 5432 do container
     environment:
@@ -11,18 +10,29 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: meu-frontend
+    image: igormrangel/meu-frontend:latest
     ports:
       - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container
     depends_on:
       - backend
   
+  backend:
+    build:
+      context: ./backend
+    image: igormrangel/meu-backend:latest1
+    volumes:
+      - ./backend:/src
+    command: npm run dev
+  
+    expose:
+      - 5050
+
   nginx:
-    image: nginx
+    image: igormrangel/ngnx:latest2
     container_name: meu-nginx
     ports:
       - "8000:8000"  # Mapeando a porta 80 no host para a 80 do container
     volumes:
-      - .frontend/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
