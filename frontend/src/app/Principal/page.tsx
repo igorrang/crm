@@ -15,6 +15,9 @@ export default function Index() {
 
         <div className="w-full h-[90.3vh] flex flex-col justify-center items-center text-primary">
           <div className="flex flex-col md:flex-row">
+            <Link href="/VerCliente" className="">
+              <img src="/verCliente.png" alt="" className="w-[222px] mx-10 my-5"/>
+            </Link>
             <Link href="/Planilha" className="">
               <img src="/Planilha.png" alt="" className="w-[240px] mx-10 my-5"/>
             </Link>

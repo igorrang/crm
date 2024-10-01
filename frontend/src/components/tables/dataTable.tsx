@@ -338,7 +338,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   // esse date corresponde ao valor de quando filtrar uma data ate outra data
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
-    to: addDays(new Date(), 20),
+    to: addDays(new Date(), 30),
   })
 
   // Função que realizará o filtro de uma data ate outra data e carregar todos dados correspondentes
@@ -346,6 +346,11 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     const dateFrom = date?.from // Pegando a data inicial do filtro
     const dateTo = date?.to // Pegando a data final do filtro
     
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
+  }
+  
+  const filtros = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
     const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
     setData(res.data)
   }
@@ -382,26 +387,35 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-          />
-          <div className="flex justify-end mx-4 my-2">
-            <Button onClick={filtroDataFromTo}>Filtrar</Button>
+        <PopoverContent className="w-auto p-0 flex" align="start">
+          <div>
+            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
+            <div className="flex justify-end mx-4 my-2">
+              <Button onClick={filtroDataFromTo}>Filtrar</Button>
+            </div>
+          </div>
+          {/* Filtro por períodos já pré estabelecidos */}
+          <div className=" mx-4 my-3">
+            <h1>Períodos</h1>
+            <div className="mx-3 flex flex-col items-start">
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={listarDados}>Máximo</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(), new Date())}>Hoje</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5"></Button>
+            </div>
           </div>
         </PopoverContent>
       </Popover>
     </div>
         <Input
-          placeholder="Filtrar por status..."
-          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrar por nome..."
+          value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("status")?.setFilterValue(event.target.value)
+            table.getColumn("nome")?.setFilterValue(event.target.value)
           }
           className="max-w-[300px] mr-2"
         />
