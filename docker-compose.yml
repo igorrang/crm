@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     image: igormrangel/post:latest3
@@ -9,7 +11,7 @@ services:
       POSTGRES_DB: botecobrasil
 
   frontend:
-    build: ./frontend
+    build: frontend
     image: igormrangel/meu-frontend:latest
     ports:
       - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container
@@ -18,20 +20,20 @@ services:
   
   backend:
     build:
-      context: ./backend
+      context: backend
     image: igormrangel/meu-backend:latest1
     volumes:
       - ./backend:/src
     command: npm run dev
-  
-    expose:
-      - 5050
+    environment:
+      DATABASE_URL: postgres://postgres:12345678@postgres:5332/botecobrasil  # URL de conexão ao PostgreSQL
+    depends_on:
+      - postgres  # Aguarda o PostgreSQL estar pronto antes de iniciar
 
   nginx:
     image: igormrangel/ngnx:latest2
-    container_name: meu-nginx
     ports:
-      - "8000:8000"  # Mapeando a porta 80 no host para a 80 do container
+      - "8000:80"  # Mapeando a porta 80 no host para a 80 do container
     volumes:
       - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
