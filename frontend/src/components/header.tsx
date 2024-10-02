@@ -37,6 +37,12 @@ const Header = ({  }) => {
         <div className="lg:hidden  absolute top-full left-0 w-full bg-primary p-4 rounded-b-2xl  shadow-md ">
           <ul className="flex flex-col gap-y-2 ">
             <li>
+              <Link href="/VerCliente" className="flex justify-between items-center my-2">
+                Ver Cliente
+                <img src="/verCliente.png" alt="" className="w-[30px]"/>
+              </Link>
+            </li>
+            <li>
               <Link href="/Planilha" className="flex justify-between items-center my-2">
                 Planilha
                 <img src="/Planilha.png" alt="" className="w-[30px]"/>

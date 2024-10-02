@@ -105,8 +105,8 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    id: "id",
-    accessorKey: "id",
+    id: "id_cliente",
+    accessorKey: "id_cliente",
     header: "Editar",
     enableHiding: false,
     cell: ({ row }) => {
@@ -123,7 +123,7 @@ export const columns: ColumnDef<Payment>[] = [
       
       // Pega o valor da coluna de cada linha e imprime no campo do input
       useEffect(() => {
-        setIdentificador(row.getValue("id") || '');
+        setIdentificador(row.getValue("id_cliente") || '');
         setDataInicio(row.getValue("dataInicio") || '');
         setNome(row.getValue("nome") || '');
         setOrigem(row.getValue("origem") || '');

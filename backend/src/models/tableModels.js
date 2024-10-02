@@ -47,7 +47,7 @@ const putTable = async (newData) => {
    
     
     try{
-        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id = '${identificador}'`;
+        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id_cliente = '${identificador}'`;
         const [query ] = await connection.execute(sql);
         return query;
     }  catch (err){
