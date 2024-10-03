@@ -24,7 +24,7 @@ const postHistorico = async (data) => {
 
     try {
         // Codigo sql
-        const sql = `INSERT INTO historico value (null, '${mensagemHistorico}', '2024-30-05', '15:21', '${mensagemIdCliente}') `
+        const sql = `INSERT INTO historico values (null, '${mensagemHistorico}', '2024-30-05', '15:21', '${mensagemIdCliente}') `
         // Query banco
         const [query] = await connection.execute(sql)
         console.log('Query historico: ', query );

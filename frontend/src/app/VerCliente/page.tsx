@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
 import axios from "axios";
@@ -43,6 +43,16 @@ export default function VerCliente() {
   const [mensagemIdCliente, setMensagemIdCliente] = useState<number>(0)
   const [mensagemHistorico, setMensagemHistorico] = useState('')
   
+  const endOfMessagesRef = useRef(null);
+
+  
+  useEffect(() => {
+    // Verifica se o elemento de referência existe e rola até ele
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [dataHistorico]); // Atualiza sempre que dataHistorico mudar
+
   // Função que realizará o filtro de Clientes 
   const filtrarCliente = async () => {
     const res = await axios.post("/api/filtroVerCliente", {nome});
@@ -58,11 +68,11 @@ export default function VerCliente() {
   const inserindoHistorico = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/rotaaqui", {mensagemHistorico, mensagemIdCliente});
+      const res = await axios.post("/api/historico", {mensagemHistorico, mensagemIdCliente});
         // Verifique se a requisição foi bem-sucedida
         if (res.status === 200) {
           // Usar router.push para redirecionar e recarregar a página
-          window.location.reload()
+          
 
         } else {
           console.error('Erro ao cadastrar cliente:', res.statusText);
@@ -124,16 +134,18 @@ export default function VerCliente() {
               })}
             </div>
 
-            {/* Historico */}
-           
-            {dataHistorico.map((item) => {
-              return (
+            {/* Historico */}        
                 <div className="w-full flex flex-col items-center">
-                  <div className="w-[80% p-5 rounded-2xl border shadow-md">
-                    <div className="h-[400px]  overflow-auto ">
-                      <div >
-                        <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario}/>
-                      </div>
+                  <div className="w-[80%] p-5 rounded-2xl border shadow-md">
+                    <div  className="h-[500px]  overflow-auto ">
+                    {dataHistorico.map((item) => {
+                      return (
+                        <div >
+                          <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario}/>
+                        </div>
+                      )
+                      })}
+                       <div ref={endOfMessagesRef} />
                     </div>
                     <div className="mt-3">
                       <form onSubmit={inserindoHistorico} className="flex justify-around items-end">
@@ -144,8 +156,7 @@ export default function VerCliente() {
                   </div>
                   
               </div>
-              )
-            })}
+              
           </div>
           
         </div>
