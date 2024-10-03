@@ -26,8 +26,17 @@ interface Item {
     ultimaAtualizacao: string
 }
 
+interface Historico {
+    id_historico: number,
+    mensagem: string,
+    data: string,
+    horario: string,
+    id_cliente: number,
+}
+
 export default function VerCliente() {
   const [data, setData] = useState<Item[]>([]);
+  const [dataHistorico, setDataHistorico] = useState<Historico[]>([])
   const [nome, setNome] = useState('')
 
   // Função que realizará o filtro de Clientes 
@@ -35,6 +44,15 @@ export default function VerCliente() {
     const res = await axios.post("/api/filtroVerCliente", {nome});
     setData(res.data) 
   };
+
+  // Função que será executada quando o cliente clicar no usuario desejado. Passará o id para realizar a query e colocará os valores da query em um useState<recebe um items array> para 
+  // Rodar uma map nesse useState e imprimir as observacoes do cliente
+  const exibirHistoricoCliente = async (id: number): Promise<void> => {
+    const res = await axios.get(`/api/historico?id_cliente=${id}`)
+    console.log(res.data);
+    
+    setDataHistorico(res.data)
+  }
 
   return (
     <main>
@@ -77,7 +95,7 @@ export default function VerCliente() {
               {data.map((item) => {
                 return (
                   <div >
-                    <Button variant='clean' size='clean' className="w-full">
+                    <Button onClick={() => exibirHistoricoCliente(item.id_cliente)} variant='clean' size='clean' className="w-full">
                       <CardFiltroCliente nome={item.nome} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status} />
                     </Button>
                   </div>
@@ -89,7 +107,14 @@ export default function VerCliente() {
             <div className="w-full flex flex-col items-center">
 
               <div className="h-[600px] w-[80%] rounded-2xl border shadow-md overflow-auto ">
-                <CardMensagemHistorico texto=""/>
+              {dataHistorico.map((item) => {
+                return (
+                  <div >
+                     <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario}/>
+                  </div>
+                )
+              })}
+               
                
               </div>
             

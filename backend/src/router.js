@@ -5,7 +5,8 @@ const router = express.Router()
 const clientesControllers = require("./controllers/validacaoLoginControllers")
 const tableConstrollers = require('./controllers/tableControllers')
 const filtroTableConstrollers = require('./controllers/filtroTableConstrollers')
-const filtroVerCliente = require('./controllers/filtroVerCliente')
+const filtroVerClienteControllers = require('./controllers/filtroVerClienteControllers')
+const historicoControllers = require('./controllers/historicoControllers')
 
 router.get("/validacaoLogin", clientesControllers.getCliente)
 router.post("/validacaoLogin", clientesControllers.postCliente)
@@ -19,8 +20,10 @@ router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
 router.post('/filtroTable', filtroTableConstrollers.postFiltroTable)
 
 // Ver cliente
-router.post('/filtroVerCliente', filtroVerCliente.postFiltroVerCliente)
+router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerCliente)
 
+// Historico
+router.get('/historico', historicoControllers.getHistorico)
 
 
 // console.log(this.delete)

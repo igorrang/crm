@@ -8,20 +8,22 @@ import DataHistorico from "../texts/dataHistorico";
 
 export interface cardMensagemHistoricoProps {
   texto: string
+  data: string
+  horario: string
 }
 
-export default function CardMensagemHistorico({texto}: cardMensagemHistoricoProps) {
+export default function CardMensagemHistorico({texto, data, horario}: cardMensagemHistoricoProps) {
   return (
     <div className="m-4 ">
       <div className="flex items-center">
         <IoMdContact className="text-[60px]"/>
         <div>
-        <NomeHistorico texto="Marcos" />
-        <DataHistorico texto="12:00 05/08/2024" />
+        <NomeHistorico texto="Nome do usuário" />
+        <DataHistorico texto={`${horario} - ${data}`} />
         </div>
 
       </div>
-      <MensagemHistorico texto="texto" />
+      <MensagemHistorico texto={texto} />
     </div>
 
   );
