@@ -24,6 +24,7 @@ router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerClient
 
 // Historico
 router.get('/historico', historicoControllers.getHistorico)
+router.post('/historico', historicoControllers.postHistorico)
 
 
 // console.log(this.delete)

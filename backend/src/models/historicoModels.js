@@ -18,9 +18,28 @@ const getHistorico = async (data) => {
     }
 }
 
+const postHistorico = async (data) => {
+    const {mensagemHistorico} = data
+    const {mensagemIdCliente} = data
+
+    try {
+        // Codigo sql
+        const sql = `INSERT INTO historico value (null, '${mensagemHistorico}', '2024-30-05', '15:21', '${mensagemIdCliente}') `
+        // Query banco
+        const [query] = await connection.execute(sql)
+        console.log('Query historico: ', query );
+        
+        return query
+    } catch (err) {
+        console.error("Error:", err);
+        return 'Erro na QUERY com o BD. Tipo POST do filtro'
+    }
+}
+
 
 
 
 module.exports = {
     getHistorico,
+    postHistorico
 }
