@@ -14,16 +14,14 @@ export interface cardMensagemHistoricoProps {
 
 export default function CardMensagemHistorico({texto, data, horario}: cardMensagemHistoricoProps) {
   return (
-    <div className="m-4 ">
-      <div className="flex items-center">
-        <IoMdContact className="text-[60px]"/>
-        <div>
+    <div className="m-4 flex">
+      
+      <IoMdContact className="text-[50px]"/>
+      <div className="bg-primary/10 border shadow-md rounded-xl py-2 px-2 ml-1 ">
         <NomeHistorico texto="Nome do usuário" />
         <DataHistorico texto={`${horario} - ${data}`} />
-        </div>
-
-      </div>
-      <MensagemHistorico texto={texto} />
+        <MensagemHistorico texto={texto} />
+      </div>        
     </div>
 
   );
