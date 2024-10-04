@@ -1,11 +1,11 @@
 //const mysql = require('mysql2/promise')
 const { Pool } = require('pg');
 const connection = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: '12345678',
-    database:'botecobrasil',
-    port: 5332,
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || '12345678',
+    database: process.env.DB_NAME || 'botecobrasil',
+    port: process.env.DB_PORT || 5332,
 });
 
 module.exports = connection
