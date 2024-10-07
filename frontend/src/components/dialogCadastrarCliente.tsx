@@ -111,6 +111,12 @@ export default function DialogCadastrarCliente() {
               <Input
                 id="valorFicha"
                 className=""
+                onKeyDown={(e) => {
+                  if(e.key === ",") {
+                    e.preventDefault()
+                    window.alert('Utilize o "." para inserir os centavos')
+                  }
+                }}
                 value={valorFicha}
                 onChange={(e) => setValorFicha(e.target.value)}
                 required

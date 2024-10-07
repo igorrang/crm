@@ -48,7 +48,8 @@ export default function VerCliente() {
   }, [dataHistorico]); // Executa sempre que dataHistorico for atualizado
 
   // Função para filtrar clientes
-  const filtrarCliente = async () => {
+  const filtrarCliente = async (e: React.FormEvent) => {
+    e.preventDefault()
     try {
       const res = await axios.post("/api/filtroVerCliente", { nome });
       setData(res.data);
@@ -118,10 +119,11 @@ export default function VerCliente() {
           <div className="flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
             {/* Card com os dados do cliente */}
             <div className="w-[80%] max-w-[500px] h-[615px] overflow-auto lg:ml-20 lg:mr-5 py-5 px-5 relative border shadow-md rounded-l-2xl">
-              <div className="flex flex-col items-end">
+              <form onSubmit={filtrarCliente} className="flex flex-col items-end">
                 <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" />
-                <Button type="submit" className="my-2" onClick={filtrarCliente}>Confirmar</Button>
-              </div>
+                <Button type="submit" className="my-2" >Confirmar</Button>
+              </form>
+              
 
               {data.map((item) => (
                 <div key={item.id_cliente}>
@@ -161,6 +163,12 @@ export default function VerCliente() {
                     <textarea
                       value={mensagemHistorico}
                       onChange={(e) => setMensagemHistorico(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault(); // Evita a quebra de linha
+                          inserindoHistorico(e); // Chama a função de submit
+                        }
+                      }}
                       required
                       placeholder="Digite algum comentário"
                       className="min-h-[40px] w-[90%] mr-1 py-2 px-3 text-sm border shadow-md overflow-auto"

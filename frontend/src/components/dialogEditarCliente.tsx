@@ -93,6 +93,7 @@ export default function DialogEditarCliente() {
                   <Input
                     id="valorFichas"
                     className=""
+                    
                     value={valorFichas} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setValorFichas(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required

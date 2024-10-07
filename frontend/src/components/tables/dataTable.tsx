@@ -85,10 +85,16 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "valorFicha",
-    header: "Valor das fichas",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("valorFicha")}</div>
-    ),
+    header: () => <div className="text-right">Valor das fichas</div>,
+    cell: ({ row }) => {
+      const valorFicha = parseFloat(row.getValue("valorFicha"))
+      const formatted = new Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(valorFicha)
+ 
+      return <div className="text-right font-medium">{formatted}</div>
+    },
   },
   {
     accessorKey: "status",
@@ -226,6 +232,12 @@ export const columns: ColumnDef<Payment>[] = [
                   <Input
                     id="valorFichas"
                     className=""
+                    onKeyDown={(e) => {
+                      if(e.key === ",") {
+                        e.preventDefault()
+                        window.alert('Utilize o "." para inserir os centavos')
+                      }
+                    }}
                     value={valorFicha} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setValorFicha(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required

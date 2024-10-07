@@ -25,7 +25,7 @@ const postTable = async (data) => {
     
     try {
         // Codigo sql
-        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', '${valorFicha}', '${status}', '${ultimaAtualizacao}')`
+        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', ${valorFicha}, '${status}', '${ultimaAtualizacao}')`
         // Query banco
         const [query] = await connection.execute(sql)
         return query
