@@ -299,6 +299,14 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
+       // variaveis pra receber o valor de cada coluna e imprimir no input
+       const [identificadorCliente, setIdentificadorCliente] = useState('')
+       const [data, setData] = useState('')
+       const [hora, setHora] = useState('')
+       const [valorReais, setValorReais] = useState('')
+       const [valorFicha, setValorFicha] = useState('')
+       const [anexo, setAnexo] = useState('')
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -314,9 +322,105 @@ export const columns: ColumnDef<Payment>[] = [
             >
               Copiar ID do Pagamento
             </DropdownMenuItem> */}
-            <Link href="/VerCliente">
-              <DropdownMenuItem>Ver Cliente</DropdownMenuItem>
-            </Link>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="clean">Fichas</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <DialogHeader>
+                  <DialogTitle>Fichas</DialogTitle>
+                  <DialogDescription>Registrar compra de fichas</DialogDescription>
+                </DialogHeader>
+                <form  className="" encType="multipart/form-data">
+                  <div className="grid grid-cols-2 gap-4 py-4">
+                    <div>
+                      {/* Serve pro identificador do cliente */}
+                      <div className="  gap-4">
+                        <Input
+                          id="identificador"
+                          className="hidden"
+                          value={identificadorCliente} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setIdentificadorCliente(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                      <div className="gap-4">
+                        <Label htmlFor="data" className="text-right"> Data </Label>
+                        <Input
+                          id="data"
+                          type="date"
+                          className=""
+                          value={data} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setData(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                      <div className=" gap-4">
+                        <Label htmlFor="hora" className="text-right"> Hora </Label>
+                        <Input
+                          id="hora"
+                          className=""
+                          value={hora} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setHora(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                      
+                    </div>
+                    <div>
+                      <div className=" gap-4">
+                        <Label htmlFor="valorReais" className="text-right"> Valor Reais </Label>
+                        <Input
+                          id="valorReais"
+                          className=""
+                          onKeyDown={(e) => {
+                            if(e.key === ",") {
+                              e.preventDefault()
+                              window.alert('Utilize o "." para inserir os centavos')
+                            }
+                          }}
+                          value={valorReais} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setValorReais(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                    
+                      <div className=" gap-4">
+                        <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
+                        <Input
+                          id="valorFichas"
+                          className=""
+                          onKeyDown={(e) => {
+                            if(e.key === ",") {
+                              e.preventDefault()
+                              window.alert('Utilize o "." para inserir os centavos')
+                            }
+                          }}
+                          value={valorFicha} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setValorFicha(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                      
+                    </div>
+                    <div className="col-span-2 gap-2">
+                        <Label htmlFor="anexo" className="text-right"> Anexo </Label>
+                        <Input
+                          id="anexo"
+                          type="file"
+                          className=""
+                          value={anexo} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
+                          onChange={(e) => setAnexo(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
+                          required
+                        />
+                      </div>
+                    <DialogFooter className="mt-24">
+                      <Button type="submit">Confirmar</Button>
+                    </DialogFooter>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
             <DropdownMenuSeparator />
 
             <DropdownMenuItem></DropdownMenuItem>

@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-white text-lg px-8 py-2  rounded-full cursor-pointer hover:brightness-75",
+        default: "bg-primary text-white text-lg px-8 py-2  rounded-full cursor-pointer hover:bg-primary/80",
         clean: "",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
