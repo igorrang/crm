@@ -5,6 +5,10 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nodejs
+
 RUN npm install
 
 COPY . .

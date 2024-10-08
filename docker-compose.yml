@@ -3,13 +3,7 @@ services:
     build: ./frontend
     container_name: frontend
     ports:
-      - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container
-    
-      
-
-
-
-        
+      - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container        
   nginx:
     image: nginx:latest
     container_name: nginx
