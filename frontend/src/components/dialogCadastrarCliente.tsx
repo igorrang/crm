@@ -5,7 +5,8 @@ import { Label } from "@/components/ui/label"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/router';
- 
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+
 export default function DialogCadastrarCliente() {
   const [dataInicio, setDataInicio] = useState('')
   const [nome, setNome] = useState('')
@@ -78,17 +79,22 @@ export default function DialogCadastrarCliente() {
                 required
               />
             </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="contato" className="text-right">
-                Origem
-              </Label>
-              <Input
-                id="origem"
-                className=""
-                value={origem}
-                onChange={(e) => setOrigem(e.target.value)}
-                required
-              />
+            <div className="flex flex-col py-1 gap-2">
+              <Label  className="text-start"> Origem </Label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="justify-start" >
+                  <Button variant="outline" className="">{origem}</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup value={origem} onValueChange={setOrigem}>
+                    <DropdownMenuRadioItem value="Instagram (Bio)"> Instagram (Bio)</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Indicação">Indicação</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Anuncio">Anuncio</DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             <div className="items-center gap-4">
               <Label htmlFor="anuncio" className="text-right">
@@ -112,27 +118,33 @@ export default function DialogCadastrarCliente() {
                 id="valorFicha"
                 className=""
                 onKeyDown={(e) => {
-                  if(e.key === ",") {
-                    e.preventDefault()
-                    window.alert('Utilize o "." para inserir os centavos')
-                  }
-                }}
+                      if(e.key === ",") {
+                        e.preventDefault()
+                        window.alert('Utilize o "." para inserir os centavos')
+                      }
+                    }}
                 value={valorFicha}
                 onChange={(e) => setValorFicha(e.target.value)}
                 required
               />
             </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="status" className="text-right">
-                Status
-              </Label>
-              <Input
-                id="status"
-                className=""
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                required
-              />
+            <div className="flex flex-col py-1 gap-2">
+              <Label  className="text-start"> Status </Label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="justify-start" >
+                  <Button variant="outline" className="">{status}</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
+                    <DropdownMenuRadioItem value="Fracassado"> Fracassado</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Pendente"> Pendente</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Processando">Processando</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Sucesso">Sucesso</DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             <div className="items-center gap-4">
               <Label htmlFor="ultimaAtualizacao" className="text-right">

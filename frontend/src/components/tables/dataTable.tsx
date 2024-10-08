@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon,} from "@radix-ui/react-icons";
 import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable,} from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
@@ -121,7 +121,7 @@ export const columns: ColumnDef<Payment>[] = [
       const [identificador, setIdentificador] = useState('')
       const [dataInicio, setDataInicio] = useState('')
       const [nome, setNome] = useState('')
-      const [origem, setOrigem] = useState('')
+      const [origem, setOrigem] = React.useState("bottom")
       const [observacao, setObservacao] = useState('')
       const [valorFicha, setValorFicha] = useState('')
       const [status, setStatus] = useState('')
@@ -176,7 +176,7 @@ export const columns: ColumnDef<Payment>[] = [
             
             <div className="grid grid-cols-2 gap-4 py-4">
               <div>
-                <div className=" items-center gap-4">
+                <div className="  gap-4">
                   <Input
                     id="identificador"
                     className="hidden"
@@ -185,17 +185,18 @@ export const columns: ColumnDef<Payment>[] = [
                     required
                   />
                 </div>
-                <div className=" items-center gap-4">
+                <div className="  gap-4">
                   <Label htmlFor="dataInicio" className="text-right"> Data de Inicio </Label>
                   <Input
                     id="dataInicio"
+                    type="date"
                     className=""
                     value={dataInicio} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setDataInicio(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
                     required
                   />
                 </div>
-                <div className="items-center gap-4">
+                <div className=" gap-4">
                   <Label htmlFor="nome" className="text-right"> Nome </Label>
                   <Input
                     id="nome"
@@ -205,19 +206,25 @@ export const columns: ColumnDef<Payment>[] = [
                     required
                   />
                 </div>
-                <div className="items-center gap-4">
-                  <Label htmlFor="origem" className="text-right"> Origem </Label>
-                  <Input
-                    id="origem"
-                    className=""
-                    value={origem} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setOrigem(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
+
+                <div className="flex flex-col py-1 gap-2">
+                  <Label  className="text-start"> Origem </Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild className="justify-start" >
+                      <Button variant="outline" className="">{origem}</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                      <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup value={origem} onValueChange={setOrigem}>
+                        <DropdownMenuRadioItem value="Instagram (Bio)"> Instagram (Bio)</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="Indicação">Indicação</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="Anuncio">Anuncio</DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-              </div>
-              <div>
-                <div className="items-center gap-4">
+                <div className=" gap-4">
                   <Label htmlFor="observacoes" className="text-right"> Observacoes </Label>
                   <Input
                     id="observacoes"
@@ -227,7 +234,10 @@ export const columns: ColumnDef<Payment>[] = [
                     required
                   />
                 </div>
-                <div className="items-center gap-4">
+              </div>
+              <div>
+                
+                <div className=" gap-4">
                   <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
                   <Input
                     id="valorFichas"
@@ -243,20 +253,29 @@ export const columns: ColumnDef<Payment>[] = [
                     required
                   />
                 </div>
-                <div className="items-center gap-4">
-                  <Label htmlFor="status" className="text-right"> Status </Label>
-                  <Input
-                    id="status"
-                    className=""
-                    value={status} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setStatus(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
+               <div className="flex flex-col py-1 gap-2">
+                  <Label  className="text-start"> Status </Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild className="justify-start" >
+                      <Button variant="outline" className="">{status}</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                      <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
+                        <DropdownMenuRadioItem value="Fracassado"> Fracassado</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="Pendente"> Pendente</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="Processando">Processando</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="Sucesso">Sucesso</DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <div className="items-center gap-4">
+                <div className=" gap-4">
                   <Label htmlFor="ultimaAtualizacao" className="text-right"> Ultima Atualizacao </Label>
                   <Input
                     id="ultimaAtualizacao"
+                    type="date"
                     className=""
                     value={ultimaAtualizacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
                     onChange={(e) => setUltimaAtualizacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel

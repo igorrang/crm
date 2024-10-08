@@ -120,7 +120,7 @@ export default function VerCliente() {
             {/* Card com os dados do cliente */}
             <div className="w-[80%] max-w-[500px] h-[615px] overflow-auto lg:ml-20 lg:mr-5 py-5 px-5 relative border shadow-md rounded-l-2xl">
               <form onSubmit={filtrarCliente} className="flex flex-col items-end">
-                <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" />
+                <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
