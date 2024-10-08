@@ -118,15 +118,15 @@ export default function VerCliente() {
           {/* Container principal */}
           <div className="flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
             {/* Card com os dados do cliente */}
-            <div className="w-[80%] max-w-[500px] h-[615px] overflow-auto lg:ml-20 lg:mr-5 py-5 px-5 relative border shadow-md rounded-l-2xl">
-              <form onSubmit={filtrarCliente} className="flex flex-col items-end">
+            <div className="w-[80%] max-w-[500px]   lg:ml-20 lg:mr-5 py-5  relative border shadow-md rounded-l-2xl">
+              <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
                 <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
-
+              <div className="h-[443px] overflow-auto pl-5 mt-3" >
               {data.map((item) => (
-                <div key={item.id_cliente}>
+                <div key={item.id_cliente} >
                   <Button
                     onClick={() => {
                       exibirHistoricoCliente(item.id_cliente);
@@ -146,11 +146,13 @@ export default function VerCliente() {
                   </Button>
                 </div>
               ))}
+              </div>
+             
             </div>
 
             {/* Histórico */}
             <div className="w-full flex flex-col items-center">
-              <div className="w-[80%] p-5 rounded-r-2xl border shadow-md">
+              <div className="w-full mr-10 p-5 pt-0 rounded-r-2xl border shadow-md">
                 <div ref={containerRef} className="h-[500px] overflow-auto">
                   {dataHistorico.map((item) => (
                     <div key={item.id_historico}>
