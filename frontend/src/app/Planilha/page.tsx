@@ -1,6 +1,6 @@
 "use client";
 
-import DialogCadastrarCliente from "@/components/dialogCadastrarCliente";
+import DialogCadastrarCliente from "@/components/dialogs/dialogCadastrarCliente";
 import Header from "@/components/header";
 import Navbar from "@/components/narbar";
 import { DataTable } from "@/components/tables/dataTable";

@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
 import { Label } from "../ui/label";
+import DialogEditarCliente from "../dialogs/dialogEditarCliente";
 
 
 const data: Payment[] = [
@@ -116,181 +117,9 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Editar",
     enableHiding: false,
     cell: ({ row }) => {
-
-      // variaveis pra receber o valor de cada coluna e imprimir no input
-      const [identificador, setIdentificador] = useState('')
-      const [dataInicio, setDataInicio] = useState('')
-      const [nome, setNome] = useState('')
-      const [origem, setOrigem] = React.useState("bottom")
-      const [observacao, setObservacao] = useState('')
-      const [valorFicha, setValorFicha] = useState('')
-      const [status, setStatus] = useState('')
-      const [ultimaAtualizacao, setUltimaAtualizacao] = useState('')
-      
-      // Pega o valor da coluna de cada linha e imprime no campo do input
-      useEffect(() => {
-        setIdentificador(row.getValue("id_cliente") || '');
-        setDataInicio(row.getValue("dataInicio") || '');
-        setNome(row.getValue("nome") || '');
-        setOrigem(row.getValue("origem") || '');
-        setObservacao(row.getValue("observacao") || '');
-        setValorFicha(row.getValue("valorFicha") || '');
-        setStatus(row.getValue("status") || '');
-        setUltimaAtualizacao(row.getValue("ultimaAtualizacao") || '');
-      }, [row]);
-    
-      const editandoCliente = async (e: React.FormEvent) => {
-        e.preventDefault();
-    
-        
-        console.log({identificador, dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
-        
-        try {
-          const res = await axios.put("/api/table", {identificador, dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
-          console.log(res.data);  // Verificar a resposta do backend
-            // Verifique se a requisição foi bem-sucedida
-            if (res.status === 200) {
-              console.log('Cliente cadastrado com sucesso!');
-              // Usar router.push para redirecionar e recarregar a página
-              window.location.reload()
-    
-            } else {
-              console.error('Erro ao cadastrar cliente:', res.statusText);
-            }
-        } catch (error) {
-          console.error('Error posting client data:', error);
-        }
-      };
-
-      return (  
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="clean">Editar</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px]">
-          <DialogHeader>
-            <DialogTitle>Editar</DialogTitle>
-            <DialogDescription>Editar dados do cliente</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={editandoCliente} className="">
-            
-            <div className="grid grid-cols-2 gap-4 py-4">
-              <div>
-                <div className="  gap-4">
-                  <Input
-                    id="identificador"
-                    className="hidden"
-                    value={identificador} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setIdentificador(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-                <div className="  gap-4">
-                  <Label htmlFor="dataInicio" className="text-right"> Data de Inicio </Label>
-                  <Input
-                    id="dataInicio"
-                    type="date"
-                    className=""
-                    value={dataInicio} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setDataInicio(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-                <div className=" gap-4">
-                  <Label htmlFor="nome" className="text-right"> Nome </Label>
-                  <Input
-                    id="nome"
-                    className=""
-                    value={nome} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setNome(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col py-1 gap-2">
-                  <Label  className="text-start"> Origem </Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild className="justify-start" >
-                      <Button variant="outline" className="">{origem}</Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuRadioGroup value={origem} onValueChange={setOrigem}>
-                        <DropdownMenuRadioItem value="Instagram (Bio)"> Instagram (Bio)</DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Indicação">Indicação</DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Anuncio">Anuncio</DropdownMenuRadioItem>
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <div className=" gap-4">
-                  <Label htmlFor="observacoes" className="text-right"> Observacoes </Label>
-                  <Input
-                    id="observacoes"
-                    className=""
-                    value={observacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setObservacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                
-                <div className=" gap-4">
-                  <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
-                  <Input
-                    id="valorFichas"
-                    className=""
-                    onKeyDown={(e) => {
-                      if(e.key === ",") {
-                        e.preventDefault()
-                        window.alert('Utilize o "." para inserir os centavos')
-                      }
-                    }}
-                    value={valorFicha} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setValorFicha(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-               <div className="flex flex-col py-1 gap-2">
-                  <Label  className="text-start"> Status </Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild className="justify-start" >
-                      <Button variant="outline" className="">{status}</Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
-                        <DropdownMenuRadioItem value="Fracassado"> Fracassado</DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Pendente"> Pendente</DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Processando">Processando</DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="Sucesso">Sucesso</DropdownMenuRadioItem>
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <div className=" gap-4">
-                  <Label htmlFor="ultimaAtualizacao" className="text-right"> Ultima Atualizacao </Label>
-                  <Input
-                    id="ultimaAtualizacao"
-                    type="date"
-                    className=""
-                    value={ultimaAtualizacao} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                    onChange={(e) => setUltimaAtualizacao(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                    required
-                  />
-                </div>
-              <DialogFooter className="mt-24">
-                <Button type="submit">Confirmar</Button>
-              </DialogFooter>
-              </div>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-      );
+      return(
+        <DialogEditarCliente identificador_props={row.getValue("id_cliente")} dataInicio_props={row.getValue("dataInicio")} nome_props={row.getValue("nome")} origem_props={row.getValue("origem")} observacao_props={row.getValue("observacao")} valorFicha_props={row.getValue("valorFicha")} status_props={row.getValue("status")} ultimaAtualizacao_props={row.getValue("ultimaAtualizacao")}></DialogEditarCliente>
+      )
     },
   },
   {
@@ -641,7 +470,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Nenhum cliente encontrado
                 </TableCell>
               </TableRow>
             )}

@@ -1,7 +1,7 @@
 const express = require("express")
 
 const router = express.Router()
-const filtroConstrollers = require("./controllers/filtroControllers.js")
+
 const clientesControllers = require("./controllers/validacaoLoginControllers")
 const tableConstrollers = require('./controllers/tableControllers')
 const filtroTableConstrollers = require('./controllers/filtroTableConstrollers')
@@ -22,7 +22,7 @@ router.post('/filtroTable', filtroTableConstrollers.postFiltroTable)
 // Ver cliente
 router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerCliente)
 
-router.post('/filtro', filtroConstrollers.uploadAvatar)
+
 // Historico
 router.get('/historico', historicoControllers.getHistorico)
 router.post('/historico', historicoControllers.postHistorico)
