@@ -185,7 +185,7 @@ export default function VerCliente() {
               <h1 className="text-sm py-2 border-b-2">Data: 2024-05-45</h1>
               <h1 className="text-sm py-2 border-b-2">Hora: 12:30</h1>
               <h1 className="text-sm py-2 border-b-2">Valor Reais: R$ 3000.00</h1>
-              <h1 className="text-sm py-2 ">Valor Fichas: 6000.00</h1>
+              <h1 className="text-sm py-2 border-b-2">Valor Fichas: 6000.00</h1>
             </div>
           </div>
         </div>
