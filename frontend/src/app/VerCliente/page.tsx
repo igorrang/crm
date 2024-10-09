@@ -1,16 +1,17 @@
 'use client';
 
-import { IoSend } from "react-icons/io5";
-import Header from "@/components/header";
-import Navbar from "@/components/narbar";
-import CardMensagemHistorico from "@/components/cards/cardMensagemHistorico";
-import { Input } from "@/components/ui/input";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
 import axios from "axios";
+import { IoSend } from "react-icons/io5";
+
+import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
+import CardMensagemHistorico from "@/components/cards/cardMensagemHistorico";
+import Header from "@/components/header";
+import Navbar from "@/components/narbar";
+import { Input } from "@/components/ui/input";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 
 interface Item {
   id_cliente: number;
@@ -125,29 +126,14 @@ export default function VerCliente() {
               </form>
               
               <div className="h-[443px] overflow-auto pl-5 mt-3" >
-              {data.map((item) => (
-                <div key={item.id_cliente} >
-                  <Button
-                    onClick={() => {
-                      exibirHistoricoCliente(item.id_cliente);
-                      setMensagemIdCliente(item.id_cliente); // Define o id do cliente
-                    }}
-                    variant="clean"
-                    size="clean"
-                    className="w-full"
-                  >
-                    <CardFiltroCliente
-                      nome={item.nome}
-                      dataInicio={item.dataInicio}
-                      ultimaAtualizacao={item.ultimaAtualizacao}
-                      origem={item.origem}
-                      status={item.status}
-                    />
-                  </Button>
-                </div>
-              ))}
+                {data.map((item) => (
+                  <div key={item.id_cliente} >
+                    <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirHistoricoCliente(item.id_cliente); setMensagemIdCliente(item.id_cliente);}}>
+                      <CardFiltroCliente nome={item.nome} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status}/>
+                    </Button>
+                  </div>
+                ))}
               </div>
-             
             </div>
 
             {/* Histórico */}
