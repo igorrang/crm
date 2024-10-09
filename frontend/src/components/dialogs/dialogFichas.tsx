@@ -12,7 +12,6 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 // Props para receber os dados ao chamar o component
 export interface dialogFichasProps {
   identificador_props: string
-  
 }
  
 export default function DialogFichas({identificador_props}: dialogFichasProps) {
@@ -29,6 +28,26 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
     setIdentificadorCliente(identificador_props || '');
   });
 
+  const cadastrarfichas = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const res = await axios.post("/api/table", {identificadorCliente, data, hora, valorReais, valorFicha, anexo});
+      console.log(res.data);  // Verificar a resposta do backend
+        // Verifique se a requisição foi bem-sucedida
+        if (res.status === 200) {
+          console.log('Cliente cadastrado com sucesso!');
+          // Usar router.push para redirecionar e recarregar a página
+          window.location.reload()
+
+        } else {
+          console.error('Erro ao cadastrar cliente:', res.statusText);
+        }
+    } catch (error) {
+      console.error('Error posting client data:', error);
+    }
+  };
+
 
   return (
     <Dialog>
@@ -40,7 +59,7 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
           <DialogTitle>Fichas</DialogTitle>
           <DialogDescription>Registrar compra de fichas</DialogDescription>
         </DialogHeader>
-        <form  className="grid grid-cols-2 gap-4 py-4" encType="multipart/form-data">
+        <form  onSubmit={cadastrarfichas} className="grid grid-cols-2 gap-4 py-4" encType="multipart/form-data">
             <div>
               {/* Serve pro identificador do cliente */}
               <div className="  gap-4">
@@ -52,13 +71,13 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
               </div>
               <div className=" gap-4">
                 <Label htmlFor="hora" className="text-right"> Hora </Label>
-                <Input id="hora" value={hora}  onChange={(e) => setHora(e.target.value)} required/>
+                <Input id="hora" type="time" value={hora}  onChange={(e) => setHora(e.target.value)} required/>
               </div>
             </div>
             <div>
               <div className=" gap-4">
                 <Label htmlFor="valorReais" className="text-right"> Valor Reais </Label>
-                <Input id="valorReais" value={valorReais}  onChange={(e) => setValorReais(e.target.value)} required
+                <Input id="valorReais" type="number" value={valorReais}  onChange={(e) => setValorReais(e.target.value)} required
                   onKeyDown={(e) => {
                     if(e.key === ",") {
                       e.preventDefault()
@@ -70,7 +89,7 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
                 
               <div className=" gap-4">
                 <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
-                <Input id="valorFichas" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required
+                <Input id="valorFichas" type="number" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required
                   onKeyDown={(e) => {
                     if(e.key === ",") {
                       e.preventDefault()
@@ -84,7 +103,7 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
               <Label htmlFor="anexo" className="text-right"> Anexo </Label>
               <Input id="anexo" type="file" value={anexo}  onChange={(e) => setAnexo(e.target.value)} required />
             </div>
-            <DialogFooter className="mt-24">
+            <DialogFooter className=" col-span-2">
               <Button type="submit">Confirmar</Button>
             </DialogFooter>
         </form>
