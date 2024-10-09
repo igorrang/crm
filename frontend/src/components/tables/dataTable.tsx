@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { addDays, format } from "date-fns"
+
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { cn } from "@/lib/utils"
@@ -15,14 +16,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
-import { Label } from "../ui/label";
 import DialogEditarCliente from "../dialogs/dialogEditarCliente";
+import DialogFichas from "../dialogs/dialogFichas";
 
-
-const data: Payment[] = [
-  
-]
+const data: Payment[] = []
 
 export type Payment = {
   id: string;
@@ -126,16 +123,6 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
-       // variaveis pra receber o valor de cada coluna e imprimir no input
-       const [identificadorCliente, setIdentificadorCliente] = useState('')
-       const [data, setData] = useState('')
-       const [hora, setHora] = useState('')
-       const [valorReais, setValorReais] = useState('')
-       const [valorFicha, setValorFicha] = useState('')
-       const [anexo, setAnexo] = useState('')
-      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -146,112 +133,8 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copiar ID do Pagamento
-            </DropdownMenuItem> */}
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="clean">Fichas</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle>Fichas</DialogTitle>
-                  <DialogDescription>Registrar compra de fichas</DialogDescription>
-                </DialogHeader>
-                <form  className="" encType="multipart/form-data">
-                  <div className="grid grid-cols-2 gap-4 py-4">
-                    <div>
-                      {/* Serve pro identificador do cliente */}
-                      <div className="  gap-4">
-                        <Input
-                          id="identificador"
-                          className="hidden"
-                          value={identificadorCliente} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setIdentificadorCliente(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                      <div className="gap-4">
-                        <Label htmlFor="data" className="text-right"> Data </Label>
-                        <Input
-                          id="data"
-                          type="date"
-                          className=""
-                          value={data} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setData(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                      <div className=" gap-4">
-                        <Label htmlFor="hora" className="text-right"> Hora </Label>
-                        <Input
-                          id="hora"
-                          className=""
-                          value={hora} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setHora(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                      
-                    </div>
-                    <div>
-                      <div className=" gap-4">
-                        <Label htmlFor="valorReais" className="text-right"> Valor Reais </Label>
-                        <Input
-                          id="valorReais"
-                          className=""
-                          onKeyDown={(e) => {
-                            if(e.key === ",") {
-                              e.preventDefault()
-                              window.alert('Utilize o "." para inserir os centavos')
-                            }
-                          }}
-                          value={valorReais} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setValorReais(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                    
-                      <div className=" gap-4">
-                        <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
-                        <Input
-                          id="valorFichas"
-                          className=""
-                          onKeyDown={(e) => {
-                            if(e.key === ",") {
-                              e.preventDefault()
-                              window.alert('Utilize o "." para inserir os centavos')
-                            }
-                          }}
-                          value={valorFicha} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setValorFicha(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                      
-                    </div>
-                    <div className="col-span-2 gap-2">
-                        <Label htmlFor="anexo" className="text-right"> Anexo </Label>
-                        <Input
-                          id="anexo"
-                          type="file"
-                          className=""
-                          value={anexo} // Pega o valor da coluna em especifico e ja atribui a seu proprio valor
-                          onChange={(e) => setAnexo(e.target.value)} // Quando o usuario editar o valor, editar o valor da variavel
-                          required
-                        />
-                      </div>
-                    <DialogFooter className="mt-24">
-                      <Button type="submit">Confirmar</Button>
-                    </DialogFooter>
-                  </div>
-                </form>
-              </DialogContent>
-            </Dialog>
+            <DialogFichas identificador_props={row.getValue("id_cliente")} /> 
             <DropdownMenuSeparator />
-
             <DropdownMenuItem></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -314,7 +197,8 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     setData(res.data)
   }
   
-  const filtros = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
+  // Função para o filtrar por periodos
+  const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
     const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
     setData(res.data)
   }
@@ -363,43 +247,21 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
             <h1>Períodos</h1>
             <div className="mx-3 flex flex-col items-start">
               <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={listarDados}>Máximo</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(), new Date())}>Hoje</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtros(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
+              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
               <Button variant='clean' size='clean' className="text-slate-=700 my-0.5"></Button>
             </div>
           </div>
         </PopoverContent>
       </Popover>
     </div>
-        <Input
-          placeholder="Filtrar por nome..."
-          value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("nome")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[300px] mr-2"
-        />
-        <Input
-          placeholder="Filtrar por origem..."
-          value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("origem")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[300px] mr-2"
-        />
-        <Input
-          placeholder="Filtrar por data de inicio..."
-          value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("dataInicio")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[300px] mr-2"
-        />
-
+        <Input placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } className="max-w-[300px] mr-2" />
+        <Input placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} className="max-w-[300px] mr-2" />
+        <Input placeholder="Filtrar por data de inicio..." className="max-w-[300px] mr-2" value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -483,22 +345,8 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
           {table.getFilteredRowModel().rows.length} linha(s) selected.
         </div>
         <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
+          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Anterior</Button>
+          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Próximo</Button>
         </div>
       </div>
     </div>
