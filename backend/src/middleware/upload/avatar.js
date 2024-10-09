@@ -49,4 +49,6 @@ class UploadAvatar {
         };
       }
 }
-module.exports = new UploadAvatar();
+
+const uploadAvatar = new UploadAvatar();
+module.exports = uploadAvatar;
