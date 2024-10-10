@@ -1,60 +1,68 @@
-FROM node:20-alpine AS base
+FROM node:18-alpine AS base
 
-RUN apk update && apk add openssh
-
+# Install dependencies only when needed
 FROM base AS deps
-
-# Adiciona lib para compatibilidade devido ao 'musl'
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
-COPY keys/my_key /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-RUN npm run build
-
-
-# Imagem de produção com todas as configurações necessárias
-FROM base AS production
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_SHARP_PATH "/app/node_modules/sharp"
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=deps /app/public ./public
+COPY --from=builder /app/public ./public
 
-# Permissões para poder usar corretamente o prerender do Next.js
-RUN mkdir -p /home/next/.ssh
-RUN chown nextjs:nodejs .next
-
-RUN cp /root/.ssh/id_rsa /home/nextjs/.ssh/id_rsa \
-    && chmod 600 /home/nextjs/.ssh/id_rsa \
-    && chown nextjs:nodejs /home/nextjs/.ssh/id_rsa
-
-COPY --from=deps /app/next.config.mjs ./
-
+# Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-COPY --from=deps --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=deps --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-
 EXPOSE 3000
 
-ENV HOSTNAME "konvictus.com"
+ENV PORT=3000
 
-# Standalone output para não precisar usar todas as libs dentro do node_modules
-CMD ["sh", "-c", "ssh -i  /home/nextjs/.ssh/id_rsa root@92.112.179.19 'cd ../home  && node server.js'"]
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]

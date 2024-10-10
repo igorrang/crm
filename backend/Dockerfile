@@ -1,13 +1,12 @@
 # Base Image
-FROM node:20-alpine AS base
+FROM node:18-alpine AS base
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nodejs
+
 
 RUN npm install
 

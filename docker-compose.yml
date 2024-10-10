@@ -1,18 +1,53 @@
+
+
+
 services:
+  postgres:
+    container_name: banco
+    image: igormrangel/post:latest3
+    ports:
+      - "5332:5332"  # Mapeando a porta 5332 no host para a 5432 do container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: botecobrasil
+
   frontend:
-    build: ./frontend
+    build: frontend
+    image: igormrangel/frontend:latest
+  
     container_name: frontend
     ports:
-      - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container        
+      - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container
+    depends_on:
+      - backend
   nginx:
-    image: nginx:latest
+    image: igormrangel/ngnx:latest2
     container_name: nginx
     ports:
-      - "8000:8000"  # Mapeando a porta 80 no host para a 80 do container
+      - "80:80"  # Mapeando a porta 80 no host para a 80 do container
+    volumes:
+      - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
+     # Mapeando a porta 80 no host para a 80 do container
     depends_on:
       - frontend
-
   
+  backend:
+    container_name: backend
+    build:
+      context: backend
+    image: igormrangel/backend:latest4
+    volumes:
+      - ./backend:/src
+    command: npm run dev
+    environment:
+      DATABASE_URL: postgres://postgres:12345678@postgres:5332/botecobrasil  # URL de conexão ao PostgreSQL
+    depends_on:
+      - postgres  # Aguarda o PostgreSQL estar pronto antes de iniciar
+
+networks:
+  dokploy-network:
+    external: true 
 
 volumes:
    postgres-data:
