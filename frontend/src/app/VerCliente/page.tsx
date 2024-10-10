@@ -180,12 +180,29 @@ export default function VerCliente() {
             </div>
             
             {/* Dados detalhados do anexo */}
-            <div className="w-[90%] max-w-[700px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border shadow-md">
-              <div  className="w-full h-[100px] bg-cover bg-center ..." style={{ backgroundImage: "url('/verCliente.png')" }}/>
-              <h1 className="text-sm py-2 border-b-2">Data: 2024-05-45</h1>
-              <h1 className="text-sm py-2 border-b-2">Hora: 12:30</h1>
-              <h1 className="text-sm py-2 border-b-2">Valor Reais: R$ 3000.00</h1>
-              <h1 className="text-sm py-2 border-b-2">Valor Fichas: 6000.00</h1>
+            <div className="flex flex-col justify-between w-[90%] max-w-[600px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border shadow-md">
+              <div>
+                <div  className="w-full h-[120px] bg-cover bg-center ..." style={{ backgroundImage: "url('/Planilha.png')" }}/>
+                <div className="flex justify-between py-2 border-b-2 mt-5">
+                  <h1 className="text-sm">Data:</h1>
+                  <h1 className="text-sm">2024-05-45</h1>
+                </div>
+                <div className="flex justify-between py-2 border-b-2">
+                  <h1 className="text-sm">Hora:</h1>
+                  <h1 className="text-sm">12:30</h1>
+                </div>
+                <div className="flex justify-between py-2 border-b-2">
+                  <h1 className="text-sm">Valor Reais:</h1>
+                  <h1 className="text-sm">R$ 3000.00</h1>
+                </div>
+                <div className="flex justify-between py-2 border-b-2">
+                  <h1 className="text-sm">Valor Fichas:</h1>
+                  <h1 className="text-sm">6000.00</h1>
+                </div>
+              </div>
+              <div className="w-full flex justify-end">
+                <Button>Editar</Button>
+              </div>
             </div>
           </div>
         </div>

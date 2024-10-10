@@ -108,14 +108,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
           <div>
             <div className=" gap-4">
               <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
-              <Input id="valorFichas" className="" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required
-                onKeyDown={(e) => {
-                  if(e.key === ",") {
-                    e.preventDefault()
-                    window.alert('Utilize o "." para inserir os centavos')
-                  }
-                }}
-              />
+              <Input id="valorFichas" className="" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required/>
             </div>
           <div className="flex flex-col py-1 gap-2">
               <Label className="text-start"> Status </Label>
