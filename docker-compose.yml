@@ -22,7 +22,7 @@ services:
     depends_on:
       - backend
   nginx:
-    image: ngnx:latest2
+    image: igormrangel/ngnx:latest2
     container_name: nginx
     ports:
       - "80:80"  # Mapeando a porta 80 no host para a 80 do container
