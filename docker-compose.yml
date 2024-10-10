@@ -4,9 +4,9 @@
 services:
   postgres:
     container_name: banco
-  
+    image: igormrangel/postgres:latest3
     ports:
-      - "5332:5332"  # Mapeando a porta 5332 no host para a 5432 do container
+      - "5332:5432"  # Mapeando a porta 5332 no host para a 5432 do container
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345678
