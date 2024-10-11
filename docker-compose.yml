@@ -2,6 +2,21 @@
 
 
 services:
+  next-app:
+    build: 
+      context: ./next-app
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - 3000
+    networks:
+      - dokploy-network
+    labels:
+      - traefik. enable=true
+      - traefik.http. routers.next-app.rule=Host(*next-app.dokploy.com*)
+      - traefik.http.routers.next-app.entrypoints=websecure
+      - traefik.http.routers.next-app.tls.certResolver=letsencrypt
+      - trafik.http.services.next-app. loadbalancer.server.port=3000
   postgres:
     container_name: banco
     image: igormrangel/postgres:latest3
