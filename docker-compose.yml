@@ -50,6 +50,16 @@ services:
       DATABASE_URL: postgres://postgres:12345678@postgres:5332/botecobrasil  # URL de conexão ao PostgreSQL
     depends_on:
       - postgres  # Aguarda o PostgreSQL estar pronto antes de iniciar
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
 
 networks:
   dokploy-network:
