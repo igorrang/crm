@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import CardFiltroAnexo from "@/components/cards/cardFiltroAnexo";
+import DialogEditarFichas from "@/components/dialogs/dialogEditarFichas";
 
 interface Item {
   id_cliente: number;
@@ -92,7 +93,7 @@ export default function VerCliente() {
       <div className="flex">
         <Navbar />
 
-        <div className="w-full text-black">
+        <div className="w-full min-h-[94vh] text-black">
           <div className="hidden lg:flex w-full py-4 px-10">
             <Breadcrumb>
               <BreadcrumbList>
@@ -173,16 +174,21 @@ export default function VerCliente() {
 
           <div className="flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
             {/* Onde mostrará os anexos de cada cliente */}
-            <div className="w-[90%] max-w-[650px] lg:max-w-[600px] h-[522px] lg:ml-20  py-5  relative border shadow-md rounded-2xl lg:rounded-r-none overflow-auto pl-5" >
+            <div className="w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] lg:ml-20  py-5  relative border shadow-md rounded-2xl lg:rounded-r-none overflow-auto pl-5" >
               <Button variant="clean" size="clean" className="w-full" onClick={() => {}}>
                 <CardFiltroAnexo data="" hora="" valorFichas="" valorReais="" anexo=""/>
               </Button>
             </div>
             
             {/* Dados detalhados do anexo */}
-            <div className="flex flex-col justify-between w-[90%] max-w-[600px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border shadow-md">
+            <div className=" flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border shadow-md">
               <div>
-                <div  className="w-full h-[120px] bg-cover bg-center ..." style={{ backgroundImage: "url('/Planilha.png')" }}/>
+                {/* Imagem do anexo */}
+                <div className="relative w-full h-[120px] bg-cover bg-center hover:brightness-90" style={{ backgroundImage: "url('/Planilha.png')" }}>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-400 bg-transparent">
+                    <p className="text-white text-lg">Clique para abrir</p>
+                  </div>
+                </div>
                 <div className="flex justify-between py-2 border-b-2 mt-5">
                   <h1 className="text-sm">Data:</h1>
                   <h1 className="text-sm">2024-05-45</h1>
@@ -201,7 +207,7 @@ export default function VerCliente() {
                 </div>
               </div>
               <div className="w-full flex justify-end">
-                <Button>Editar</Button>
+                <DialogEditarFichas identificador_props="" data_props="" hora_props="" valorReais_props="" valorFicha_props="" anexo_props=""></DialogEditarFichas>
               </div>
             </div>
           </div>

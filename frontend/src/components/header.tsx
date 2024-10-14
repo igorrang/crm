@@ -10,7 +10,7 @@ const Header = ({  }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="w-full py-5 z-50 flex justify-between  items-center bg-primary relative  text-white animate-items-appear">
+    <div className="w-full py-3 z-50 flex justify-between items-center bg-gradient-to-l from-black/90 via-black/85 to-black/80 relative  text-white animate-items-appear">
       <Link href="/Principal" className="ml-[10%] ">
         <Image
           src="/KonvictusLogoEscrita.png"

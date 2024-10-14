@@ -1,3 +1,4 @@
+import CardDashBoard from "@/components/cards/cardDashBoard";
 import Header from "@/components/header";
 import Navbar from "@/components/narbar";
 import Image from "next/image";
@@ -10,20 +11,17 @@ export default function Index() {
   return (
     <main>
       <Header></Header>
-      <div className="flex">
+      <div className="flex ">
         <Navbar></Navbar>
 
-        <div className="w-full h-[90.3vh] flex flex-col justify-center items-center text-primary">
-          <div className="flex flex-col md:flex-row">
-            <Link href="/VerCliente" className="">
-              <img src="/verCliente.png" alt="" className="w-[222px] mx-10 my-5"/>
-            </Link>
-            <Link href="/Planilha" className="">
-              <img src="/Planilha.png" alt="" className="w-[240px] mx-10 my-5"/>
-            </Link>
-            <Link href="/Conta" className="">
-              <img src="/contaUsuario.png" alt="" className="w-[230px] mx-10 my-5"/>
-            </Link>
+        <div className="w-full min-h-[94vh] px-5 flex flex-col items-center lg:items-start">
+          <h1 className="text-3xl text-gray-700 font-semibold leading-none tracking-tight">Controle de leads</h1>
+          <div className="w-full flex flex-wrap items-center justify-center lg:justify-start">
+            <CardDashBoard titulo="Total de leads" valor="200"></CardDashBoard>
+            <CardDashBoard titulo="Nunca respondeu" valor="50"></CardDashBoard>
+            <CardDashBoard titulo="Primeiro contato" valor="150"></CardDashBoard>
+            <CardDashBoard titulo="Cadastrou-se" valor="100"></CardDashBoard>
+            <CardDashBoard titulo="Carregou fichas" valor="80"></CardDashBoard>
           </div>
         </div>
       </div>
