@@ -18,7 +18,7 @@ export default function Conta() {
     <div className="flex">
       <Navbar></Navbar>
 
-      <div className="w-full min-h-[94vh] text-black ">
+      <div className="w-full min-h-[94vh] text-black bg-gradient-to-l from-black via-black/90 to-black/85 ">
           <div className="hidden lg:flex w-full py-4 px-10">
             <Breadcrumb>
               <BreadcrumbList>

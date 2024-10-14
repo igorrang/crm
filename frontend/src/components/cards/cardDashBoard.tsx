@@ -8,19 +8,23 @@ import { Input } from "../ui/input";
 export interface cardDashBoardProps {
   titulo: string
   valor: string
+  urlIcone: string
 }
 
-export default function CardDashBoard({titulo, valor}: cardDashBoardProps) {
+export default function CardDashBoard({titulo, valor, urlIcone}: cardDashBoardProps) {
   return (
-    <Card className="w-[300px] m-3 flex py-5">
-      <CardHeader className="w-[30%] flex items-center justify-center p-0 ">
-        <img src="/geracao-de-leads.png" alt="" className="w-[60px] rounded-2xl"/>
-      </CardHeader>
-      <CardContent className="w-[70%] flex flex-col justify-center p-0">
-        <CardDescription className="text-md">{titulo}</CardDescription>
-        <CardTitle className="text-3xl text-gray-700">{valor}</CardTitle>
-      </CardContent>
-    </Card>
+    <div className="relative  p-[2px] m-3 rounded-lg bg-gradient-to-tr from-green-400 from-1% via-transparent to-green-400 to-100%">
+      <Card className=" flex py-5 bg-secondary border-none bg-gradient-to-bl from-green-400/15 from-0% via-transparent to-transparent to-100%">
+        <CardHeader className="w-[30%] flex items-center justify-center p-0 ">
+          <img src={urlIcone} alt="" className="w-[50px] "/>
+        </CardHeader>
+        <CardContent className="w-[70%] flex flex-col justify-center p-0">
+          <CardDescription className="text-[14px] text-white">{titulo}</CardDescription>
+          <CardTitle className="text-[25px] font-normal text-white">{valor}</CardTitle>
+        </CardContent>
+      </Card>
+    </div>
+    
     
   );
 }
