@@ -2,20 +2,21 @@
 services:
   frontend:
     build:
+      images: igormrangel/frontend:latest
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
-    expose:
-      - 3001
+    ports:
+      - 4000:4000
     
     networks:
       - dokploy-network
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend-app.rule=Host(`frontend.dokploy.com`)
+      - traefik.http.routers.frontend-app.rule=Host(`frontend.konvictus.com`)
       - traefik.http.routers.frontend-app.entrypoints=web
-      - traefik.http.services.frontend-app.loadbalancer.server.port=3000
+      - traefik.http.services.frontend-app.loadbalancer.server.port=4000
 
 networks:
   dokploy-network:
