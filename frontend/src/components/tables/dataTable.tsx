@@ -59,26 +59,26 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "dataInicio",
     header: "Data de Inicio",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("dataInicio")}</div>
+      <div className="capitalize text-white">{row.getValue("dataInicio")}</div>
     ),
   },
   {
     accessorKey: "nome",
     header: "Nome",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("nome")}</div>,
+    cell: ({ row }) => <div className="capitalize text-white">{row.getValue("nome")}</div>,
   },
   {
     accessorKey: "origem",
     header: "Origem",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("origem")}</div>
+      <div className="capitalize text-white">{row.getValue("origem")}</div>
     ),
   },
   {
     accessorKey: "observacao",
     header: "Observação",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("observacao")}</div>
+      <div className="capitalize text-white">{row.getValue("observacao")}</div>
     ),
   },
   {
@@ -91,21 +91,21 @@ export const columns: ColumnDef<Payment>[] = [
         currency: "BRL",
       }).format(valorFicha)
  
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="text-right font-medium text-white">{formatted}</div>
     },
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize text-white">{row.getValue("status")}</div>
     ),
   },
   {
     accessorKey: "ultimaAtualizacao",
     header: "Ultima Atualização",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("ultimaAtualizacao")}</div>
+      <div className="capitalize text-white">{row.getValue("ultimaAtualizacao")}</div>
     ),
   },
   {
@@ -128,7 +128,7 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Abrir menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
+              <DotsHorizontalIcon className="h-4 w-4 text-white" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -204,7 +204,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   }
   
   return (
-    <div className="w-full">      
+    <div className="w-full ">      
 
       <div className="flex items-center py-4">
       <div className={cn("grid gap-2", className)}>
@@ -276,7 +276,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className="capitalize text-white"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -290,7 +290,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
         </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className="bg-primary rounded-md">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -330,7 +330,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-white"
                 >
                   Nenhum cliente encontrado
                 </TableCell>

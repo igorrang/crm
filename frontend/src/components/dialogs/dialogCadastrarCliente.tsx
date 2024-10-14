@@ -55,7 +55,7 @@ export default function DialogCadastrarCliente() {
         <form onSubmit={cadastrandoCliente} className="grid grid-cols-2 gap-4 py-4">
           <div>
             <div className=" items-center gap-4">
-              <Label htmlFor="dataInicio" className="text-right">
+              <Label htmlFor="dataInicio" className="text-right text-white">
                 Data de Inicio
               </Label>
               <Input
@@ -68,7 +68,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="nome" className="text-right">
+              <Label htmlFor="nome" className="text-right text-white">
                 Nome
               </Label>
               <Input
@@ -80,7 +80,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="flex flex-col py-1 gap-2">
-              <Label  className="text-start"> Origem </Label>
+              <Label  className="text-start text-white"> Origem </Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="justify-start" >
                   <Button variant="outline" className="">{origem}</Button>
@@ -97,7 +97,7 @@ export default function DialogCadastrarCliente() {
               </DropdownMenu>
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="anuncio" className="text-right">
+              <Label htmlFor="anuncio" className="text-right text-white">
                 Observacao
               </Label>
               <Input
@@ -111,7 +111,7 @@ export default function DialogCadastrarCliente() {
           </div>
           <div>
             <div className="items-center gap-4">
-              <Label htmlFor="observacoes" className="text-right">
+              <Label htmlFor="observacoes" className="text-right text-white">
                 Valor das Fichas
               </Label>
               <Input
@@ -129,7 +129,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="flex flex-col py-1 gap-2">
-              <Label  className="text-start"> Status </Label>
+              <Label  className="text-start text-white"> Status </Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="justify-start" >
                   <Button variant="outline" className="">{status}</Button>
@@ -147,7 +147,7 @@ export default function DialogCadastrarCliente() {
               </DropdownMenu>
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="ultimaAtualizacao" className="text-right">
+              <Label htmlFor="ultimaAtualizacao" className="text-right text-white">
                 Ultima Atualizacao
               </Label>
               <Input

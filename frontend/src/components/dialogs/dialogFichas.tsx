@@ -66,17 +66,17 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
                 <Input id="identificador" className="hidden" value={identificadorCliente}  onChange={(e) => setIdentificadorCliente(e.target.value)} required/>
               </div>
               <div className="gap-4">
-                <Label htmlFor="data" className="text-right"> Data </Label>
+                <Label htmlFor="data" className="text-right text-white"> Data </Label>
                 <Input id="data" type="date" value={data}  onChange={(e) => setData(e.target.value)} required/>
               </div>
               <div className=" gap-4">
-                <Label htmlFor="hora" className="text-right"> Hora </Label>
+                <Label htmlFor="hora" className="text-right text-white"> Hora </Label>
                 <Input id="hora" type="time" value={hora}  onChange={(e) => setHora(e.target.value)} required/>
               </div>
             </div>
             <div>
               <div className=" gap-4">
-                <Label htmlFor="valorReais" className="text-right"> Valor Reais </Label>
+                <Label htmlFor="valorReais" className="text-right text-white"> Valor Reais </Label>
                 <Input id="valorReais" type="number" value={valorReais}  onChange={(e) => setValorReais(e.target.value)} required
                   onKeyDown={(e) => {
                     if(e.key === ",") {
@@ -88,7 +88,7 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
               </div>
                 
               <div className=" gap-4">
-                <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
+                <Label htmlFor="valorFichas" className="text-right text-white"> Valor Fichas </Label>
                 <Input id="valorFichas" type="number" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required
                   onKeyDown={(e) => {
                     if(e.key === ",") {
@@ -100,8 +100,8 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
               </div>
             </div>
             <div className="col-span-2 gap-2">
-              <Label htmlFor="anexo" className="text-right"> Anexo </Label>
-              <Input id="anexo" type="file" value={anexo}  onChange={(e) => setAnexo(e.target.value)} required />
+              <Label htmlFor="anexo" className="text-right text-white"> Anexo </Label>
+              <Input className="text-white" id="anexo" type="file" value={anexo}  onChange={(e) => setAnexo(e.target.value)} required />
             </div>
             <DialogFooter className=" col-span-2">
               <Button type="submit">Confirmar</Button>

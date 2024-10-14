@@ -161,7 +161,7 @@ export default function VerCliente() {
                       }}
                       required
                       placeholder="Digite algum comentário"
-                      className="min-h-[40px] w-[90%] mr-1 py-2 px-3 text-sm border shadow-md overflow-auto"
+                      className="min-h-[40px] w-[90%] mr-1 py-2 px-3 text-sm border shadow-md overflow-auto bg-primary placeholder:text-gray-300 text-white"
                     />
                     <Button type="submit"><IoSend /></Button>
                   </form>
@@ -189,19 +189,19 @@ export default function VerCliente() {
                     <p className="text-white text-lg">Clique para abrir</p>
                   </div>
                 </div>
-                <div className="flex justify-between py-2 border-b-2 mt-5">
+                <div className="flex justify-between py-2 border-b-2 text-white mt-5 ">
                   <h1 className="text-sm">Data:</h1>
                   <h1 className="text-sm">2024-05-45</h1>
                 </div>
-                <div className="flex justify-between py-2 border-b-2">
+                <div className="flex justify-between py-2 border-b-2 text-white">
                   <h1 className="text-sm">Hora:</h1>
                   <h1 className="text-sm">12:30</h1>
                 </div>
-                <div className="flex justify-between py-2 border-b-2">
+                <div className="flex justify-between py-2 border-b-2 text-white">
                   <h1 className="text-sm">Valor Reais:</h1>
                   <h1 className="text-sm">R$ 3000.00</h1>
                 </div>
-                <div className="flex justify-between py-2 border-b-2">
+                <div className="flex justify-between py-2 border-b-2 text-white">
                   <h1 className="text-sm">Valor Fichas:</h1>
                   <h1 className="text-sm">6000.00</h1>
                 </div>

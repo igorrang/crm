@@ -8,7 +8,7 @@ export interface MensagemHistoricoProps {
 export default function MensagemHistorico({ texto }: MensagemHistoricoProps) {
   return (
     <p
-      className={`${poppins.className} whitespace-normal  leading-5 text-black text-[14px] font-black`}
+      className={`${poppins.className} whitespace-normal  leading-5 text-white text-[14px] font-black`}
     >
       {texto}
     </p>

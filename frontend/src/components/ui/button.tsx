@@ -10,9 +10,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-white text-lg px-8 py-2  rounded-full cursor-pointer hover:bg-primary/80",
-        clean: "",
+        clean: "text-white",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-primary placeholder:text-gray-300 text-white hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-gray-200 text-lg",

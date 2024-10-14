@@ -8,7 +8,7 @@ export interface DataHistoricoProps {
 export default function DataHistorico({ texto }: DataHistoricoProps) {
   return (
     <p
-      className={`${poppins.className} leading-5  text-black text-[13px] `}
+      className={`${poppins.className} leading-5  text-white text-[13px] `}
     >
       {texto}
     </p>

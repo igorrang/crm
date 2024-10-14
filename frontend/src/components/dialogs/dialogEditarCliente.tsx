@@ -76,15 +76,15 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
               <Input id="identificador" className="hidden" value={identificador} onChange={(e) => setIdentificador(e.target.value)}/>
             </div>
             <div className="  gap-4">
-              <Label htmlFor="dataInicio" className="text-right"> Data de Inicio </Label>
+              <Label htmlFor="dataInicio" className="text-right text-white"> Data de Inicio </Label>
               <Input id="dataInicio" type="date" className="" value={dataInicio}  onChange={(e) => setDataInicio(e.target.value)} required/>
             </div>
             <div className=" gap-4">
-              <Label htmlFor="nome" className="text-right"> Nome </Label>
+              <Label htmlFor="nome" className="text-right text-white"> Nome </Label>
               <Input id="nome" className="" value={nome}  onChange={(e) => setNome(e.target.value)} required/>
             </div>
             <div className="flex flex-col py-1 gap-2">
-              <Label className="text-start"> Origem </Label>
+              <Label className="text-start text-white"> Origem </Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="justify-start" >
                   <Button variant="outline" className="">{origem}</Button>
@@ -101,17 +101,17 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
               </DropdownMenu>
             </div>
             <div className=" gap-4">
-              <Label htmlFor="observacoes" className="text-right"> Observacoes </Label>
+              <Label htmlFor="observacoes" className="text-right text-white"> Observacoes </Label>
               <Input id="observacoes" className="" value={observacao}  onChange={(e) => setObservacao(e.target.value)} required/>
             </div>
           </div>
           <div>
             <div className=" gap-4">
-              <Label htmlFor="valorFichas" className="text-right"> Valor Fichas </Label>
+              <Label htmlFor="valorFichas" className="text-right text-white"> Valor Fichas </Label>
               <Input id="valorFichas" className="" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required/>
             </div>
           <div className="flex flex-col py-1 gap-2">
-              <Label className="text-start"> Status </Label>
+              <Label className="text-start text-white"> Status </Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild className="justify-start" >
                   <Button variant="outline" className="">{status}</Button>
@@ -129,7 +129,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
               </DropdownMenu>
             </div>
             <div className=" gap-4">
-              <Label htmlFor="ultimaAtualizacao" className="text-right"> Ultima Atualizacao </Label>
+              <Label htmlFor="ultimaAtualizacao" className="text-right text-white"> Ultima Atualizacao </Label>
               <Input id="ultimaAtualizacao" type="date" className="" value={ultimaAtualizacao}  onChange={(e) => setUltimaAtualizacao(e.target.value)} required/>
             </div>
             <DialogFooter className="mt-24">

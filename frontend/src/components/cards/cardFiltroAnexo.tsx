@@ -10,7 +10,7 @@ export interface cardFiltroClienteProps {
 
 export default function CardFiltroAnexo({ data, hora, valorReais, valorFichas, anexo }: cardFiltroClienteProps) {
   return (
-    <div className="w-full  mx-2 px-2 py-6 border-b-2 border-gray-300 text-gray-700 hover:bg-primary/80 hover:text-white">
+    <div className="w-full  mx-2 px-2 py-6 border-b-2 border-gray-300 text-white hover:bg-primary/80 hover:text-white">
       <div className=" flex items-center  ">
         <h1 className="text-[16px] font-black text-start whitespace-normal">anexoooooooo</h1>
       </div>

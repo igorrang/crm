@@ -8,7 +8,7 @@ export interface NomeHistoricoProps {
 export default function NomeHistorico({ texto }: NomeHistoricoProps) {
   return (
     <p
-      className={`${poppins.className} leading-5 text-black text-[16px]`}
+      className={`${poppins.className} leading-5 text-white text-[16px]`}
     >
       {texto}
     </p>
