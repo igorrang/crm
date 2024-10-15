@@ -267,7 +267,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-white/70">
         <Table className="bg-secondary rounded-md">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -308,7 +308,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-white"
+                  className="h-24 text-center text-white "
                 >
                   Nenhum cliente encontrado
                 </TableCell>

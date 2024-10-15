@@ -115,7 +115,7 @@ export default function VerCliente() {
           {/* Container principal */}
           <div className=" flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
             {/* Card com os dados do cliente */}
-            <div className="bg-secondary w-[90%] max-w-[650px] lg:max-w-[500px]   lg:ml-20 lg:mr-5 py-5  relative border shadow-md rounded-2xl lg:rounded-r-none">
+            <div className="bg-secondary w-[90%] max-w-[650px] lg:max-w-[500px]   lg:ml-20 lg:mr-5 py-5  relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
               <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
                 <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
@@ -134,8 +134,8 @@ export default function VerCliente() {
 
             {/* Histórico */}
             <div className="w-[90%] max-w-[1000px] flex flex-col items-center mt-5 lg:mt-0">
-              <div className="bg-secondary w-full lg:mr-10 p-5 pt-0 rounded-2xl lg:rounded-l-none border shadow-md">
-                <div ref={containerRef} className="h-[500px] overflow-auto">
+              <div className="bg-secondary w-full lg:mr-10 p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+                <div ref={containerRef} className="h-[501px] overflow-auto">
                   {dataHistorico.map((item) => (
                     <div key={item.id_historico}>
                       <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario} />
@@ -168,14 +168,14 @@ export default function VerCliente() {
 
           <div className="flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
             {/* Onde mostrará os anexos de cada cliente */}
-            <div className="bg-secondary w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] lg:ml-20  py-5  relative border shadow-md rounded-2xl lg:rounded-r-none overflow-auto px-5" >
+            <div className="bg-secondary w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] lg:ml-20  py-5  relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto px-5" >
               <Button variant="clean" size="clean" className="w-full" onClick={() => {}}>
                 <CardFiltroAnexo data="" hora="" valorFichas="" valorReais="" anexo=""/>
               </Button>
             </div>
             
             {/* Dados detalhados do anexo */}
-            <div className="bg-secondary flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border shadow-md">
+            <div className="bg-secondary flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
               <div>
                 {/* Imagem do anexo */}
                 <div className="relative w-full h-[120px] bg-cover bg-center hover:brightness-90" style={{ backgroundImage: "url('/Planilha.png')" }}>

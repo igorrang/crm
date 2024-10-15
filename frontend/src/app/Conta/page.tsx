@@ -41,7 +41,7 @@ export default function Conta() {
           <div className="w-full flex justify-center py-10">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {/* Card 01 */}
-              <div className="px-5 w-[280px] h-[600px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
+              <div className="px-5 w-[280px] h-[600px] border border-white/70 shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div foto usuario e o nome */}
                 <div className="h-[100px] my-5 flex flex-col items-center">
                   <img src="/KonvictusLogoWhite.png" alt="" width={70} className="my-5"/>
@@ -62,7 +62,7 @@ export default function Conta() {
                 </div>
               </div>
               {/* Card 02 */}
-              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
+              <div className="px-5 w-[280px] h-[300px] border border-white/70 shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div com o titulo do card e o icone do card */}
                 <div className="h-[100px] my-5 flex flex-col items-center">
                   <TituloCardConta texto="Editar Perfil" />
@@ -76,7 +76,7 @@ export default function Conta() {
               </div>
 
               {/* Card 03 */}
-              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
+              <div className="px-5 w-[280px] h-[300px] border border-white/70 shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div com o titulo do card e o icone do card */}
                 <div className=" h-[100px] my-5 flex flex-col items-center">
                   <TituloCardConta texto="Senha" />
