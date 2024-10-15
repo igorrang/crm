@@ -56,4 +56,5 @@ USER nextjs
 EXPOSE 80
 
 # Usar o Nginx como servidor
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["node", "server.js"]
