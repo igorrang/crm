@@ -8,7 +8,7 @@ export interface dadosContaProps {
 export default function DadosConta({ texto }: dadosContaProps) {
   return (
     <p
-      className={`${poppins.className} leading-5 ml-1 text-gray-500 text-[14px]`}
+      className={`${poppins.className} leading-5 ml-1 text-white/85 text-[14px]`}
     >
       {texto}
     </p>

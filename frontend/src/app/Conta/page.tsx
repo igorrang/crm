@@ -41,14 +41,14 @@ export default function Conta() {
           <div className="w-full flex justify-center py-10">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {/* Card 01 */}
-              <div className="px-5 w-[280px] h-[600px] border shadow shadow-2xl flex flex-col items-center">
+              <div className="px-5 w-[280px] h-[600px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div foto usuario e o nome */}
                 <div className="h-[100px] my-5 flex flex-col items-center">
                   <img src="/KonvictusLogoWhite.png" alt="" width={70} className="my-5"/>
                   <TituloCardConta texto="Marcos Miguel" />
                 </div>
                 {/* Div com os dados do perfil */}
-                <div className="my-5">
+                <div className="my-10">
                   {/* Email */}
                   <div className="flex items-center my-1 ">
                     <AiOutlineMail className="text-gray-500 text-[17px] mr-1"/> 
@@ -62,11 +62,11 @@ export default function Conta() {
                 </div>
               </div>
               {/* Card 02 */}
-              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center">
+              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div com o titulo do card e o icone do card */}
                 <div className="h-[100px] my-5 flex flex-col items-center">
                   <TituloCardConta texto="Editar Perfil" />
-                  <LiaUserEditSolid className="text-[90px] my-3"/> 
+                  <LiaUserEditSolid className="text-[90px] my-3 text-white/85"/> 
                 </div>
                 {/* Paragrafo com texto auxiliar do card */}
                 <ParagrafoConta texto="Mantenha as informações do seu perfil sempre atualizadas." />
@@ -76,11 +76,11 @@ export default function Conta() {
               </div>
 
               {/* Card 03 */}
-              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center">
+              <div className="px-5 w-[280px] h-[300px] border shadow shadow-2xl flex flex-col items-center bg-secondary">
                 {/* Div com o titulo do card e o icone do card */}
                 <div className=" h-[100px] my-5 flex flex-col items-center">
                   <TituloCardConta texto="Senha" />
-                  <GoKey className="text-[50px] my-3"/> 
+                  <GoKey className="text-[50px] my-3 text-white/85"/> 
                 </div>
                 {/* Paragrafo com texto auxiliar do card */}
                 <ParagrafoConta texto="Tornar sua senha mais forte ou alterá-la caso outra pessoa a conheça." />

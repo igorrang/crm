@@ -8,7 +8,7 @@ export interface paragrafoContaProps {
 export default function ParagrafoConta({ texto }: paragrafoContaProps) {
   return (
     <p
-      className={`${poppins.className} text-center leading-5 ml-1 text-gray-500 text-[14px]`}
+      className={`${poppins.className} text-center leading-5 ml-1 text-white/75 text-[14px]`}
     >
       {texto}
     </p>

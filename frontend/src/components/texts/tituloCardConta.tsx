@@ -8,7 +8,7 @@ export interface tituloCardContaProps {
 export default function TituloCardConta({ texto }: tituloCardContaProps) {
   return (
     <p
-      className={`${poppins.className} leading-5 ml-1 text-black text-[20px]`}
+      className={`${poppins.className} leading-5 ml-1 text-white text-[20px]`}
     >
       {texto}
     </p>

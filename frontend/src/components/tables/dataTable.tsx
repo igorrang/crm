@@ -290,7 +290,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
         </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <Table className="bg-primary rounded-md">
+        <Table className="bg-secondary rounded-md">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
