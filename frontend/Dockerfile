@@ -56,7 +56,7 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN chmod +x .next/standalone/server.js
+
 USER nextjs
 
 
@@ -64,10 +64,9 @@ USER nextjs
 EXPOSE 3001
 
 
-
+ENV PORT=3001
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
-ENV PORT=3001
 CMD ["node", "server.js"]
