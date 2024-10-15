@@ -33,28 +33,7 @@ export type Payment = {
 };
 
 export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  
   {
     accessorKey: "dataInicio",
     header: "Data de Inicio",
@@ -206,65 +185,64 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className="w-full ">      
 
-      <div className="flex items-center py-4">
-      <div className={cn("grid gap-2", className)}>
-      
-      {/* Popover para filtrar os dados de uma data ate outra data */}
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={"outline"}
-            className={cn(
-              "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 flex" align="start">
-          <div>
-            <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
-            <div className="flex justify-end mx-4 my-2">
-              <Button onClick={filtroDataFromTo}>Filtrar</Button>
-            </div>
-          </div>
-          {/* Filtro por períodos já pré estabelecidos */}
-          <div className=" mx-4 my-3">
-            <h1>Períodos</h1>
-            <div className="mx-3 flex flex-col items-start">
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={listarDados}>Máximo</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
-              <Button variant='clean' size='clean' className="text-slate-=700 my-0.5"></Button>
-            </div>
-          </div>
-        </PopoverContent>
-      </Popover>
-    </div>
-        <Input placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } className="max-w-[300px] mr-2" />
-        <Input placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} className="max-w-[300px] mr-2" />
-        <Input placeholder="Filtrar por data de inicio..." className="max-w-[300px] mr-2" value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
+      <div className="flex items-center flex-wrap py-4">
+        <div className={cn("grid gap-2", className)}>
+          {/* Popover para filtrar os dados de uma data ate outra data */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                variant={"outline"}
+                className={cn(
+                  "w-[300px] justify-start text-left font-normal m-1 ml-0",
+                  !date && "text-white/60"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date?.from ? (
+                  date.to ? (
+                    <>
+                      {format(date.from, "LLL dd, y")} -{" "}
+                      {format(date.to, "LLL dd, y")}
+                    </>
+                  ) : (
+                    format(date.from, "LLL dd, y")
+                  )
+                ) : (
+                  <span>Escolha uma data</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 flex" align="start">
+              <div>
+                <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
+                <div className="flex justify-end mx-4 my-2">
+                  <Button onClick={filtroDataFromTo}>Filtrar</Button>
+                </div>
+              </div>
+              {/* Filtro por períodos já pré estabelecidos */}
+              <div className=" mx-4 my-3">
+                <h1 className="text-white/80">Períodos</h1>
+                <div className="mx-3 flex flex-col items-start">
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={listarDados}>Máximo</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5"></Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } />
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="">
               Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>

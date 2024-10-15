@@ -13,7 +13,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 
 export default function Navbar() {
   return (
-    <div className="w-[80px] hidden lg:flex flex-col  items-center  bg-gradient-to-t from-black/90 via-black/85 to-black/80 shadow-xl">
+    <div className="min-w-[80px] hidden xl:flex flex-col  items-center  bg-gradient-to-t from-black/90 via-black/85 to-black/80 shadow-xl">
       <div className="fixed top-1/2 transform -translate-y-1/2">
         <div className="my-10 flex flex-col items-center justify-center text-white">
           <Link href="/Principal" className="flex flex-col items-center">
@@ -35,8 +35,7 @@ export default function Navbar() {
         </div>
         <div className="my-10 flex flex-col items-center justify-center text-white">
           <Link href="/Conta" className="flex flex-col items-center">
-            
-          <VscAccount className="text-[25px]"/>
+            <VscAccount className="text-[25px]"/>
             <h1 className="text-[12px] text-center">conta</h1>
           </Link>
         </div>
