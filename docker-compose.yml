@@ -1,48 +1,10 @@
-
-
-
+version: '3'
 services:
-  next-app:
-    build: 
-      context: ./next-app
-      dockerfile: Dockerfile
-    restart: always
-    ports: 
-      - 3000
-    networks:
-      - dokploy-network
-    labels:
-      - traefik. enable=true
-      - traefik.http. routers.next-app.rule=Host(*next-app.dokploy.com*)
-      - traefik.http.routers.next-app.entrypoints=websecure
-      - traefik.http.routers.next-app.tls.certResolver=letsencrypt
-      - trafik.http.services.next-app. loadbalancer.server.port=3000
-  postgres:
-    container_name: banco
-    image: igormrangel/postgres:latest3
-    ports:
-      - "5332:5432"  # Mapeando a porta 5332 no host para a 5432 do container
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345678
-      POSTGRES_DB: botecobrasil
-
-  frontend:
-    build: frontend
-    image: igormrangel/frontend:latest
-  
-    container_name: frontend
-    ports:
-      - "3000:3000"  # Mapeando a porta 3000 no host para a 3000 do container
-    depends_on:
-      - backend
-
-  
   backend:
     container_name: backend
     build:
       context: backend
-    image: backend:latest4
+    image: crm-backend-4bb33d:latest
     volumes:
       - ./backend:/src
     command: npm run dev
@@ -50,16 +12,30 @@ services:
       DATABASE_URL: postgres://postgres:12345678@postgres:5332/botecobrasil  # URL de conexão ao PostgreSQL
     depends_on:
       - postgres  # Aguarda o PostgreSQL estar pronto antes de iniciar
-  
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - "80:80"
+    networks:
+      - dokploy-network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+    image: crm-frontend-50eeca:latest
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend:/src
+    command: npm start
+    ports:
+      - 3000:3000
     depends_on:
-      - frontend
+      - backend  # Aguarda o backend estar pronto antes de iniciar
+    networks:
+      - dokploy-network
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dokploy-network
 
 networks:
   dokploy-network:
