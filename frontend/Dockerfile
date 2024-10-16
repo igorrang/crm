@@ -53,6 +53,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 # Exponha a porta 80
+EXPOSE 3001
 
 # Usar o Nginx como servidor
 
