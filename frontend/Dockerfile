@@ -53,7 +53,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 USER nextjs
 
 # Exponha a porta 80
-EXPOSE 80
 
 # Usar o Nginx como servidor
 
