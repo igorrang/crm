@@ -1,5 +1,4 @@
 
-
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
@@ -45,7 +44,7 @@ RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./.next/standalone
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 
