@@ -7,7 +7,7 @@ services:
     image: crm-backend-4bb33d:latest
     volumes:
       - ./backend:/src
-    command: npm run dev
+    
     environment:
       DATABASE_URL: postgres://postgres:12345678@postgres:5332/botecobrasil  # URL de conexão ao PostgreSQL
     depends_on:
@@ -22,7 +22,7 @@ services:
     image: crm-frontend-50eeca:latest
     volumes:
       - ./frontend:/src
-    command: npm start
+    
     ports:
       - 3000:3000
     depends_on:
