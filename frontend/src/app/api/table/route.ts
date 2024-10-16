@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function GET() {
   try {
-    const res = await axios.get('http://localhost:5050/api/tables');
+    const res = await axios.get('http://frontend-backend-ff5606.1.bd8ne5sa1ogubssrqf0brx1po/tables');
     const dados = res.data;
     
     return NextResponse.json(dados);
@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://localhost:5050/api/tables', body);
+    const res = await axios.post('http://frontend-backend-ff5606.1.bd8ne5sa1ogubssrqf0brx1po/tables', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {
