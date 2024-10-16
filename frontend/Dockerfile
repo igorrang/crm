@@ -1,17 +1,13 @@
+
+
 FROM node:18-alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-RUN corepack enable
-
-FROM base AS build
-COPY . /frontend/src/app
-WORKDIR /frontend/src/app
-
-
-# Install dependencies
-
-# Deploy only the dokploy app
-
+# Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
@@ -20,19 +16,47 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-RUN cp -R /usr/src/app/apps/website/.next /prod/website/.next
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-FROM base AS dokploy
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Set production
 ENV NODE_ENV=production
 
-# Copy only the necessary files
-COPY --from=build /prod/website/.next ./.next
-COPY --from=build /prod/website/public ./public
-COPY --from=build /prod/website/package.json ./package.json
-COPY --from=build /prod/website/node_modules ./node_modules
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copie o arquivo de configuração do Nginx
+
+
+# Trocar para o usuário non-root
+USER nextjs
+
+# Exponha a porta 80
 EXPOSE 3000
-CMD HOSTNAME=0.0.0.0 && pnpm start
+
+# Usar o Nginx como servidor
+
+CMD ["node", "server.js"]
