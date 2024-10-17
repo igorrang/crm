@@ -45,7 +45,7 @@ interface Deposito {
 }
 
 export default function VerCliente() {
-  const [data, setData] = useState<Item[]>([]);
+  const [data, setData] = useState<Item[]>([]); //Recebe os dados referente ao filtro de cliente
   const [dataHistorico, setDataHistorico] = useState<Historico[]>([]);
   const [dataDeposito, setDeposito] = useState<Deposito[]>([]);
   const [dataDepositoEscolhido, setDepositoEscolhido] = useState<Deposito[]>([]);
@@ -150,16 +150,17 @@ export default function VerCliente() {
           </div>
 
           {/* Container principal */}
-          <div className=" flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
-            
+          <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20">
+          
             {/* Card com os dados do cliente */}
-            <div className="bg-secondary w-[90%] max-w-[650px] lg:max-w-[500px]   lg:ml-20 lg:mr-5 py-5  relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
+            <div className="w-[90%] max-w-[650px] lg:max-w-[500px]  py-5 relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
               <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
                 <Input placeholder="Filtrar por nome ou nickname" value={nomeOrNickname} onChange={(e) => setNomeOrNickname(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
               <div className="h-[443px] overflow-auto px-4 mt-3" >
+                
                 {data.map((item) => (
                   <div key={item.id_cliente} >
                     <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirHistoricoCliente(item.id_cliente); setMensagemIdCliente(item.id_cliente); filtrarDepositos(item.id_cliente);  }}>
@@ -171,8 +172,9 @@ export default function VerCliente() {
             </div>
 
             {/* Histórico */}
-            <div className="w-[90%] max-w-[1000px] flex flex-col items-center mt-5 lg:mt-0">
-              <div className="bg-secondary w-full lg:mr-10 p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+            <div className=" w-[90%] max-w-[1000px] flex flex-col items-center lg:mr-5 mt-5 lg:mt-0">
+              
+              <div className=" bg-secondary w-full  p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
                 <div ref={containerRef} className="h-[501px] overflow-auto">
                   {dataHistorico.map((item) => (
                     <div key={item.id_historico}>
@@ -202,22 +204,20 @@ export default function VerCliente() {
             </div>
           </div>
 
-          {/* Parte inferior onde mostrara os anexos */}
 
-          <div className="flex flex-col items-center lg:flex-row lg:items-start justify-start py-10">
+          {/* Parte inferior onde mostrara os anexos */}
+          <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20 ">
             {/* Onde mostrará os anexos de cada cliente */}
-            <div className="bg-secondary w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] lg:ml-20  py-5  relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto px-5" >
+            <div className="w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] py-5 px-5 bg-secondary relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto " >
               {dataDeposito.map((item) => (
                 <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirDepositosCliente(item.id_deposito)}}>
                   <CardFiltroAnexo data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais} anexo=""/>
                 </Button>
               ))}
-              
-              
             </div>
             
             {/* Dados detalhados do anexo */}
-            <div className="bg-secondary flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+            <div className="bg-secondary flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] lg:mr-5  mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
               {dataDepositoEscolhido.map((item) => (
                 <div>
                 {/* Imagem do anexo */}
@@ -244,7 +244,6 @@ export default function VerCliente() {
                 </div>
               </div>
               ))}
-              
               
               <div className="w-full flex justify-end">
                 <DialogEditarFichas identificador_props="" data_props="" hora_props="" valorReais_props="" valorFicha_props="" anexo_props=""></DialogEditarFichas>
