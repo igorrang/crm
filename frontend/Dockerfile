@@ -1,5 +1,4 @@
 
-
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
@@ -52,15 +51,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 
 # Trocar para o usuário non-root
-
-
 USER nextjs
 
+# Exponha a porta 80
 EXPOSE 3000
 
-ENV PORT=3001
+# Usar o Nginx como servidor
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
+
