@@ -18,11 +18,11 @@ export default function CardFiltroAnexo({ data, hora, valorReais, valorFichas, a
         <div>
           <div className="flex ">
             <h1 className="text-[13px] mr-1 text-white/80">Data: </h1>
-            <h1 className="text-[12px] text-white/80">2024-05-20</h1>
+            <h1 className="text-[12px] text-white/80">{data}</h1>
           </div>
           <div className="flex ">
             <h1 className="text-[13px] mr-1 text-white/80"> Hora:</h1>
-            <h1 className="text-[12px] text-white/80">12:30</h1>
+            <h1 className="text-[12px] text-white/80">{hora}</h1>
           </div>
         </div>        
       </div>

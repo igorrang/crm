@@ -32,11 +32,10 @@ export default function DialogFichas({identificador_props}: dialogFichasProps) {
     e.preventDefault();
     
     try {
-      const res = await axios.post("/api/table", {identificadorCliente, data, hora, valorReais, valorFicha, anexo});
+      const res = await axios.post("/api/filtrarDeposito", {identificadorCliente, data, hora, valorReais, valorFicha, anexo});
       console.log(res.data);  // Verificar a resposta do backend
         // Verifique se a requisição foi bem-sucedida
         if (res.status === 200) {
-          console.log('Cliente cadastrado com sucesso!');
           // Usar router.push para redirecionar e recarregar a página
           window.location.reload()
 
