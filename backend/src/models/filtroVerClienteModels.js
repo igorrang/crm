@@ -8,7 +8,7 @@ const postFiltroVerCliente = async (data) => {
         const sql = `SELECT * FROM cliente WHERE nome LIKE '%${nomeOrNickname}%' OR nickname LIKE '%${nomeOrNickname}%' `
         // Query banco
         const [query] = await connection.execute(sql)
-        console.log('Query ver cliente filtrando: ', query );
+        // console.log('Query ver cliente filtrando: ', query );
         
         return query
     } catch (err) {

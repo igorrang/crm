@@ -115,7 +115,9 @@ export default function VerCliente() {
   // Função para exibir o histórico do cliente selecionado
   const exibirDepositosCliente = async (id: number) => {
     try {
-      const res = await axios.get(`/api/historico?id_cliente=${id}`);
+      console.log('1 ok');
+      
+      const res = await axios.get(`/api/deposito?id_deposito=${id}`);
       setDepositoEscolhido(res.data);
     } catch (error) {
       console.error('Erro ao exibir histórico:', error);

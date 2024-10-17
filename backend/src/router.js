@@ -8,6 +8,7 @@ const filtroTableConstrollers = require('./controllers/filtroTableConstrollers')
 const filtroVerClienteControllers = require('./controllers/filtroVerClienteControllers')
 const historicoControllers = require('./controllers/historicoControllers')
 const filtrarDepositoControllers = require('./controllers/filtrarDepositoControllers')
+const depositoControllers = require('./controllers/depositoControllers')
 
 router.get("/validacaoLogin", clientesControllers.getCliente)
 router.post("/validacaoLogin", clientesControllers.postCliente)
@@ -28,9 +29,11 @@ router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerClient
 router.get('/historico', historicoControllers.getHistorico)
 router.post('/historico', historicoControllers.postHistorico)
 
-// Deposito
+// Filtrar Deposito
 router.get('/filtrarDeposito', filtrarDepositoControllers.getDeposito)
 router.post('/filtrarDeposito', filtrarDepositoControllers.postDeposito)
+
+router.get('/deposito', depositoControllers.getDeposito)
 
 // console.log(this.delete)
 module.exports = router

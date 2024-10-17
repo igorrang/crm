@@ -2,14 +2,14 @@ const connection = require("./connectionDois")
 
 const getDeposito = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles
-    const {id_cliente} = data
+    const {id_deposito} = data
 
     try {
         // Codigo sql
-        const sql = `SELECT * FROM deposito WHERE id_cliente='${id_cliente}' `
+        const sql = `SELECT * FROM deposito WHERE id_deposito='${id_deposito}' `
         // Query banco
         const [query] = await connection.execute(sql)
-        // console.log('Query historico: ', query );
+        console.log('Query mostrando dados do deposito: ', query );
         
         return query
     } catch (err) {

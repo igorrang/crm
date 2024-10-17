@@ -9,7 +9,7 @@ const getHistorico = async (data) => {
         const sql = `SELECT * FROM historico WHERE id_cliente='${id_cliente}' `
         // Query banco
         const [query] = await connection.execute(sql)
-        console.log('Query historico: ', query );
+        // console.log('Query historico: ', query );
         
         return query
     } catch (err) {
