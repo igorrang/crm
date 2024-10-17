@@ -20,6 +20,7 @@ interface Item {
   dataInicio: string;
   nome: string;
   origem: string;
+  nickname: string;
   observacao: string;
   valorFicha: string;
   status: string;
@@ -37,7 +38,8 @@ interface Historico {
 export default function VerCliente() {
   const [data, setData] = useState<Item[]>([]);
   const [dataHistorico, setDataHistorico] = useState<Historico[]>([]);
-  const [nome, setNome] = useState('');
+  const [nomeOrNickname, setNomeOrNickname] = useState('');
+  
   const [mensagemIdCliente, setMensagemIdCliente] = useState<number>(0);
   const [mensagemHistorico, setMensagemHistorico] = useState('');
 
@@ -54,7 +56,7 @@ export default function VerCliente() {
   const filtrarCliente = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const res = await axios.post("/api/filtroVerCliente", { nome });
+      const res = await axios.post("/api/filtroVerCliente", { nomeOrNickname});
       setData(res.data);
     } catch (error) {
       console.error('Erro ao filtrar clientes:', error);
@@ -117,7 +119,7 @@ export default function VerCliente() {
             {/* Card com os dados do cliente */}
             <div className="bg-secondary w-[90%] max-w-[650px] lg:max-w-[500px]   lg:ml-20 lg:mr-5 py-5  relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
               <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
-                <Input placeholder="Filtrar por nome..." value={nome} onChange={(e) => setNome(e.target.value)} className="w-full" required/>
+                <Input placeholder="Filtrar por nome ou nickname" value={nomeOrNickname} onChange={(e) => setNomeOrNickname(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
@@ -125,7 +127,7 @@ export default function VerCliente() {
                 {data.map((item) => (
                   <div key={item.id_cliente} >
                     <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirHistoricoCliente(item.id_cliente); setMensagemIdCliente(item.id_cliente);}}>
-                      <CardFiltroCliente nome={item.nome} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status}/>
+                      <CardFiltroCliente nome={item.nome} nickname={item.nickname} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status}/>
                     </Button>
                   </div>
                 ))}

@@ -26,6 +26,7 @@ export type Payment = {
   dataInicio: string;
   nome: string;
   origem: string;
+  nickname: string;
   observacao: string;
   valorFicha: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
@@ -51,6 +52,13 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Origem",
     cell: ({ row }) => (
       <div className="capitalize text-white">{row.getValue("origem")}</div>
+    ),
+  },
+  {
+    accessorKey: "nickname",
+    header: "Nickname",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("nickname")}</div>
     ),
   },
   {
@@ -94,7 +102,7 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       return(
-        <DialogEditarCliente identificador_props={row.getValue("id_cliente")} dataInicio_props={row.getValue("dataInicio")} nome_props={row.getValue("nome")} origem_props={row.getValue("origem")} observacao_props={row.getValue("observacao")} valorFicha_props={row.getValue("valorFicha")} status_props={row.getValue("status")} ultimaAtualizacao_props={row.getValue("ultimaAtualizacao")}></DialogEditarCliente>
+        <DialogEditarCliente identificador_props={row.getValue("id_cliente")} dataInicio_props={row.getValue("dataInicio")} nome_props={row.getValue("nome")} origem_props={row.getValue("origem")} nickName_props={row.getValue("nickname")}  observacao_props={row.getValue("observacao")} valorFicha_props={row.getValue("valorFicha")} status_props={row.getValue("status")} ultimaAtualizacao_props={row.getValue("ultimaAtualizacao")}></DialogEditarCliente>
       )
     },
   },

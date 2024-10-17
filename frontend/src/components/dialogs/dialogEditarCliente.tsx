@@ -14,18 +14,20 @@ export interface dialogEditarClienteProps {
   dataInicio_props: string
   nome_props: string
   origem_props: string
+  nickName_props: string
   observacao_props: string
   valorFicha_props: string
   status_props: string
   ultimaAtualizacao_props: string
 }
  
-export default function DialogEditarCliente({identificador_props,dataInicio_props, nome_props, origem_props,  observacao_props, valorFicha_props, status_props, ultimaAtualizacao_props}: dialogEditarClienteProps) {
+export default function DialogEditarCliente({identificador_props,dataInicio_props, nome_props, origem_props, nickName_props,  observacao_props, valorFicha_props, status_props, ultimaAtualizacao_props}: dialogEditarClienteProps) {
   // useState pra receber o valor de cada coluna e imprimir no input
   const [identificador, setIdentificador] = useState('')
   const [dataInicio, setDataInicio] = useState('')
   const [nome, setNome] = useState('')
   const [origem, setOrigem] = useState('')
+  const [nickname, setNickname] = useState('')
   const [observacao, setObservacao] = useState('')
   const [valorFicha, setValorFicha] = useState('')
   const [status, setStatus] = useState('')
@@ -37,17 +39,18 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
     setDataInicio(dataInicio_props || '');
     setNome(nome_props || '');
     setOrigem(origem_props || '');
+    setNickname(nickName_props || '');
     setObservacao(observacao_props || '');
     setValorFicha(valorFicha_props || '');
     setStatus(status_props || '');
     setUltimaAtualizacao(ultimaAtualizacao_props || '');
-  }, [identificador_props, dataInicio_props, nome_props, origem_props, observacao_props, valorFicha_props, status_props, ultimaAtualizacao_props]);
+  }, [identificador_props, dataInicio_props, nome_props, origem_props, nickName_props, observacao_props, valorFicha_props, status_props, ultimaAtualizacao_props]);
 
   // Função que enviará os dados para o backend
   const editandoCliente = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.put("/api/table", {identificador, dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+      const res = await axios.put("/api/table", {identificador, dataInicio, nome, origem, nickname, observacao, valorFicha, status, ultimaAtualizacao});
         // Verifique se a requisição foi bem-sucedida
       if (res.status === 200) {
           // Usar router.push para redirecionar e recarregar a página
@@ -101,11 +104,15 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
               </DropdownMenu>
             </div>
             <div className=" gap-4">
-              <Label htmlFor="observacoes" className="text-right text-white"> Observacoes </Label>
-              <Input id="observacoes" className="" value={observacao}  onChange={(e) => setObservacao(e.target.value)} required/>
+              <Label htmlFor="nickName" className="text-right text-white"> NickName </Label>
+              <Input id="nickName" className="" value={nickname}  onChange={(e) => setNickname(e.target.value)} required/>
             </div>
           </div>
           <div>
+           <div className=" gap-4">
+              <Label htmlFor="observacoes" className="text-right text-white"> Observacoes </Label>
+              <Input id="observacoes" className="" value={observacao}  onChange={(e) => setObservacao(e.target.value)} required/>
+            </div>
             <div className=" gap-4">
               <Label htmlFor="valorFichas" className="text-right text-white"> Valor Fichas </Label>
               <Input id="valorFichas" className="" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required/>

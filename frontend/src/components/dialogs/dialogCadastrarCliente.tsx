@@ -11,6 +11,7 @@ export default function DialogCadastrarCliente() {
   const [dataInicio, setDataInicio] = useState('')
   const [nome, setNome] = useState('')
   const [origem, setOrigem] = useState('')
+  const [nickName, setNickName] = useState('')
   const [observacao, setObservacao] = useState('')
   const [valorFicha, setValorFicha] = useState('')
   const [status, setStatus] = useState('')
@@ -24,7 +25,7 @@ export default function DialogCadastrarCliente() {
     console.log({dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
     
     try {
-      const res = await axios.post("/api/table", {dataInicio, nome, origem, observacao, valorFicha, status, ultimaAtualizacao});
+      const res = await axios.post("/api/table", {dataInicio, nome, origem, nickName, observacao, valorFicha, status, ultimaAtualizacao});
       console.log(res.data);  // Verificar a resposta do backend
         // Verifique se a requisição foi bem-sucedida
         if (res.status === 200) {
@@ -97,6 +98,21 @@ export default function DialogCadastrarCliente() {
               </DropdownMenu>
             </div>
             <div className="items-center gap-4">
+              <Label htmlFor="nickName" className="text-right text-white">
+                Nickname
+              </Label>
+              <Input
+                id="nickName"
+                className=""
+                value={nickName}
+                onChange={(e) => setNickName(e.target.value)}
+                required
+              />
+            </div>
+           
+          </div>
+          <div>
+            <div className="items-center gap-4">
               <Label htmlFor="anuncio" className="text-right text-white">
                 Observacao
               </Label>
@@ -108,8 +124,6 @@ export default function DialogCadastrarCliente() {
                 required
               />
             </div>
-          </div>
-          <div>
             <div className="items-center gap-4">
               <Label htmlFor="observacoes" className="text-right text-white">
                 Valor das Fichas
@@ -135,7 +149,7 @@ export default function DialogCadastrarCliente() {
                   <Button variant="outline" className="">{status}</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Painel origem</DropdownMenuLabel>
+                  <DropdownMenuLabel>Painel status</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
                     <DropdownMenuRadioItem value="Fracassado"> Fracassado</DropdownMenuRadioItem>

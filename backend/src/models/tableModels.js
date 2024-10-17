@@ -18,6 +18,7 @@ const postTable = async (data) => {
     const {dataInicio} = data
     const {nome} = data
     const {origem} = data
+    const {nickName} = data
     const {observacao} = data
     const {valorFicha} = data
     const {status} = data
@@ -25,7 +26,7 @@ const postTable = async (data) => {
     
     try {
         // Codigo sql
-        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}', '${observacao}', ${valorFicha}, '${status}', '${ultimaAtualizacao}')`
+        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}','${nickName}', '${observacao}', ${valorFicha}, '${status}', '${ultimaAtualizacao}')`
         // Query banco
         const [query] = await connection.execute(sql)
         return query
@@ -40,6 +41,7 @@ const putTable = async (newData) => {
     const {dataInicio} = newData
     const {nome} = newData
     const {origem} = newData
+    const {nickname} = newData
     const {observacao} = newData
     const {valorFicha} = newData
     const {status} = newData
@@ -47,7 +49,7 @@ const putTable = async (newData) => {
    
     
     try{
-        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id_cliente = '${identificador}'`;
+        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', nickname='${nickname}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id_cliente = '${identificador}'`;
         const [query ] = await connection.execute(sql);
         return query;
     }  catch (err){

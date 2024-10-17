@@ -2,11 +2,10 @@ connection = require('./connectionDois')
 
 const postFiltroVerCliente = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles
-    const {nome} = data
-
+    const {nomeOrNickname} = data
     try {
         // Codigo sql
-        const sql = `SELECT * FROM cliente WHERE nome LIKE '%${nome}%' `
+        const sql = `SELECT * FROM cliente WHERE nome LIKE '%${nomeOrNickname}%' OR nickname LIKE '%${nomeOrNickname}%' `
         // Query banco
         const [query] = await connection.execute(sql)
         console.log('Query ver cliente filtrando: ', query );
