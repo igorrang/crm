@@ -1,10 +1,13 @@
 const mysql = require('mysql2/promise')
 
 const connection = mysql.createPool({
-    host: 'Mac-mini-de-igor.local',
-    user: 'root',
-    password: '12345',
-    database:'PlanilhaExcel'
+    host: 'localhost',
+    user: 'phpmyadmin',
+    password: '441e4afe56ca1a600e3ff860e6621633',
+    database:'boteco_brasil'
 })
+
+// console.log(mysql)
+// console.log(connection)
 
 module.exports = connection

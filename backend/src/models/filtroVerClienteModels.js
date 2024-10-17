@@ -1,4 +1,4 @@
-connection = require('./connectionDois')
+const connection = require('./connection')
 
 const postFiltroVerCliente = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles

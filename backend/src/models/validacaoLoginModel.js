@@ -1,4 +1,4 @@
-const connection = require("./connectionDois")
+const connection = require("./connection")
 
 const getAll = async () => {
     const [clientes] = await connection.execute("SELECT * FROM users")

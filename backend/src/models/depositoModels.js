@@ -1,4 +1,4 @@
-const connection = require("./connectionDois")
+const connection = require("./connection")
 
 const getDeposito = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles

@@ -1,4 +1,4 @@
-connection = require('./connectionDois')
+connection = require('./connection')
 
 const getHistorico = async (data) => {
     // Pegar valores que vem do front ja desestrutando eles

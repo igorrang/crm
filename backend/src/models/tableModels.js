@@ -1,4 +1,4 @@
-connection = require('./connectionDois')
+const connection = require('./connection')
 
 const getTable = async () => {
     try {

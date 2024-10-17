@@ -1,4 +1,4 @@
-connection = require('./connectionDois')
+connection = require('./connection')
 
 const { format, parseISO } = require('date-fns');
 
