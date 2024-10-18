@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const id_cliente = searchParams.get('id_cliente');
 
-    const res = await axios.get(`http://localhost:5050/historico?id_cliente=${id_cliente}`);
+    const res = await axios.get(`http://frontend-crm-d99e56-45665c-92-112-179-19.traefik.me/historico?id_cliente=${id_cliente}`);
     const dados = res.data;
     
     return NextResponse.json(dados);
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://localhost:5050/historico', body);
+    const res = await axios.post('http://app/historico', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {
