@@ -1,4 +1,4 @@
-const connection = require('./connectionDois');
+const connection = require('./connection/connectionDois');
 
 const getTable = async () => {
     const res = await connection.query('SELECT * FROM agosto');
