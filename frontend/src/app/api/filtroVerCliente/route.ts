@@ -5,7 +5,7 @@ import axios from 'axios';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://app/filtroVerCliente', body);
+    const res = await axios.post('http://frontend-backend-ff5606:5050/filtroVerCliente', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {

@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise')
 
-const connection = mysql.createPool({
-    host: 'db', // Nome do serviço do banco de dados no docker-compose.yml
-    user: process.env.MYSQL_USER, // Variável de ambiente para o usuário
-    password: process.env.MYSQL_PASSWORD, // Variável de ambiente para a senha
-    database: process.env.MYSQL_DATABAS
+const connection = await mysql.createConnection({
+    host: 'db', // normalmente 'database' se estiver no mesmo Docker Network
+    user: 'phpmyadmin',
+    password: '441e4afe56ca1a600e3ff860e6621633',
+    database: 'boteco_brasil'
 })
 
 // console.log(mysql)
