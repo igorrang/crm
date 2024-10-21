@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://validacaoLogin', body);
+    const res = await axios.post('http://localhost:5050/validacaoLogin', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {

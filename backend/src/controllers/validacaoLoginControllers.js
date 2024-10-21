@@ -7,6 +7,7 @@ const getCliente = async (req, res) => {
 
 const postCliente = async (req, res) => {
     const postCliente = await validacaoLoginModel.postCliente(req.body)
+    req.session.valorGuardado = "Olá, esse é o valor guardado!";
     return res.status(200).json(postCliente)
 }
 

@@ -31,7 +31,7 @@ export default function CardLogin() {
          if (email === cliente.email && senha === cliente.senha) {
           router.push('/Principal') // Atualizar a pagina
         } else {
-          //console.log('Os dados inseridos não condizem com os dados encotrados');
+          console.log('Os dados inseridos não condizem com os dados encotrados');
 
           setMensagemErro(!mensagemErro) // Abrir modal que mostrara a mensagem de erro.
         }
