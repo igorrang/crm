@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise')
 
-const connection = await mysql.createConnection({
-    host: 'localhost', // normalmente 'database' se estiver no mesmo Docker Network
+const connection = mysql.createPool({
+    host: 'localhost',
     user: 'root',
     password: '',
-    database: 'boteco_brasil'
+    database:'boteco_brasil'
 })
 
 // console.log(mysql)
