@@ -7,12 +7,12 @@ COPY package.json package-lock.json ./
 
  
 
+
 RUN npm install
 
 COPY . .
 
 # Production Image
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+EXPOSE 5050
+CMD ["npm", "run", "dev"]

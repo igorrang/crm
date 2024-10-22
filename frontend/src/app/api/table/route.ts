@@ -24,3 +24,15 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const res = await axios.put('http://localhost:5050/tables', body);
+    const data = res.data;
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Error posting table data:', error);
+    return NextResponse.error();
+  }
+}

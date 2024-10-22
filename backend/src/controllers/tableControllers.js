@@ -13,11 +13,9 @@ const postTable = async (req, res) => {
 }
 
 const putTable = async (req,res) => {
-    const tableName = req.params.tableName;
-    const rowId = req.params.rowId
     const newData = req.body
 
-    const table = await tableModels.putTable(newData, tableName, rowId)
+    const table = await tableModels.putTable(newData)
     return res.status(200).json(table)
 }
 
@@ -28,10 +26,20 @@ const deleteTable = async (res,req) =>{
     return res.status(200).json(drop)
 }
 
+
+
+const postFiltroTable = async (req, res) => {
+    const data = req.body;
+    const table = await filtroTableModels.postFiltroTable(data)
+    return res.status(200).json(table)
+}
+
+
 module.exports = {
     postTable,
     putTable,
     deleteTable,
-    getTable
+    getTable,
+    postFiltroTable
 }
 

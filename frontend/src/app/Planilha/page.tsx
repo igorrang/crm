@@ -1,8 +1,9 @@
 "use client";
 
-import DialogCadastrarCliente from "@/components/dialogCadastrarCliente";
+import DialogCadastrarCliente from "@/components/dialogs/dialogCadastrarCliente";
 import Header from "@/components/header";
 import Navbar from "@/components/narbar";
+import { DataTable } from "@/components/tables/dataTable";
 
 import {
   Breadcrumb,
@@ -17,7 +18,6 @@ import Link from "next/link";
 import { IoMdContact } from "react-icons/io";
 import { IoLogOutSharp } from "react-icons/io5";
 import { SiMicrosoftexcel } from "react-icons/si";
-import  {DataTable} from "@/components/tables/dataTable";
 
 
 export default function Planilha() {
@@ -27,7 +27,7 @@ export default function Planilha() {
       <div className="flex">
         <Navbar></Navbar>
 
-        <div className="w-full h-[90vh] text-black ">
+        <div className="w-full min-h-[94vh]  text-black bg-gradient-to-l from-black via-black/90 to-black/85 ">
           <div className="hidden lg:flex w-full py-4 px-10">
             <Breadcrumb>
               <BreadcrumbList>

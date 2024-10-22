@@ -44,18 +44,19 @@ RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./.next/standalone
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./ 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copie o arquivo de configuração do Nginx
 
+
+# Trocar para o usuário non-root
 USER nextjs
 
+# Exponha a porta 80
 EXPOSE 3000
 
-ENV PORT=3001
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-ENV HOSTNAME="0.0.0.0"
+# Usar o Nginx como servidor
 
 CMD ["node", "server.js"]
+

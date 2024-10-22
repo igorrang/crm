@@ -1,27 +1,76 @@
-const connection = require('./connectionDois');
+const connection = require('./connection')
 
 const getTable = async () => {
-    const res = await connection.query('SELECT * FROM agosto');
-    return res.rows;
+    try {
+        // Codigo sql
+        const sql = `SELECT * FROM cliente`
+        // Query banco
+        const [query] = await connection.execute(sql)
+        // console.log("Query result no backend:", query)
+        return query
+    } catch (err) {
+        console.error("Error:", err);
+        return 'Erro na QUERY com o BD. Tipo GET', err
+    }
 }
-
 const postTable = async (data) => {
-    const res = await connection.query(
-        'INSERT INTO agotso (data_de_inicio, nome, contato, anuncio, observacoes, valor_fichas, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-        [data.data_de_inicio, data.nome, data.contato, data.anuncio, data.observacoes, data.valor_fichas, data.status]
-    );
-    return res.rows[0];
-};
-
-const putTable = async (id, data) => {
-    const res = await pool.query('UPDATE agosto SET column1 = $1, column2 = $2 WHERE id = $3 RETURNING *', [data.column1, data.column2, id]);
-    return res.rows[0];
+    // Pegar valores que vem do front ja desestrutando eles
+    const {dataInicio} = data
+    const {nome} = data
+    const {origem} = data
+    const {nickName} = data
+    const {observacao} = data
+    const {valorFicha} = data
+    const {status} = data
+    const {ultimaAtualizacao} = data
+    
+    try {
+        // Codigo sql
+        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}','${nickName}', '${observacao}', ${valorFicha}, '${status}', '${ultimaAtualizacao}')`
+        // Query banco
+        const [query] = await connection.execute(sql)
+        return query
+    } catch (err) {
+        console.error("Error:", err);
+        return 'Erro na QUERY com o BD. Tipo POST'
+    }
 }
 
-const deleteTable = async (id) => {
-    const res = await connection.query('DELETE FROM your_table WHERE id = $1', [id]);
-    return res.rows[0];
+const putTable = async (newData) => {
+    const {identificador} = newData
+    const {dataInicio} = newData
+    const {nome} = newData
+    const {origem} = newData
+    const {nickname} = newData
+    const {observacao} = newData
+    const {valorFicha} = newData
+    const {status} = newData
+    const {ultimaAtualizacao} = newData
+   
+    
+    try{
+        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', nickname='${nickname}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id_cliente = '${identificador}'`;
+        const [query ] = await connection.execute(sql);
+        return query;
+    }  catch (err){
+        console.error("Error:", err);
+        return 'Erro na query com o banco de dados. tipo putTable'
+    }  
+
 }
+
+const deleteTable = async (dropData, tableName) => {
+    const {data_inicio, nome, contato,anuncio, observacoes,valor_fichas,status} = newData
+    try{
+        const query = `DELETE FROM '${tableName}' WHERE None = ?`
+        const [sql] = await connection.execute(query,[data_inicio,nome,contato,anuncio,observacoes,valor_fichas,status])
+        return sql
+
+    }catch{
+        return 'erro na query com o banco de dados '
+    }
+}
+
 
 module.exports = {
     getTable,

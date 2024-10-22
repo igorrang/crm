@@ -2,17 +2,11 @@ const express = require("express")
 
 const router = express.Router()
 
-const clientesControllers = require("./controllers/validacaoLoginControllers")
-const tableConstrollers = require('./controllers/tableControllers')
+const routerValidacaoLogin = require("./router/validacaoLoginRota.js")
+const routerTablesCrud = require('/Users/igorrangelkonvictus/crm/backend/src/Routers/tableControllers.js')
 
-router.get("/validacaoLogin", clientesControllers.getCliente)
-router.post("/validacaoLogin", clientesControllers.postCliente)
+const routerLogin = express.Router(routerValidacaoLogin)
+const routerTables = express.Router(routerTablesCrud)
 
-// Codigo Igor:
-router.get('/tables', tableConstrollers.getTable)
-router.post('/tables', tableConstrollers.postTable)
-router.put('/tables/:tableName/:rowId', tableConstrollers.putTable)
-router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
-
-console.log(this.delete)
-module.exports = router
+// console.log(this.delete)
+module.exports = routerLogin

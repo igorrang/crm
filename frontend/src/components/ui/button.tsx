@@ -9,22 +9,24 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-white text-lg px-8 py-2  rounded-full cursor-pointer hover:brightness-75",
-        clean: "",
+        default: "bg-primary text-white text-lg px-8 py-2  rounded-full cursor-pointer hover:bg-primary/80",
+        clean: "text-white",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-white/70 bg-secondary placeholder:text-gray-300 text-white hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: " text-lg text-white  hover:text-white/65",
         link: "text-primary underline-offset-4 hover:underline",
         true: "text-primary underline-offset-4 hover:underline",
         
       },
       size: {
         default: "h-10 px-4 py-2",
+        clean: "",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        cardConta: "my-5 h-10 px-4 py-2",
       },
     },
     defaultVariants: {

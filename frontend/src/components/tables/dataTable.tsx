@@ -1,259 +1,127 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import axios from "axios";
+import { addDays, format } from "date-fns"
+
+import { Calendar as CalendarIcon } from "lucide-react"
+import { DateRange } from "react-day-picker"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon,} from "@radix-ui/react-icons";
 import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable,} from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
-import Link from "next/link";
-import { Label } from "../ui/label";
+import DialogEditarCliente from "../dialogs/dialogEditarCliente";
+import DialogFichas from "../dialogs/dialogFichas";
+
+const data: Payment[] = []
 
 export type Payment = {
   id: string;
   dataInicio: string;
   nome: string;
-  contato: string;
-  tipo: string;
-  Anuncio: string;
-  descricaoServico: string;
-  observacoes: string;
-  valor: string;
-  
+  origem: string;
+  nickname: string;
+  observacao: string;
+  valorFicha: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
   ultimaAtualizacao: string;
 };
-const EditDialog = ({ row }: {row: any}) => {
-  const [dataInicio, setDataInicio] = useState();
-  const [nome, setNome] = useState('');
-  const [contato, setContato] = useState('');
-  const [anuncio, setAnuncio] = useState('');
-  const [observacoes, setObservacoes] = useState('');
-  const [valorFichas, setValorFichas] = useState('');
-  const [status, setStatus] = useState('');
-
-  // Aqui você pode usar dataInicio, setDataInicio, nome, setNome, contato, setContato, anuncio, setAnuncio, observacoes, setObservacoes, valorFichas, setValorFichas, status, setStatus
-  // ...
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="clean">Editar</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[625px]">
-        <DialogHeader>
-          <DialogTitle>Editar</DialogTitle>
-          <DialogDescription>
-            Editar dados do cliente
-          </DialogDescription>
-        </DialogHeader>
-        <form action="" className="grid grid-cols-2 gap-4 py-4">
-          <div>
-            <div className=" items-center gap-4">
-              <Label htmlFor="dataInicio" className="text-right">
-                Data de Inicio
-              </Label>
-              <Input
-                id="dataInicio"
-                className=""
-                value={dataInicio}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="nome" className="text-right">
-                Nome
-              </Label>
-              <Input
-                id="nome"
-                className=""
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="contato" className="text-right">
-                Contato
-              </Label>
-              <Input
-                id="contato"
-                className=""
-                value={contato}
-                onChange={(e) => setContato(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="anuncio" className="text-right">
-                Anuncio
-              </Label>
-              <Input
-                id="anuncio"
-                className=""
-                value={anuncio}
-                onChange={(e) => setAnuncio(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <div className="items-center gap-4">
-              <Label htmlFor="observacoes" className="text-right">
-                Observacoes
-              </Label>
-              <Input
-                id="observacoes"
-                className=""
-                value={observacoes}
-                onChange={(e) => setObservacoes(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="valorFichas" className="text-right">
-                Valor Fichas
-              </Label>
-              <Input
-                id="valorFichas"
-                className=""
-                value={valorFichas}
-                onChange={(e) => setValorFichas(e.target.value)}
-                required
-              />
-            </div>
-            <div className="items-center gap-4">
-              <Label htmlFor="status" className="text-right">
-                Status
-              </Label>
-              <Input
-                id="status"
-                className=""
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                required
-              />
-            </div>
-          <DialogFooter className="mt-24">
-            <Button type="submit">Confirmar</Button>
-          </DialogFooter>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
 
 export const columns: ColumnDef<Payment>[] = [
-
-
-    {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  
   {
-    accessorKey: "data_de_inicio",
+    accessorKey: "dataInicio",
     header: "Data de Inicio",
-     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("data_de_inicio")}</div>
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("dataInicio")}</div>
     ),
   },
-
   {
     accessorKey: "nome",
-    header: "nome",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("nome")}</div>,
+    header: "Nome",
+    cell: ({ row }) => <div className="capitalize text-white">{row.getValue("nome")}</div>,
   },
   {
-    accessorKey: "contato",
-    header: "Contato",
+    accessorKey: "origem",
+    header: "Origem",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("contato")}</div>
+      <div className="capitalize text-white">{row.getValue("origem")}</div>
     ),
   },
-
   {
-    accessorKey: "anuncio",
-    header: "Anuncio",
+    accessorKey: "nickname",
+    header: "Nickname",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("anuncio")}</div>
+      <div className="capitalize text-white">{row.getValue("nickname")}</div>
     ),
   },
-
   {
-    accessorKey: "observacoes",
-    header: "Observacoes",
+    accessorKey: "observacao",
+    header: "Observação",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("observacoes")}</div>
+      <div className="capitalize text-white">{row.getValue("observacao")}</div>
     ),
+  },
+  {
+    accessorKey: "valorFicha",
+    header: () => <div className="text-right">Valor das fichas</div>,
+    cell: ({ row }) => {
+      const valorFicha = parseFloat(row.getValue("valorFicha"))
+      const formatted = new Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(valorFicha)
+ 
+      return <div className="text-right font-medium text-white">{formatted}</div>
+    },
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize text-white">{row.getValue("status")}</div>
     ),
   },
   {
-    accessorKey: "valor_fichas",
-    header: "Valor_Fichas",
+    accessorKey: "ultimaAtualizacao",
+    header: "Ultima Atualização",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("valor_fichas")}</div>
+      <div className="capitalize text-white">{row.getValue("ultimaAtualizacao")}</div>
     ),
   },
   {
-    id: "editar",
+    id: "id_cliente",
+    accessorKey: "id_cliente",
+    header: "Editar",
     enableHiding: false,
-    cell: ({ row }) => <EditDialog row={row} />
+    cell: ({ row }) => {
+      return(
+        <DialogEditarCliente identificador_props={row.getValue("id_cliente")} dataInicio_props={row.getValue("dataInicio")} nome_props={row.getValue("nome")} origem_props={row.getValue("origem")} nickName_props={row.getValue("nickname")}  observacao_props={row.getValue("observacao")} valorFicha_props={row.getValue("valorFicha")} status_props={row.getValue("status")} ultimaAtualizacao_props={row.getValue("ultimaAtualizacao")}></DialogEditarCliente>
+      )
+    },
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Abrir menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
+              <DotsHorizontalIcon className="h-4 w-4 text-white" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copiar ID do Pagamento
-            </DropdownMenuItem> */}
-            <Link href="/VerCliente">
-              <DropdownMenuItem>Ver Cliente</DropdownMenuItem>
-            </Link>
+            <DialogFichas identificador_props={row.getValue("id_cliente")} /> 
             <DropdownMenuSeparator />
-
             <DropdownMenuItem></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -262,47 +130,25 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
+export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
 
-
-export function DataTable() {
-  
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Payment[]>([]); // UseState resposavel por listar as linhas da tabela
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const inserirDados = async () => {
-    const data = '2022/02/05'
-    const nome = 'Igor muito muito feio'
-    const contato = '51 993293152'
-    const anuncio = 'Instagran'
-    const observacoes = 'Ricu'
-    const valor_fichas = '322'
-    const status = 'Feitu'
-    const res = await axios.post("/api/table", {data, nome, contato, anuncio, observacoes, valor_fichas, status})
-    console.log(res.data);
-  }
-
+  // Função para listar os dados da tabela assim que entrar na pagina da planilha
   const listarDados = async () => {
-        const res = await axios.get("/api/table");
-        setData(res.data); // Atualiza o estado com os dados recebidos
-    
-};
-
-
-
-
+    const res = await axios.get("/api/table");
+    setData(res.data); // Atualiza o estado com os dados recebidos
+  };
+  
+  // Inicia uma função ao carregar a pagina
   useEffect( () => {
-    // inserirDados();
-    listarDados();
+    listarDados(); 
   },[])
     
-  
-  
 
   const table = useReactTable({
     data,
@@ -323,30 +169,88 @@ export function DataTable() {
     },
   });
 
+  // esse date corresponde ao valor de quando filtrar uma data ate outra data
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 30),
+  })
+
+  // Função que realizará o filtro de uma data ate outra data e carregar todos dados correspondentes
+  const filtroDataFromTo = async () => {
+    const dateFrom = date?.from // Pegando a data inicial do filtro
+    const dateTo = date?.to // Pegando a data final do filtro
+    
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
+  }
+  
+  // Função para o filtrar por periodos
+  const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
+  }
+  
   return (
-    <div className="w-full">      
+    <div className="w-full ">      
 
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filtrar por status..."
-          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("status")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[300px] mr-2"
-        />
-        <Input
-          placeholder="Filtrar por emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[300px] mr-2"
-        />
-
+      <div className="flex items-center flex-wrap py-4">
+        <div className={cn("grid gap-2", className)}>
+          {/* Popover para filtrar os dados de uma data ate outra data */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                variant={"outline"}
+                className={cn(
+                  "w-[300px] justify-start text-left font-normal m-1 ml-0",
+                  !date && "text-white/60"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date?.from ? (
+                  date.to ? (
+                    <>
+                      {format(date.from, "LLL dd, y")} -{" "}
+                      {format(date.to, "LLL dd, y")}
+                    </>
+                  ) : (
+                    format(date.from, "LLL dd, y")
+                  )
+                ) : (
+                  <span>Escolha uma data</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 flex" align="start">
+              <div>
+                <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
+                <div className="flex justify-end mx-4 my-2">
+                  <Button onClick={filtroDataFromTo}>Filtrar</Button>
+                </div>
+              </div>
+              {/* Filtro por períodos já pré estabelecidos */}
+              <div className=" mx-4 my-3">
+                <h1 className="text-white/80">Períodos</h1>
+                <div className="mx-3 flex flex-col items-start">
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={listarDados}>Máximo</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
+                  <Button variant='clean' size='clean' className="text-white/80 my-0.5"></Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } />
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="">
               Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -358,7 +262,7 @@ export function DataTable() {
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className="capitalize text-white"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -371,8 +275,8 @@ export function DataTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border border-white/70">
+        <Table className="bg-secondary rounded-md">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -412,9 +316,9 @@ export function DataTable() {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-white "
                 >
-                  No results.
+                  Nenhum cliente encontrado
                 </TableCell>
               </TableRow>
             )}
@@ -427,22 +331,8 @@ export function DataTable() {
           {table.getFilteredRowModel().rows.length} linha(s) selected.
         </div>
         <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
+          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>Anterior</Button>
+          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Próximo</Button>
         </div>
       </div>
     </div>
