@@ -19,7 +19,7 @@ export interface dialogFichasProps {
   anexo_props: string
 }
  
-export default function DialogFichas({identificador_props,data_props, hora_props, valorReais_props, valorFicha_props, anexo_props}: dialogFichasProps) {
+export default function DialogEditarFichas({identificador_props,data_props, hora_props, valorReais_props, valorFicha_props, anexo_props}: dialogFichasProps) {
   // useState pra receber o valor de cada coluna e imprimir no input
   const [identificadorCliente, setIdentificadorCliente] = useState('')
   const [data, setData] = useState('')

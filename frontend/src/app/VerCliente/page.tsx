@@ -14,6 +14,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbS
 import { Button } from "@/components/ui/button";
 import CardFiltroAnexo from "@/components/cards/cardFiltroAnexo";
 import DialogEditarFichas from "@/components/dialogs/dialogEditarFichas";
+import DescricaoDeposito from "@/components/descricaoDeposito";
 
 interface Item {
   id_cliente: number;
@@ -169,7 +170,7 @@ export default function VerCliente() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-white">Nenhum cliente encontrado</p>
+                  <p className="text-center text-sm text-white/80 mb-[197px]">Nenhum cliente encontrado</p>
                 )}
               </div>
             </div>
@@ -178,12 +179,19 @@ export default function VerCliente() {
             <div className=" w-[90%] max-w-[1000px] flex flex-col items-center lg:mr-5 mt-5 lg:mt-0">
               
               <div className=" bg-secondary w-full  p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
-                <div ref={containerRef} className="h-[501px] overflow-auto">
-                  {dataHistorico.map((item) => (
-                    <div key={item.id_historico}>
-                      <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario} />
-                    </div>
-                  ))}
+                <div ref={containerRef} className={`h-[501px] overflow-auto ${dataHistorico.length <= 0 ? 'flex justify-center items-center' : ''}`}>
+                  {dataHistorico.length > 0 ? (
+                    dataHistorico.map((item) => (
+                      <div key={item.id_historico}>
+                        <CardMensagemHistorico texto={item.mensagem} data={item.data} horario={item.horario} />
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-sm text-white/80 ">Nenhum histórico encontrado</p>
+                  )
+                }
+                  
+                  
                 </div>
                 <div className="mt-3 ">
                   <form onSubmit={inserindoHistorico} className=" flex justify-around items-end">
@@ -211,46 +219,27 @@ export default function VerCliente() {
           {/* Parte inferior onde mostrara os anexos */}
           <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20 ">
             {/* Onde mostrará os anexos de cada cliente */}
-            <div className="w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] py-5 px-5 bg-secondary relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto " >
-              {dataDeposito.map((item) => (
-                <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirDepositosCliente(item.id_deposito)}}>
-                  <CardFiltroAnexo data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais} anexo=""/>
-                </Button>
-              ))}
+            <div className={`w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] py-5 px-5 bg-secondary relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto ${dataDeposito.length <= 0 ? 'flex justify-center items-center' : ''} `}>
+              {dataDeposito.length > 0 ? (
+                dataDeposito.map((item) => (
+                  <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirDepositosCliente(item.id_deposito)}}>
+                    <CardFiltroAnexo data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais} anexo=""/>
+                  </Button>
+                ))
+              ) : (
+                <p className="text-center text-sm text-white/80 ">Nenhum depósito encontrado</p>
+              )}
+              
             </div>
             
             {/* Dados detalhados do anexo */}
-            <div className="bg-secondary flex flex-col justify-between w-[90%] max-w-[500px] h-[522px] lg:mr-5  mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+            <div className="bg-secondary  w-[90%] max-w-[500px] h-[522px] lg:mr-5  mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
               {dataDepositoEscolhido.map((item) => (
-                <div>
-                {/* Imagem do anexo */}
-                <div className="relative w-full h-[120px] bg-cover bg-center hover:brightness-90" style={{ backgroundImage: "url('/Planilha.png')" }}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-400 bg-transparent">
-                    <p className="text-white text-lg">Clique para abrir</p>
-                  </div>
-                </div>
-                <div className="flex justify-between py-2 border-b-2 text-white mt-5 ">
-                  <h1 className="text-sm">Data:</h1>
-                  <h1 className="text-sm">{item.data}</h1>
-                </div>
-                <div className="flex justify-between py-2 border-b-2 text-white">
-                  <h1 className="text-sm">Hora:</h1>
-                  <h1 className="text-sm">{item.hora}</h1>
-                </div>
-                <div className="flex justify-between py-2 border-b-2 text-white">
-                  <h1 className="text-sm">Valor Reais:</h1>
-                  <h1 className="text-sm">{item.valorReais}</h1>
-                </div>
-                <div className="flex justify-between py-2 border-b-2 text-white">
-                  <h1 className="text-sm">Valor Fichas:</h1>
-                  <h1 className="text-sm">{item.valorFichas}</h1>
-                </div>
-              </div>
+                <DescricaoDeposito data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais}></DescricaoDeposito>
+                
               ))}
               
-              <div className="w-full flex justify-end">
-                <DialogEditarFichas identificador_props="" data_props="" hora_props="" valorReais_props="" valorFicha_props="" anexo_props=""></DialogEditarFichas>
-              </div>
+             
             </div>
           </div>
         </div>
