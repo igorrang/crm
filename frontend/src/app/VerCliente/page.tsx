@@ -159,15 +159,18 @@ export default function VerCliente() {
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
-              <div className="h-[443px] overflow-auto px-4 mt-3" >
-                
-                {data.map((item) => (
-                  <div key={item.id_cliente} >
-                    <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirHistoricoCliente(item.id_cliente); setMensagemIdCliente(item.id_cliente); filtrarDepositos(item.id_cliente);  }}>
-                      <CardFiltroCliente nome={item.nome} nickname={item.nickname} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status}/>
-                    </Button>
-                  </div>
-                ))}
+              <div className={`h-[443px] overflow-auto px-4 mt-3 ${data.length <= 0 ? 'flex justify-center items-center' : ''}`}>
+                {data.length > 0 ? (
+                  data.map((item) => (
+                    <div key={item.id_cliente}>
+                      <Button variant="clean" size="clean" className="w-full" onClick={() => { exibirHistoricoCliente(item.id_cliente); setMensagemIdCliente(item.id_cliente); filtrarDepositos(item.id_cliente); }}>
+                        <CardFiltroCliente nome={item.nome} nickname={item.nickname} dataInicio={item.dataInicio} ultimaAtualizacao={item.ultimaAtualizacao} origem={item.origem} status={item.status} />
+                      </Button>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-white">Nenhum cliente encontrado</p>
+                )}
               </div>
             </div>
 
