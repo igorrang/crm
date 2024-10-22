@@ -9,7 +9,7 @@ const getDeposito = async (data) => {
         const sql = `SELECT * FROM deposito WHERE id_cliente='${id_cliente}' `
         // Query banco
         const [query] = await connection.execute(sql)
-        // console.log('Query historico: ', query );
+        console.log('Query historico: ', query );
         
         return query
     } catch (err) {

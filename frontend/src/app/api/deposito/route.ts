@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const id_deposito = searchParams.get('id_deposito');
     
-    const res = await axios.get(`http://frontend-backend-ff5606:5050/deposito?id_deposito=${id_deposito}`);
+    const res = await axios.get(`http://localhost:5050/deposito?id_deposito=${id_deposito}`);
     const dados = res.data;
     
     return NextResponse.json(dados);
