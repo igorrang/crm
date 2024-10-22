@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function GET() {
   try {
-    const res = await axios.get('http://frontend-backend-ff5606:5050/tables');
+    const res = await axios.get('http://localhost:5050/tables');
     const dados = res.data;
     
     return NextResponse.json(dados);
@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://frontend-backend-ff5606:5050/tables', body);
+    const res = await axios.post('http://localhost:5050/tables', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.put('http://frontend-backend-ff5606:5050/tables', body);
+    const res = await axios.put('http://localhost:5050/tables', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {

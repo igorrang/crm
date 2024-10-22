@@ -10,22 +10,6 @@ const historicoControllers = require('./controllers/historicoControllers')
 const filtrarDepositoControllers = require('./controllers/filtrarDepositoControllers')
 const depositoControllers = require('./controllers/depositoControllers')
 
-const checkAuth = function (req, res, next) {
-    req.authStatus = true
-    
-    
-    if(req.authStatus) {
-        console.log("Está logado, pode continuar");
-        next()
-    } else {
-        console.log("Não esta logado");
-        
-    }
-}
-
-router.use(checkAuth)
-
-
 router.post("/validacaoLogin", clientesControllers.postCliente)
 
 // // Codigo Igor:
