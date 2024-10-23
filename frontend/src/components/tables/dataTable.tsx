@@ -131,7 +131,7 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
-
+  const [origem, setOrigem] = useState('Todas origens')
   const [data, setData] = useState<Payment[]>([]); // UseState resposavel por listar as linhas da tabela
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -192,7 +192,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   
   return (
     <div className="w-full ">      
-
+      {/* container das opcoes de filtro */}
       <div className="flex items-center flex-wrap py-4">
         <div className={cn("grid gap-2", className)}>
           {/* Popover para filtrar os dados de uma data ate outra data */}
@@ -247,10 +247,10 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
             </PopoverContent>
           </Popover>
         </div>
-        
+    
         <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } />
-        <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
-        <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
+        <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value) } />
+        
         <div className={cn("grid gap-2", className)}>
           {/* Popover para filtrar os dados de uma data ate outra data */}
           <Popover>
@@ -304,6 +304,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
             </PopoverContent>
           </Popover>
         </div>
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="">
