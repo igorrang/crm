@@ -250,60 +250,9 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     
         <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } />
         <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value) } />
+        <Input className="max-w-[280px] m-1 ml-0 bg-secondary" placeholder="Filtrar por última atualização..." value={(table.getColumn("ultimaAtualizacao")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("ultimaAtualizacao")?.setFilterValue(event.target.value) } />
         
-        <div className={cn("grid gap-2", className)}>
-          {/* Popover para filtrar os dados de uma data ate outra data */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                size={"buttonCalendar"}
-                className={cn(
-                  " justify-start text-left font-normal m-1 ml-0",
-                  !date && "text-white/60"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "LLL dd, y")} {" "} - {" "}
-                      {format(date.to, "LLL dd, y")}
-                    </>
-                  ) : (
-                    format(date.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Escolha uma data</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 flex" align="start">
-              <div>
-                <h1 className="text-white/80 mx-4 mt-2">Filtrar por última atualização</h1>
-                <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
-                <div className="flex justify-end mx-4 my-2">
-                  <Button onClick={filtroDataFromTo}>Filtrar</Button>
-                </div>
-              </div>
-              {/* Filtro por períodos já pré estabelecidos */}
-              <div className=" mx-4 my-3 mt-10">
-                <h1 className="text-white/80">Períodos</h1>
-                <div className="mx-3 flex flex-col items-start">
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={listarDados}>Máximo</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5"></Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
+        
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
