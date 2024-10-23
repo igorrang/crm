@@ -27,6 +27,7 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
         cardConta: "my-5 h-10 px-4 py-2",
+        buttonCalendar: "h-10 px-4 py-2"
       },
     },
     defaultVariants: {
