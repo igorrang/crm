@@ -1,4 +1,5 @@
 
+
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
@@ -59,4 +60,3 @@ EXPOSE 3000
 # Usar o Nginx como servidor
 
 CMD ["node", "server.js"]
-
