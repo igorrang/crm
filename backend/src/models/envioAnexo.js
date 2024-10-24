@@ -1,11 +1,9 @@
-const GuardaVolume = require('volume')
-const connection = require('./connection')
+const connection = require('./connection');
 
-anexo.GET = (GuardaVolume) => {
-    const {id_cliente} = GuardaVolume
-    const sql = `SELECT * FROM deposito WHERE id_cliente='${id_cliente}' `
-    const [query] = connection.execute(sql)
-    return query
+const getClienteById = async (id_cliente) => {
+    const sql = `SELECT * FROM deposito WHERE id_cliente='${id_cliente}'`;
+    const [rows] = await connection.execute(sql);
+    return rows;
+};
 
-
-}
+module.exports = { getClienteById };
