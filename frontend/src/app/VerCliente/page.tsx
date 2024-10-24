@@ -154,13 +154,14 @@ export default function VerCliente() {
           <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20">
           
             {/* Card com os dados do cliente */}
-            <div className="w-[90%] max-w-[650px] lg:max-w-[500px]  py-5 relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
+            <div className="w-[90%] max-w-[650px] lg:max-w-[500px] relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
+             <h1 className="mt-3 mb-2 px-5 text-white">Filtrar clientes</h1>
               <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
                 <Input placeholder="Filtrar por nome ou nickname" value={nomeOrNickname} onChange={(e) => setNomeOrNickname(e.target.value)} className="w-full" required/>
                 <Button type="submit" className="my-2" >Confirmar</Button>
               </form>
               
-              <div className={`h-[443px] overflow-auto px-4 mt-3 ${data.length <= 0 ? 'flex justify-center items-center' : ''}`}>
+              <div className={`h-[483px] overflow-auto px-4 mt-3 ${data.length <= 0 ? 'flex justify-center items-center' : ''}`}>
                 {data.length > 0 ? (
                   data.map((item) => (
                     <div key={item.id_cliente}>
@@ -179,6 +180,7 @@ export default function VerCliente() {
             <div className=" w-[90%] max-w-[1000px] flex flex-col items-center lg:mr-5 mt-5 lg:mt-0">
               
               <div className=" bg-secondary w-full  p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+                <h1 className="mt-3 mb-2 text-white">Histórico do cliente</h1>
                 <div ref={containerRef} className={`h-[501px] overflow-auto ${dataHistorico.length <= 0 ? 'flex justify-center items-center' : ''}`}>
                   {dataHistorico.length > 0 ? (
                     dataHistorico.map((item) => (
@@ -190,8 +192,6 @@ export default function VerCliente() {
                     <p className="text-center text-sm text-white/80 ">Nenhum histórico encontrado</p>
                   )
                 }
-                  
-                  
                 </div>
                 <div className="mt-3 ">
                   <form onSubmit={inserindoHistorico} className=" flex justify-around items-end">
@@ -217,30 +217,41 @@ export default function VerCliente() {
 
 
           {/* Parte inferior onde mostrara os anexos */}
-          <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20 ">
-            {/* Onde mostrará os anexos de cada cliente */}
-            <div className={`w-[90%] max-w-[500px] lg:max-w-[500px] h-[522px] py-5 px-5 bg-secondary relative border border-white/70 shadow-md rounded-2xl lg:rounded-r-none overflow-auto ${dataDeposito.length <= 0 ? 'flex justify-center items-center' : ''} `}>
+          <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20">
+          
+            {/* Card com os dados do cliente */}
+            <div className="w-[90%] max-w-[650px] lg:max-w-[500px] relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
+              <h1 className="mt-3 mb-2 px-5 text-white">Histórico depósitos</h1>
+              
+              
+              <div className={`h-[483px] overflow-auto px-4 mt-3 ${dataDeposito.length <= 0 ? 'flex justify-center items-center' : ''}`}>
               {dataDeposito.length > 0 ? (
-                dataDeposito.map((item) => (
-                  <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirDepositosCliente(item.id_deposito)}}>
-                    <CardFiltroAnexo data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais} anexo=""/>
-                  </Button>
+                  dataDeposito.map((item) => (
+                    <Button variant="clean" size="clean" className="w-full" onClick={() => {exibirDepositosCliente(item.id_deposito)}}>
+                      <CardFiltroAnexo data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais} anexo=""/>
+                    </Button>
+                  ))
+                ) : (
+                  <p className="text-center text-sm text-white/80 ">Nenhum depósito encontrado</p>
+                )}
+              </div>
+            </div>
+
+            {/* detalhes do deposito */}
+            
+            <div className={`bg-secondary  w-[90%] max-w-[500px] h-[533px] lg:mr-5  mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md  ${dataDeposito.length <= 0 ? 'flex justify-center items-center' : ''}`}>
+              {dataDeposito.length > 0 ? (
+                dataDepositoEscolhido.map((item) => (
+                  <DescricaoDeposito data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais}></DescricaoDeposito>
+                  
                 ))
               ) : (
                 <p className="text-center text-sm text-white/80 ">Nenhum depósito encontrado</p>
               )}
-              
+
+
             </div>
             
-            {/* Dados detalhados do anexo */}
-            <div className="bg-secondary  w-[90%] max-w-[500px] h-[522px] lg:mr-5  mt-5 lg:mt-0 lg:mr-5 p-5 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
-              {dataDepositoEscolhido.map((item) => (
-                <DescricaoDeposito data={item.data} hora={item.hora} valorFichas={item.valorFichas} valorReais={item.valorReais}></DescricaoDeposito>
-                
-              ))}
-              
-             
-            </div>
           </div>
         </div>
       </div>
