@@ -246,7 +246,7 @@ export default function VerCliente() {
                   
                 ))
               ) : (
-                <p className="text-center text-sm text-white/80 ">Nenhum depósito encontrado</p>
+                <p className="text-center text-sm text-white/80 mt-[45px]">Nenhum detalhe de depósito encontrado</p>
               )}
 
 
