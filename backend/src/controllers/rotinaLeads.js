@@ -1,17 +1,29 @@
-const { postRotinaLeadsModels } = require('../models/rotinaLeadsModels');
-const mostrarCliente = async (req, res) => {
-    const { id_cliente } = req.params;
+const { sumClientes, sumAllClients, getAllClientes, getClientsandOrigem } = require('../models/rotinaLeadsModels');
+
+
+const getAllClientesController = async (req, res) => {
     try {
-        const cliente = await postRotinaLeadsModels(id_cliente);
-        if (cliente.length === 0) {
-            return res.status(404).json({ message: 'Cliente não encontrado' });
-        }
-        res.status(200).json(cliente);
+        const clientes = await getAllClientes();
+        const soma = await sumAllClients()
+        res.status(200).json({clientes,soma});
     } catch (err) {
-        res.status(500).json({ message: 'Erro ao buscar cliente', error: err.message });
+        console.error("Error:", err);
+        res.status(500).json({ message: 'Erro ao buscar clientes' });
+    }
+};
+
+const getClientsandOrigemController = async (req, res) => {
+    try {
+        const clientes = await getClientsandOrigem();
+        const totalIdClientes = await sumClientes();
+        res.status(200).json({ clientes, total_id_clientes: totalIdClientes });
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ message: 'Erro ao buscar cliente e origens', error: err.message });
     }
 };
 
 module.exports = {
-    mostrarCliente
-}
+    getAllClientesController,
+    getClientsandOrigemController
+};
