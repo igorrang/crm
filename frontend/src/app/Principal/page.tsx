@@ -18,15 +18,24 @@ import { cn } from "@/lib/utils"
 import { IoMdContact } from "react-icons/io";
 import { IoLogOutSharp } from "react-icons/io5";
 import { SiMicrosoftexcel } from "react-icons/si";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 
+interface ItemFacebookInsight {
+  campaign_name: string;
+  adset_name: string;
+  date_start: string;
+  date_stop: string;
+  spend: string;
+}
+
 export default function Index() {
   const [origem, setOrigem] = useState('Todas origens')
+  const [dadosFacebookInsights, setDadosFacebookInsights] = useState<ItemFacebookInsight[]>([])
 
   // esse date corresponde ao valor de quando filtrar uma data ate outra data
   const [date, setDate] = React.useState<DateRange | undefined>({
@@ -45,7 +54,25 @@ export default function Index() {
   // Função para o filtrar por periodos
   const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
     const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+  
   }
+  // Função para o filtrar por periodos
+  const facebookInsights = async () => {
+    try {
+      const res = await axios.get("/api/facebook/insights");
+      console.log("Dados recebidos:", res.data); // Verifique o formato no console
+  
+      // Se for um objeto, acessamos o array corretamente
+      const insights = Array.isArray(res.data) ? res.data : res.data.data || [];
+      setDadosFacebookInsights(insights);
+    } catch (error) {
+      console.error("Erro ao buscar dados do Facebook Insights:", error);
+    }
+  };
+
+  useEffect( () => {
+    facebookInsights(); 
+  },[])
 
   return (
     <main>
@@ -146,6 +173,24 @@ export default function Index() {
               <CardDashBoard titulo="Total de vendas" valor="200" urlIcone="/icons/totalvendas.png"/>
               <CardDashBoard titulo="Ticket médio" valor="50" urlIcone="/icons/ticketmedio.png"/>
               <CardDashBoard titulo="Faturamento" valor="150" urlIcone="/icons/faturamento.png"/>
+            </div>
+          </div>
+
+
+          {/* Container controle de clientes */}
+          <div className="w-full mt-10">
+            <h1 className="text-[20px] m-3 mb-0 text-white leading-none tracking-tight">Controle de clientes</h1>
+            <div className="w-full grid mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+            {dadosFacebookInsights.map((insight, index) => (
+              <CardDashBoard
+                key={index}
+                titulo={insight.campaign_name}
+                valor={`R$ ${insight.spend}`} // Exemplo de formatação para valor monetário
+                urlIcone="/icons/totalvendas.png"
+              />
+            ))}
+
+              
             </div>
           </div>
         </div>
