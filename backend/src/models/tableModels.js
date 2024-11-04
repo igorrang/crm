@@ -1,76 +1,61 @@
-const connection = require('./connection')
+const connection = require('./connection');
 
 const getTable = async () => {
     try {
-        // Codigo sql
-        const sql = `SELECT * FROM cliente`
-        // Query banco
-        const [query] = await connection.execute(sql)
-        // console.log("Query result no backend:", query)
-        return query
+        const sql = `SELECT * FROM cliente`;
+        const [query] = await connection.execute(sql);
+        return query;
     } catch (err) {
-        console.error("Error:", err);
-        return 'Erro na QUERY com o BD. Tipo GET', err
+        console.error("Erro na consulta GET:", err);
+        return 'Erro na consulta com o banco de dados';
     }
 }
+
 const postTable = async (data) => {
-    // Pegar valores que vem do front ja desestrutando eles
-    const {dataInicio} = data
-    const {nome} = data
-    const {origem} = data
-    const {nickName} = data
-    const {observacao} = data
-    const {valorFicha} = data
-    const {status} = data
-    const {ultimaAtualizacao} = data
+    const { dataInicio, nome, origem, nickName, observacao, valorFicha, status, ultimaAtualizacao } = data;
     
     try {
-        // Codigo sql
-        const sql = `INSERT INTO cliente VALUES (null, '${dataInicio}', '${nome}', '${origem}','${nickName}', '${observacao}', ${valorFicha}, '${status}', '${ultimaAtualizacao}')`
-        // Query banco
-        const [query] = await connection.execute(sql)
-        return query
+        const sql = `
+            INSERT INTO cliente (dataInicio, nome, origem, nickName, observacao, valorFicha, status, ultimaAtualizacao)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const [query] = await connection.execute(sql, [dataInicio, nome, origem, nickName, observacao, valorFicha, status, ultimaAtualizacao]);
+        return query;
     } catch (err) {
-        console.error("Error:", err);
-        return 'Erro na QUERY com o BD. Tipo POST'
+        console.error("Erro na consulta POST:", err);
+        return 'Erro na consulta com o banco de dados';
     }
 }
 
 const putTable = async (newData) => {
-    const {identificador} = newData
-    const {dataInicio} = newData
-    const {nome} = newData
-    const {origem} = newData
-    const {nickname} = newData
-    const {observacao} = newData
-    const {valorFicha} = newData
-    const {status} = newData
-    const {ultimaAtualizacao} = newData
+    const { identificador, dataInicio, nome, origem, nickname, observacao, valorFicha, status, ultimaAtualizacao } = newData;
    
-    
-    try{
-        const sql = `UPDATE cliente SET dataInicio = '${dataInicio}', nome = '${nome}', origem = '${origem}', nickname='${nickname}', observacao = '${observacao}', valorFicha = '${valorFicha}', status = '${status}', ultimaAtualizacao = '${ultimaAtualizacao}' WHERE id_cliente = '${identificador}'`;
-        const [query ] = await connection.execute(sql);
+    try {
+        const sql = `
+            UPDATE cliente 
+            SET dataInicio = ?, nome = ?, origem = ?, nickname = ?, observacao = ?, valorFicha = ?, status = ?, ultimaAtualizacao = ? 
+            WHERE id_cliente = ?
+        `;
+        const [query] = await connection.execute(sql, [dataInicio, nome, origem, nickname, observacao, valorFicha, status, ultimaAtualizacao, identificador]);
         return query;
-    }  catch (err){
-        console.error("Error:", err);
-        return 'Erro na query com o banco de dados. tipo putTable'
-    }  
-
-}
-
-const deleteTable = async (dropData, tableName) => {
-    const {data_inicio, nome, contato,anuncio, observacoes,valor_fichas,status} = newData
-    try{
-        const query = `DELETE FROM '${tableName}' WHERE None = ?`
-        const [sql] = await connection.execute(query,[data_inicio,nome,contato,anuncio,observacoes,valor_fichas,status])
-        return sql
-
-    }catch{
-        return 'erro na query com o banco de dados '
+    } catch (err) {
+        console.error("Erro na consulta PUT:", err);
+        return 'Erro na consulta com o banco de dados';
     }
 }
 
+const deleteTable = async (tableName, conditions) => {
+    const { data_inicio, nome, contato, anuncio, observacoes, valor_fichas, status } = conditions;
+
+    try {
+        const sql = `DELETE FROM ${tableName} WHERE data_inicio = ? AND nome = ? AND contato = ? AND anuncio = ? AND observacoes = ? AND valor_fichas = ? AND status = ?`;
+        const [query] = await connection.execute(sql, [data_inicio, nome, contato, anuncio, observacoes, valor_fichas, status]);
+        return query;
+    } catch (err) {
+        console.error("Erro na consulta DELETE:", err);
+        return 'Erro na consulta com o banco de dados';
+    }
+}
 
 module.exports = {
     getTable,
