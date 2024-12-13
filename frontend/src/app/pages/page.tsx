@@ -1,4 +1,5 @@
-import CardLogin from "@/components/cards/cardLogin";
+import CardLogin from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardLogin.tsx";
+import React from "react";
 
 
 export default function Home() {

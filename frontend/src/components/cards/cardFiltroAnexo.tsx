@@ -1,4 +1,7 @@
-'use client'; // Garante que o componente seja renderizado no cliente
+'use client';
+import React from "react";
+
+ // Garante que o componente seja renderizado no cliente
 
 export interface cardFiltroClienteProps {
   data: string;
@@ -7,6 +10,7 @@ export interface cardFiltroClienteProps {
   valorFichas: string;
   anexo: string;
 }
+
 
 export default function CardFiltroAnexo({ data, hora, valorReais, valorFichas, anexo }: cardFiltroClienteProps) {
   return (

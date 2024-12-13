@@ -5,6 +5,7 @@ import { IoMdContact } from "react-icons/io";
 import MensagemHistorico from "../texts/mensagemHistorico";
 import NomeHistorico from "../texts/nomeHistorico";
 import DataHistorico from "../texts/dataHistorico";
+import React from "react";
 
 export interface cardMensagemHistoricoProps {
   texto: string

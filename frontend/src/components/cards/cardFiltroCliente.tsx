@@ -1,4 +1,7 @@
-'use client'; // Garante que o componente seja renderizado no cliente
+'use client';
+import React from "react";
+
+ // Garante que o componente seja renderizado no cliente
 
 export interface cardFiltroClienteProps {
   nome: string;

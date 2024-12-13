@@ -1,19 +1,19 @@
 'use client'
 
-import CardDashBoard from "@/components/cards/cardDashBoard";
-import Header from "@/components/header";
-import MensagemBemVindo from "@/components/mensagemBemVindo";
-import Navbar from "@/components/narbar";
-import { Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import CardDashBoard from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardDashBoard";
+import Header from "/Users/igorrangelkonvictus/crm/frontend/src/components/header";
+import MensagemBemVindo from "/Users/igorrangelkonvictus/crm/frontend/src/components/mensagemBemVindo";
+import Navbar from "/Users/igorrangelkonvictus/crm/frontend/src/components/narbar";
+import { Popover, PopoverContent, PopoverTrigger,} from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/popover"
+import { Button } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/button"
+import { Calendar } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/calendar"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { addDays, format } from "date-fns"
 import axios from "axios";
-import { cn } from "@/lib/utils"
+import { cn } from "/Users/igorrangelkonvictus/crm/frontend/src/lib/utils.ts"
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/dropdown-menu";
 
 
 export default function Index() {

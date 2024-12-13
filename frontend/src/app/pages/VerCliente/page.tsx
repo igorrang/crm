@@ -5,15 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { IoSend } from "react-icons/io5";
 
-import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
-import CardMensagemHistorico from "@/components/cards/cardMensagemHistorico";
-import Header from "@/components/header";
-import Navbar from "@/components/narbar";
-import { Input } from "@/components/ui/input";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import CardFiltroAnexo from "@/components/cards/cardFiltroAnexo";
-import DialogEditarFichas from "@/components/dialogs/dialogEditarFichas";
+import CardFiltroCliente from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardFiltroCliente";
+import CardMensagemHistorico from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardMensagemHistorico";
+import Header from "/Users/igorrangelkonvictus/crm/frontend/src/components/header";
+import Navbar from "/Users/igorrangelkonvictus/crm/frontend/src/components/narbar";
+import { Input } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/input";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/breadcrumb";
+import { Button } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/button";
+import CardFiltroAnexo from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardFiltroAnexo";
+import DialogEditarFichas from "/Users/igorrangelkonvictus/crm/frontend/src/components/dialogs/dialogEditarFichas";
+import React from "react";
 
 interface Item {
   id_cliente: number;
