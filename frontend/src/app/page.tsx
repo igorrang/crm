@@ -1,5 +1,5 @@
 import CardLogin from "@/components/cards/cardLogin";
-import Image from "next/image";
+
 
 export default function Home() {
   return (

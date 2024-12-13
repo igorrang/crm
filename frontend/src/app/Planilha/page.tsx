@@ -13,11 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Image from "next/image";
 import Link from "next/link";
-import { IoMdContact } from "react-icons/io";
-import { IoLogOutSharp } from "react-icons/io5";
-import { SiMicrosoftexcel } from "react-icons/si";
 
 
 export default function Planilha() {
