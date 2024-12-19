@@ -1,4 +1,4 @@
-import CardLogin from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardLogin";
+import {CardLogin} from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardLogin";
 import React from "react";
 
 

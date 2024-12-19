@@ -15,35 +15,11 @@ import { Button } from "/Users/igorrangelkonvictus/crm/frontend/src/components/u
 import CardFiltroAnexo from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardFiltroAnexo";
 import DialogEditarFichas from "/Users/igorrangelkonvictus/crm/frontend/src/components/dialogs/dialogEditarFichas";
 import React from "react";
+import {Item,
+  Historico,
+  Deposito
 
-interface Item {
-  id_cliente: number;
-  dataInicio: string;
-  nome: string;
-  origem: string;
-  nickname: string;
-  observacao: string;
-  valorFicha: string;
-  status: string;
-  ultimaAtualizacao: string;
-}
-
-interface Historico {
-  id_historico: number;
-  mensagem: string;
-  data: string;
-  horario: string;
-  id_cliente: number;
-}
-
-interface Deposito {
-  id_deposito: number;
-  data: string;
-  hora: string;
-  valorReais: string;
-  valorFichas: string;
-  id_cliente: number;
-}
+} from '../api/models/types/userTypes'
 
 export default function VerCliente() {
   const [data, setData] = useState<Item[]>([]); //Recebe os dados referente ao filtro de cliente

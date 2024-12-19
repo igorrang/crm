@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import axios from 'axios';
+import { NextResponse, NextRequest} from 'next/server';
+import UserService from '@/service/UserService'
 
 export async function GET(request: Request) {
   try {

@@ -10,7 +10,7 @@ import { Calendar } from "/Users/igorrangelkonvictus/crm/frontend/src/components
 import { Calendar as CalendarIcon } from "lucide-react"
 import { addDays, format } from "date-fns"
 import axios from "axios";
-import { cn } from "/Users/igorrangelkonvictus/crm/frontend/src/lib/utils"
+import { cn } from "../../../service/lib/utils"
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/dropdown-menu";
