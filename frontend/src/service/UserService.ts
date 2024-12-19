@@ -3,7 +3,7 @@ import User, {IUser,IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/fronte
 import { connectMongoDB } from './lib/mongodb';
 import { CadastralUpdateFromGogleSource,CreateUserDto } from '@/app/pages/api/models/types/userTypes';
 import { Resend } from 'resend';
-import {EmailVerificationTemplate} from '@/components/l'
+import {EmailVerificationTemplate} from '@/components/EmailVerificationTemplate'
 const resend = new Resend (process.env.RESEND_API_KEY)
 
 

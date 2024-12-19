@@ -41,7 +41,22 @@ export const CreateUserSchema = yup.object().shape({
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
             'A senha deve ter pelo menos um caractere especial e um número'
           )
-          .required('a senha é obrigatória')
-          
+          .required('a senha é obrigatória'),
+
+        confirmEmail: yup 
+        .string()
+        .nullable()
+        .oneOf([yup.ref('email'), null], 'Os emails devem ser iguais de confirmação')
+        .required('Campo obrigatório'),
+        confirmPassword: yup 
+        .string()
+        .nullable()
+        .oneOf([yup.ref('password'), null], 'As senhas devem ser iguais de confirmação')
+        .required('a senha de confirmação é obrigatoria'),
+        birthdate: yup.date().required('a data de nascimento é obrigatória'),
+        termsOfService: yup
+        .boolean()
+        .oneOf ([true], 'voce precisa aceitar os termos')
+
 
 })
