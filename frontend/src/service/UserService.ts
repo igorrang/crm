@@ -1,19 +1,9 @@
-
-import { randomBytes } from 'crypto';
-import User, {IUser, IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/frontend/src/app/pages/api/models/User'
- // conexão com o mongo dv
-
- import {Resend} from 'resend'
- import{
-    CadastralUpdateFromGogleSource,
-    CreateUserDto,
-    CreateUserDtoFromGoogle,
-    UpdateUserDto
-
- } from '/Users/igorrangelkonvictus/crm/frontend/src/app/pages/api/models/types/userTypes'
-
- import mongoose,{UpdateQuery} from 'mongoose'
-
+import { VerificationCodeTypes } from '@/models/VerificationCode';
+import User, {IUser,IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/frontend/src/app/pages/api/models/User'
+import { connectMongoDB } from './lib/mongodb';
+import { CadastralUpdateFromGogleSource,CreateUserDto } from '@/app/pages/api/models/types/userTypes';
+import { Resend } from 'resend';
+import {EmailVerificationTemplate} from '@/components/l'
 const resend = new Resend (process.env.RESEND_API_KEY)
 
 

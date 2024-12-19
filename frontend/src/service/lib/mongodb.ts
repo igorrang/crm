@@ -1,5 +1,5 @@
 import mongoose,{mongo} from "mongoose";
-import{CustomError, ECustomError} from "../../utils/Errors"
+import{CustomError, ECustomError} from "../utils/Errors"
 
 var mongodb: typeof mongoose | null = null;
 
