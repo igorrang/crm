@@ -88,14 +88,62 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
                 />
 
                 <Button variant="primary"
-                className='self-center mt-11 text-xl w-[]270'>
-
+                className='self-center mt-11 text-xl w-[270] h-[56]'
+                 type='submit'>
+                    Entrar
                 </Button>
+
+                <Button
+                className='mt-7 underline hover:opacity-50 w-fit self-center'
+                type='button'
+                onClick={() => forgotPassword(true)}
+                >
+                 Esqueci a minha senha
+                </Button>
+                
                </Form> 
             )}
           </Formik>  
+          <Box className="w-[610px]">
+        <div className="flex flex-col gap-4">
+          <p className="font-bold text-xl">
+            Entre ou cadastre-se com as suas redes <br /> sociais.
+          </p>
+          <p className="text-brownPrimary text-xl">
+            Prefere um login mais rápido da próxima vez? Use <br /> suas redes
+            sociais para se cadastrar.
+          </p>
+        </div>
+        <GoogleOAuthProvider
+          clientId={process?.env?.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
+        >
+          <GoogleLogin
+            onSuccess={loginWithGoogle}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          />
+        </GoogleOAuthProvider>
+        <Divider className="w-[100%]" />
+        <div className="flex flex-col gap-4 mt-4">
+          <p className="font-bold text-xl">
+            Primeira vez por aqui? Cadastre-se agora!
+          </p>
+          <p className="text-brownPrimary text-xl">
+            Precisamos de poucas informações para criar sua conta LINK MILHAS.
+          </p>
+        </div>
+        <Button
+          variant="primary"
+          className="self-center mt-8 text-xl w-[270px] h-[56px]"
+          onClick={() => register(true)}
+        >
+          Criar conta
+        </Button>
+      </Box>
+        </Box> 
 
-        </Box>    
+
         
         </>
     )
