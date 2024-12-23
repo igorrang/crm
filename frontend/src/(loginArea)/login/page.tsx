@@ -17,7 +17,7 @@ export default function LoginPage(){
                 <Link href={'/login'} className='cursor-pointer'>
                     <Image
                     src=''
-                    alt='logo'
+                    alt='logo'  
                     width={197}
                     height={52}
                     loading='eager'

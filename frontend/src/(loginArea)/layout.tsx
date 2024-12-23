@@ -1,0 +1,7 @@
+import '../global.css'
+import type {Metadata} from 'next'
+import {DM_Sans} from 'next/font/google'
+import {nextAuthOptions} from '@/service/utils/AuthOptions'
+import {getServerSession} from 'next-auth'
+import {redirect} from 'next/navigation'
+import {Toaster} from 'react-hot-toast'
