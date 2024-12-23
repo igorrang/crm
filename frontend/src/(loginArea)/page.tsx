@@ -1,9 +1,10 @@
 'use client'
-import {ForgotPasswordForm} from '@/components/'
+import {ForgotPasswordForm} from '@/components/ForgotPassword/ForgotPassword'
 import {useState} from 'react'
 import {LoginForm} from '@/components/loginform'
 import Image from 'next/image'
 import Link from 'next/link'
+import {RegisterForm} from '@/components/RegisterForm'
 
 
 export default function LoginPage(){
