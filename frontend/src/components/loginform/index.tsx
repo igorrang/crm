@@ -130,7 +130,7 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
             Primeira vez por aqui? Cadastre-se agora!
           </p>
           <p className="text-brownPrimary text-xl">
-            Precisamos de poucas informações para criar sua conta LINK MILHAS.
+            Precisamos de poucas informações para criar sua conta .
           </p>
         </div>
         <Button
