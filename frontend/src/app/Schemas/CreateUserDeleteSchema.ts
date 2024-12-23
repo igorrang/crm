@@ -1,4 +1,4 @@
-import { CreateUserDeleteReasonDTO } from './../../models/types/userTypes';
+
 import * as yup from 'yup'
 
 export const CreateUserDeleteSchema = yup.object().shape({
