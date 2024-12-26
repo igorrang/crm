@@ -31,7 +31,7 @@ export interface CreateUserDtoFromGoogle
     >{}
 
 
-export interface CadastralUpdateFromGogleSource {
+export interface CadastralUpdateFromGoogleSource {
     cpf: string;
     phone: string;
 }

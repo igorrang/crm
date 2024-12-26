@@ -18,6 +18,7 @@ const  verificationCodeSchema = new Schema (
         code: {
             type: String,
             required: true,
+            index: {unique: true }
         },
         email:{type:String, required:false},
         type: {

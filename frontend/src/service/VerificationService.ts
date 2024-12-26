@@ -20,6 +20,16 @@ const sendVerificationCode = async (email:string) => {
     sendEmail(email, verificationCode)
 } 
 
+const verifyCode = async (code:string) => {
+    try{
+        await connectMongoDB();
+        const verificationCodeObj= await VerificationCode.findOne({code:code})
+        await UserService.markUserAsVerified(verificationCodeObj.email)
+    } catch (error){
+        console.log(error)
+    }
+}
+
 const insertCodeOnDatabase = async (
     code: string ,
     type: VerificationCodeTypes,
@@ -42,15 +52,7 @@ const insertCodeOnDatabase = async (
 
 
 
-const verifyCode = async (code:string) => {
-    try{
-        await connectMongoDB();
-        const verificationCodeObj= await VerificationCode.findOne({code:code})
-        await UserService.markUserAsVerified(verificationCodeObj.email)
-    } catch (error){
-        console.log(error)
-    }
-}
+
 
 const generateCode = (type: VerificationCodeTypes) => {
     const charcterAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
