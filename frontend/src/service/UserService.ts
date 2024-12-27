@@ -6,13 +6,7 @@ import {
     CreateUserDtoFromGoogle,
     UpdateUserDto,
     CadastralUpdateFromGoogleSource,
-    CreateUserDeleteReasonDTO,
-    ForgotPasswordRequest ,
-    ValidateForgotPasswordCodeRequest ,
-    VerifyUserEmailRequest,
-    VerifyUserPhoneRequest,
-    ChangePasswordRequest,
-    UserDeleteResonDTO
+    CreateUserDeleteReasonDTO
 } from '/Users/igorrangelkonvictus/crm/frontend/src/models/types/userTypes'
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import VerificationService from './VerificationService';
@@ -35,7 +29,7 @@ const findUserById = async (id:string) => {
 
 }
 
-const createUser = async (createUserDto:CreateUserDto) => {
+const createUser = async (createUserDto: CreateUserDto) => {
     await connectMongoDB();
 
     const salt = randomBytes(16).toString('hex');
@@ -46,10 +40,11 @@ const createUser = async (createUserDto:CreateUserDto) => {
         name: createUserDto.name,
         surname: createUserDto.surname,
         email: createUserDto.email,
-        cpf: createUserDto.phone,
+        cpf: createUserDto.cpf,
+        phone: createUserDto.phone,
         banned: false,
         birthdate: createUserDto.birthdate,
-        emailVerified: false,// trocar para false depois
+        emailVerified: false,
         credentials :{
             password: hashedPassword,
             salt: salt,
@@ -61,15 +56,15 @@ const createUser = async (createUserDto:CreateUserDto) => {
         return null;
     }
 
-    const code: string = VerificationService.generateCode(
+    const code : string = VerificationService.generateCode(
         VerificationCodeTypes.EMAIL_VERIFICATION
-    )
+    ) as string;
 
-    await VerificationService.insertCodeOnDatabase(
+        await VerificationService.insertCodeOnDatabase(
             code,
             VerificationCodeTypes.EMAIL_VERIFICATION,
-            dbData._id
-    )
+            dbData._id as string
+        )
     
     resend.emails.send({
         from: '<ti@konvictus.com.br>',
@@ -106,12 +101,12 @@ const createUserFromGoogle = async (createUserDto: CreateUserDtoFromGoogle) => {
     return dbData
 }
 
-const findByEmail = async (email:string) => {
+const findByEmail = async (email: string) => {
     await connectMongoDB()
 
     let dbData = null 
     try {
-        dbData = await User.findOne({ email:email})
+        dbData = await User.findOne({ email: email})
     } catch(error) {
         console.log(error)
     }
@@ -123,7 +118,7 @@ const findByEmail = async (email:string) => {
     return null
 }
 
-const findByCpf = async (cpf:string) =>{
+const findByCpf = async (cpf: string) =>{
     await connectMongoDB()
 
     let dbData = null
@@ -149,14 +144,15 @@ const markUserAsVerified = async (email:string) => {
     await User.updateOne({email:email}, {emailVerified:true})
 }
 const patchUserFromGoogleAuth = async ( 
-    id:string, updateUserDto : CadastralUpdateFromGoogleSource)=>
+    id: string,
+    updateUserDto : CadastralUpdateFromGoogleSource) =>
         {
             await connectMongoDB()
-            let updateQuery: UpdateQuery<IUser> = {
-            }
+            let updateQuery: UpdateQuery<IUser> = {}
+
             if(updateUserDto.cpf) {
                 updateQuery = {
-                    cpf: updateUserDto.cpf
+                    cpf: updateUserDto.cpf,
                 }
             }
             if (updateUserDto.cpf) {
@@ -173,47 +169,24 @@ const patchUserFromGoogleAuth = async (
             )
         } 
 
-const patchUserAsVerified = async (
-    id:string,
-    UpdateUserDto: CadastralUpdateFromGoogleSource
-) => {
-    await connectMongoDB()
-    let updateQuery: UpdateQuery<IUser> = {}
-    if(UpdateUserDto.cpf){
-        updateQuery = {
-            cpf: UpdateUserDto.cpf
-        }
-    }
-    if (UpdateUserDto.phone){
-        updateQuery = {
-            ...updateQuery,
-            phone: UpdateUserDto.phone
-        }
-    }
-    return await User.findByIdAndUpdate(
-        id,
-        {...UpdateUserDto, metadata: { needsCadastralUpdate: false} },
-        {new : true}
-    )
-}
 
-const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
-    await connectMongoDB()
-    let updateQuery: UpdateQuery<IUser> = {}
-
-    if (updateUserDto.email) {
-        updateQuery = {
-            email: updateUserDto.email
+        const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
+            await connectMongoDB()
+            let updateQuery: UpdateQuery<IUser> = {}
+        
+            if (updateUserDto.email) {
+                updateQuery = {
+                    email: updateUserDto.email
+                }
+            }
+            if (updateUserDto.phone){
+                updateQuery = {
+                    ...updateQuery,
+                    phone: updateUserDto.phone
+                }
+            }
+            return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true})
         }
-    }
-    if (updateUserDto.phone){
-        updateQuery = {
-            ...updateQuery,
-            phone: updateUserDto.phone
-        }
-    }
-    return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true})
-}
 
 const updateUserPasswordById = async (
     id: string,
@@ -266,7 +239,7 @@ const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReaso
         ...userDeleteReasonDto,
         userId: userId,
     }
-    const userDeleteReason = await userDeleteReasonDto.create(
+    const userDeleteReason = await  UserDeleteReason.create(
         completeUserDeleteReasonDto
     )
     return userDeleteReason
@@ -283,5 +256,9 @@ export default {
     findByEmail,
     markUserAsVerified,
     patchUserFromGoogleAuth,
-
+    patchUser,
+    deleteUser,
+    createUserDeleteReason,
+    updateUserPasswordById,
+   
 }

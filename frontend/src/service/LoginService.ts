@@ -27,7 +27,7 @@ const verifyUser = async (credential: string, password: string ) => {
 }
 
 const login = async (loginDto: LoginDto) => {
-    const verifiedUser = await verifyUser(loginDto.credential, loginDto.password)
+    const verifiedUser = await verifyUser(loginDto.credentials, loginDto.password)
     if(verifiedUser) {
         return verifiedUser
     }

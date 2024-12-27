@@ -1,0 +1,14 @@
+export type Action =  
+    | 'USER_SEND_VALUE'
+    | 'USER_SEND_VALUE_SUCCESS'
+    | 'USER_SEND_VALUE_ERROR'
+    | 'USER_SEND_VALUE_RESET'
+    | 'USER_SEND_VALUE_RESET_SUCCESS'
+    | 'USER_SEND_VALUE_RESET_ERROR'
+    | 'USER_SEND_VALUE_RESET_SUCCESS'
+    | 'PAID'
+    | 'PAID_SUCCESS'
+    | 'CONFIRM_FILLED_TICKET_FORM'
+    | 'AWAIT_PAYMENT'
+
+    export type TruggeredBy = 'ADMIN'
