@@ -47,7 +47,7 @@ export const nextAuthOption: NextAuthOptions = {
                         if(!user){
                             const createUserDtoFromGoogle: CreateUserDtoFromGoogle = {
                                 name: payload?.given_name as string, surname: payload?.family_name as string, email: payload?.email as string, confirmEmail: payload?.email as string, provider: UserProvider.GOOGLE_AUTH,
-                                instagram: ''
+                              
                             }
                         
                             try {

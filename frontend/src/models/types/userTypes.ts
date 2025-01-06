@@ -15,7 +15,7 @@ export interface CreateUserDto{
   password: string;
   confirmPassword: string;
   birthdate: Date;
-  instagram: string;
+  
   provider: UserProvider;
 }
 
@@ -27,7 +27,7 @@ export interface UpdateUserDto{
 export interface CreateUserDtoFromGoogle
     extends Omit<
     CreateUserDto,
-    'cpf' | 'password' | 'confirmPassword' | 'phone' | 'birthdate'
+    'cpf' | 'password' | 'confirmPassword' | 'phone' | 'birthdate' 
     >{}
 
 
