@@ -14,20 +14,17 @@ router.post('/tables', tableConstrollers.postTable)
 router.put('/tables/:tableName/:rowId', tableConstrollers.putTable)
 router.delete('/tables/:tableName/:rowId', tableConstrollers.deleteTable)
 
-<<<<<<< Updated upstream
-console.log(this.delete)
-=======
-router.post('/filtroTable', filtroTableConstrollers.postFiltroTable)
+
+//router.post('/filtroTable', filtroTableConstrollers.postFiltroTable)
 
 // Ver cliente
-router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerCliente)
+//router.post('/filtroVerCliente', filtroVerClienteControllers.postFiltroVerCliente)
 
-router.post('/uploadFile', filtroConstrollers.uploadAvatar)
+//router.post('/uploadFile', filtroConstrollers.uploadAvatar)
 // Historico
-router.get('/historico', historicoControllers.getHistorico)
-router.post('/historico', historicoControllers.postHistorico)
+//router.get('/historico', historicoControllers.getHistorico)
+//router.post('/historico', historicoControllers.postHistorico)
 
 
-// console.log(this.delete)
->>>>>>> Stashed changes
+
 module.exports = router

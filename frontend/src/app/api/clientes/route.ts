@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function GET(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.get('http://192.168.0.34:5050/validacaoLogin', body);
+    const res = await axios.get('http://localhost:5050/validacaoLogin', body);
     const dados = res.data;
     console.log(NextResponse.json(dados));
     
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const res = await axios.post('http://192.168.0.34:5050/validacaoLogin', body);
+    const res = await axios.post('http://localhost:5050/validacaoLogin', body);
     const data = res.data;
     return NextResponse.json(data);
   } catch (error) {
