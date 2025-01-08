@@ -12,6 +12,7 @@ import {
 interface EmailVerificationTemplateProps{
     username: string;
     link: string;
+    token: string;
 }
 
 export const EmailVerificationTemplate: React.FC <

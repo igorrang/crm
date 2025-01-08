@@ -16,7 +16,7 @@ export default function LoginPage(){
             <div className='mt-[50px] 15inch:mt-2'>
                 <Link href={'/login'} className='cursor-pointer'>
                     <Image
-                    src=''
+                    src='/images/tokio.jpg'
                     alt='logo'  
                     width={197}
                     height={52}

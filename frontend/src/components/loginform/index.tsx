@@ -1,12 +1,12 @@
-import { Box } from 'lucide-react';
+import { Box } from '@/components/Box';
 import {Formik,Form} from 'formik'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google'
 import { Divider } from '../Divider/divider'
 import {useState} from 'react'
 import {signIn} from 'next-auth/react'
-import {useRouter} from 'next/router'
-import {toast} from 'react-hot-toast'
+import {useRouter} from 'next/navigation'
+import toast from 'react-hot-toast'
 import {loginSchema} from '@/app/Schemas/LoginSchema'
 import Email from 'next-auth/providers/email';
 import { Input } from '@/components/input/input';
@@ -36,7 +36,7 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
         }
 
         setIsLoading(false)
-        router.replace('/Home')
+        router.replace('/Planilha')
     }
 
     const handleSubmit = async (values: {email:string; password:string}) => {
@@ -51,6 +51,8 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
             toast.error(result.error)
             return
         }
+        setIsLoading(false)
+        router.replace('/Planilha')
     };
 
 

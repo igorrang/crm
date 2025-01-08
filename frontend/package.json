@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@mantine/core": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
     "@mui/icons-material": "^6.2.1",
@@ -53,6 +55,7 @@
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.0.4",
     "yup": "^1.6.1"
   },
   "devDependencies": {

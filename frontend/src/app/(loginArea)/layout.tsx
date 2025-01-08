@@ -1,4 +1,4 @@
-import '../global.css'
+import '/Users/igorrangelkonvictus/crm/frontend/src/app/globals.css'
 import type {Metadata} from 'next'
 import {DM_Sans} from 'next/font/google'
 import NextAuthSessionProvider from '@/models/providers/sessionProvider'
@@ -21,13 +21,13 @@ export default async function LoginAreaLayout({
 }) {
     const session = await getServerSession(nextAuthOption)
     if (session) {
-        redirect( '/Home')
+        redirect( '/Planilha')
     }
 
     return (
         <html lang="pt-br">
             <body
-            className={`${DMSans.className} flex flex-col bg-black h-screen w-screen`}
+            className={`${DMSans.className} flex flex-col h-screen w-screen`}
             >
                 <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
             </body>
