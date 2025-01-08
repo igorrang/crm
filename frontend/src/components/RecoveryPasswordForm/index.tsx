@@ -102,9 +102,17 @@ export const RecoveryPasswordForm = ({
                         onChange={e => setFieldValue('confirmPassword', e.target.value)}
                         id='confirmPassword'
                         name='confirmPassword'
-                        type
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        onClick={()=>  setShowConfirmPassword}
+                        className='flex-row-reverse pr-4'
                         />
-                       
+                        <Button
+                        variant='primary'
+                        className='self-center mt-11 text-xl w-[270] h-[56]'
+                        type='submit'
+                        >
+                            confirmar
+                        </Button>
                     </Form>
                 )}
             </Formik>
