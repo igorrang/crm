@@ -11,7 +11,7 @@ import { Box } from 'lucide-react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { Divider } from '../Divider/divider';
-import { loginSchema } from '/Users/igorrangelkonvictus/crm/frontend/src/app/Schemas/LoginSchema';
+import { loginSchema } from '../../app/schemas/LoginSchema';
 
 type LoginFormProps = {
   register?: any;

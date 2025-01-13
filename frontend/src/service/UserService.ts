@@ -66,15 +66,16 @@ const createUser = async (createUserDto: CreateUserDto) => {
             dbData._id as string
         )
     
-    resend.emails.send({
-        from: '<ti@konvictus.com.br>',
-        to: [dbData.email],
-        subject: 'Verificação de email',
-        react: EmailVerificationTemplate({
-            username:dbData.name,
+        resend.emails.send({
+            from: '<ti@konvictus.com.br>',
+            to: [dbData.email],
+            subject: 'Verificação de email',
+            react: EmailVerificationTemplate({
+            username: dbData.name,
             link: `${process.env.BASE_URL}/confirmar-email?email=${dbData.email}&code=${code}`,
-        }),
-        text: 'Verificação de email',
+            token: code
+            }),
+            text: 'Verificação de email',
     })
 
     return dbData;

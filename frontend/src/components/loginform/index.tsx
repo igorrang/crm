@@ -7,7 +7,7 @@ import {useState} from 'react'
 import {signIn} from 'next-auth/react'
 import {useRouter} from 'next/navigation'
 import toast from 'react-hot-toast'
-import {loginSchema} from '@/app/Schemas/LoginSchema'
+import {loginSchema} from '@/app/schemas/LoginSchema'
 import Email from 'next-auth/providers/email';
 import { Input } from '@/components/input/input';
 import { Button } from '@/components/Button';

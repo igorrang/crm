@@ -1,5 +1,5 @@
 'use client'
-import {ForgotPasswordForm} from '@/components/ForgotPassword/ForgotPassword'
+import {ForgotPasswordForm} from '@/components/ForgotPasswordForm/ForgotPasswordForm'
 import {useState} from 'react'
 import {LoginForm} from '@/components/loginform'
 import Image from 'next/image'

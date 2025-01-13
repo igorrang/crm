@@ -5,7 +5,7 @@ import User from './User'
 export enum VerificationCodeTypes {
     EMAIL_VERIFICATION = 'EMAIL_VERIFICATION',
     FORGOT_PASSWORD = 'FORGOT_PASSWORD',
-    PHONE_VERIFICATION = 'PHONE_VERIFICATION',
+    PHONE_VERIFICATION = 'PHONE_VERIFICATION'
 }
 export enum VerificationCodeStatuses {
     USABLE = "USABLE",

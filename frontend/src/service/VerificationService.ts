@@ -4,6 +4,7 @@ import {addHours} from 'date-fns'
 import VerificationCode, {VerificationCodeStatuses,VerificationCodeTypes,} from '@/models/VerificationCode';
 import {connectMongoDB} from '@/service/lib/mongodb';
 import UserService from '@/service/UserService';
+import { ObjectId } from 'mongodb';
 
 const sendVerificationCode = async (email:string) => {
     const verificationCode = createHash('sha256').update(email).digest('hex');
@@ -81,6 +82,7 @@ const generateCode = (type: VerificationCodeTypes) => {
 }
 
 const findVerificationCodes = async (
+    
     code: string,
     type: VerificationCodeTypes,
 ) => {
@@ -103,7 +105,26 @@ const findVerificationCodes = async (
         console.log(error)
     }
 }
-
+const verificationPhoneCode = async (userId:string,code:string, type:VerificationCodeTypes) => {
+    try{
+        await connectMongoDB()
+        const verificationCodePhone = await VerificationCode.findOne({
+            userRef: new ObjectId(userId),
+            type,
+            status: VerificationCodeStatuses.USABLE,
+            experiesAt: {gte$: new Date()},
+        })
+        .sort({createdAt: -1})
+        .populate('userRef')
+        if (verificationCodePhone.code === code) {
+            return verificationCodePhone
+        } else {
+            return null
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 const updateVerificationCodes = async (
     code: string,
     newStatus: VerificationCodeStatuses
@@ -127,7 +148,8 @@ const VerificationService = {
     generateCode,
     findVerificationCodes,
     updateVerificationCodes,
-    insertCodeOnDatabase
+    insertCodeOnDatabase,
+    verificationPhoneCode
 }
 
 export default VerificationService

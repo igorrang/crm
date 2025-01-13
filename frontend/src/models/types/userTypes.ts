@@ -3,7 +3,9 @@ export enum UserProvider{
     EMAIL_PASSWORD = 'EMAIL_PASSWORD',
     GOOGLE_AUTH = 'GOOGLE_AUTH',
 }
-
+export interface ForgotPasswordRequest {
+  email: string;
+}
 
 export interface CreateUserDto{
   name: string;
@@ -83,6 +85,10 @@ export interface Item {
     valorReais: string;
     valorFichas: string;
     id_cliente: number;
+  }
+
+  export interface VerifyUserPhoneRequest {
+    code: string
   }
   
   export interface Credentials {
