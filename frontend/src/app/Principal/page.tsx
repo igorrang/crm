@@ -1,5 +1,5 @@
 'use client'
-
+import {postData} from '@/service/APIService'
 import CardDashBoard from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardDashBoard";
 import Header from "/Users/igorrangelkonvictus/crm/frontend/src/components/header";
 import MensagemBemVindo from "/Users/igorrangelkonvictus/crm/frontend/src/components/mensagemBemVindo";
@@ -9,33 +9,74 @@ import { Button } from "/Users/igorrangelkonvictus/crm/frontend/src/components/u
 import { Calendar } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/calendar"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { addDays, format } from "date-fns"
-import axios from "axios";
+import { useRouter , useSearchParams} from 'next/navigation'
 import { cn } from "../../service/lib/utils"
-import React, { useState } from "react";
-import { DateRange } from "react-day-picker";
+import React, { useEffect, useState } from "react";
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "/Users/igorrangelkonvictus/crm/frontend/src/components/ui/dropdown-menu";
+import toast from 'react-hot-toast';
 
 
-export default function Index() {
+
+type DateRange = {
+  from?:Date;
+  to?: Date
+}
+
+function Index() {
   const [origem, setOrigem] = useState('Todas origens')
+  const [queryParams, setQueryParams] = useState<{nome?: string; status?: string}>({})
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   // esse date corresponde ao valor de quando filtrar uma data ate outra data
-  const [date, setDate] = React.useState<DateRange | undefined>({
+  
+
+  const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 30),
   })
-
+  
+  useEffect(() => {
+    const status = searchParams.get('status')
+    const nome = searchParams.get('nome')
+    
+    if (nome || status) {
+      setQueryParams({nome: nome || "" ,status: status || ""})
+    }
+  }, [searchParams])
   // Função que realizará o filtro de uma data ate outra data e carregar todos dados correspondentes
-  const filtroDataFromTo = async () => {
+   const filtroDataFromTo = async () => {
     const dateFrom = date?.from // Pegando a data inicial do filtro
     const dateTo = date?.to // Pegando a data final do filtro
-    
-    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
-  }
+    if (!dateFrom || !dateTo){
+      toast.error('Selecione uma data valida')
+      return
+    }
+    try {
+      await postData({
+        dateFrom,
+        dateTo,
+      },
+      '/Principal/data'
+    )
+
+    }catch(error) {
+      toast.error('nao foi possivel listar essa data')
+     }
   
   // Função para o filtrar por periodos
-  const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
-    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+  const filtroPeriodo = async (dateFrom: Date, dateTo: Date, ) => {    
+    try {
+      const payload = {
+        dateFrom,
+        dateTo,
+        ...queryParams
+      }
+      await postData(payload,'/Principal/data')
+    } catch(error) {
+      toast.error('nao foi possivel listar essa data')
+    }
   }
 
   return (
@@ -143,4 +184,11 @@ export default function Index() {
       </div>
     </main>
   );
+}
+}
+
+export default {
+  Index
+
+
 }

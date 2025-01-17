@@ -44,8 +44,8 @@ export type Action =
 
     }
 
-    export interface Planilha {
-        data_inicio: AdmActions.ADD_DATA_INICIO;
+    export interface CreateLead {
+        datainicio: AdmActions.ADD_DATA_INICIO;
         nome: string ;
         origem: LeadsOrigin;
         nickname: string;
@@ -54,4 +54,14 @@ export type Action =
         status: UserStatus;
     }
 
-    
+
+    export interface UpdateLead{
+        datainicio: string;
+        nome: string;
+        origem: string;
+        nickname: string;
+        observacao: string;
+        valorFicha: string;
+        status: string;
+        ultimatualizacao: string;
+    }

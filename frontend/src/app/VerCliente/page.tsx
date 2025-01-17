@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { IoSend } from "react-icons/io5";
-
 import CardFiltroCliente from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardFiltroCliente";
 import CardMensagemHistorico from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardMensagemHistorico";
 import Header from "/Users/igorrangelkonvictus/crm/frontend/src/components/header";
