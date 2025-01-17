@@ -27,7 +27,15 @@ export const patchData = async (data:any , url:string) => {
     }
         return response.json()
     }
-
+export const listData = async (data:any , url:string) => {
+    const response = await fetch (`/api/${url}`,{
+        method: 'LIST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+}
 
     export const postData = async(data:any , url:string) => {
         const response = await fetch(`/api/${url}`,{

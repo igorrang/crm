@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import axios from "axios";
-import {useRouter} from 'next/router'
-import toast from 'react-hot-toast'
 import { addDays, format } from "date-fns"
+
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { cn } from "@/service/lib/utils"
@@ -18,13 +18,12 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import DialogEditarCliente from "../dialogs/dialogEditarCliente";
 import DialogFichas from "../dialogs/dialogFichas";
-import { postData } from "@/service/APIService";
 
-const data: Leed[] = []
+const data: Payment[] = []
 
-export type Leed = {
-  _id: string;
-  datainicio: string;
+export type Payment = {
+  id: string;
+  dataInicio: string;
   nome: string;
   origem: string;
   nickname: string;
@@ -34,72 +33,106 @@ export type Leed = {
   ultimaAtualizacao: string;
 };
 
-export const  textColumns = ['datainiicio','nome', 'origem','nickname', 'observacao' , 'status', 'ultimatualizacao'].map((key)=> ({
-  acessorKey: key,
-  header: key.charAt(0).toUpperCase() + key.slice(1),
-  cell: ({row}: {row:any}) => <div className="capitalize text-white">{row.getValeu(key)}</div>
-})
-)
-export const columns: ColumnDef<Leed>[] =[
-  ...textColumns,
+export const columns: ColumnDef<Payment>[] = [
+  
   {
-    accessorKey: 'valorFichas',
-    header: () => <div className="text-right">Valor das fichas</div>,
-    cell: ({row}) => {
-      const valorFichas = parseFloat(row.getValue('valorFicha'))
-      const formatted = new Intl.NumberFormat('pt-br ', {
-        style: 'currency',
-        currency: 'BRL'
-      }).format(valorFichas)
-
-      return <div className='text-right font-medium text-white'>{formatted}</div>
-    },
-  },
-  {
-    accessorKey:'_id',
-    header:'editar',
-    enableHiding:false,
-    cell: ({row}) => {
-      <DialogEditarCliente
-        identificador_props={row.getValue('id_cliente')}
-        dataInicio_props={row.getValue('datainicio')}
-        nome_props={row.getValue('nome')}
-        origem_props={row.getValue('origem')}
-        nickName_props={row.getValue('nickname')}
-        observacao_props={row.getValue('observacao')}
-        valorFicha_props={row.getValue('valorFicha')}
-        status_props={row.getValue('status')}
-        ultimaAtualizacao_props={row.getValue('ultimaAtualizacao')}
-      />
-    },
-  },
-  {
-    id:'actions',
-    enableHiding: false,
-    cell: ({row}) => (
-      <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Abrir menu</span>
-          <DotsHorizontalIcon className="h-4 w-4 text-white" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Ações</DropdownMenuLabel>
-        <DialogFichas identificador_props={row.getValue("id_cliente")} />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem></DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    accessorKey: "dataInicio",
+    header: "Data de Inicio",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("dataInicio")}</div>
     ),
   },
-  
-]
-
+  {
+    accessorKey: "nome",
+    header: "Nome",
+    cell: ({ row }) => <div className="capitalize text-white">{row.getValue("nome")}</div>,
+  },
+  {
+    accessorKey: "origem",
+    header: "Origem",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("origem")}</div>
+    ),
+  },
+  {
+    accessorKey: "nickname",
+    header: "Nickname",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("nickname")}</div>
+    ),
+  },
+  {
+    accessorKey: "observacao",
+    header: "Observação",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("observacao")}</div>
+    ),
+  },
+  {
+    accessorKey: "valorFicha",
+    header: () => <div className="text-right">Valor das fichas</div>,
+    cell: ({ row }) => {
+      const valorFicha = parseFloat(row.getValue("valorFicha"))
+      const formatted = new Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(valorFicha)
+ 
+      return <div className="text-right font-medium text-white">{formatted}</div>
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("status")}</div>
+    ),
+  },
+  {
+    accessorKey: "ultimaAtualizacao",
+    header: "Ultima Atualização",
+    cell: ({ row }) => (
+      <div className="capitalize text-white">{row.getValue("ultimaAtualizacao")}</div>
+    ),
+  },
+  {
+    id: "id_cliente",
+    accessorKey: "id_cliente",
+    header: "Editar",
+    enableHiding: false,
+    cell: ({ row }) => {
+      return(
+        <DialogEditarCliente identificador_props={row.getValue("id_cliente")} dataInicio_props={row.getValue("dataInicio")} nome_props={row.getValue("nome")} origem_props={row.getValue("origem")} nickName_props={row.getValue("nickname")}  observacao_props={row.getValue("observacao")} valorFicha_props={row.getValue("valorFicha")} status_props={row.getValue("status")} ultimaAtualizacao_props={row.getValue("ultimaAtualizacao")}></DialogEditarCliente>
+      )
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Abrir menu</span>
+              <DotsHorizontalIcon className="h-4 w-4 text-white" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DialogFichas identificador_props={row.getValue("id_cliente")} /> 
+            <DropdownMenuSeparator />
+            <DropdownMenuItem></DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+];
 
 export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
 
-  const [data, setData] = useState<Leed[]>([]); // UseState resposavel por listar as linhas da tabela
+  const [data, setData] = useState<Payment[]>([]); // UseState resposavel por listar as linhas da tabela
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -146,34 +179,15 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   const filtroDataFromTo = async () => {
     const dateFrom = date?.from // Pegando a data inicial do filtro
     const dateTo = date?.to // Pegando a data final do filtro
-    if (!dateFrom || !dateTo){
-      toast.error('Selecione uma data valida')
-      return
-    }
-    try {
-      await postData({
-        dateFrom,
-        dateTo,
-      },
-      '/Principal/data'
-    )
-
-    }catch(error) {
-      toast.error('nao foi possivel listar essa data')
-     }
+    
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
+  }
   
   // Função para o filtrar por periodos
   const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
-    try {
-      const payload = {
-        dateFrom,
-        dateTo,
-        ...data
-      }
-      await postData(payload,'/dataTable/data')
-    } catch(error) {
-      toast.error('nao foi possivel listar essa')
-    }
+    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+    setData(res.data)
   }
   
   return (
@@ -323,5 +337,4 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
       </div>
     </div>
   );
-
-  }}
+}
