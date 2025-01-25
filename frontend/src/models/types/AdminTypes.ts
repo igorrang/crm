@@ -45,13 +45,13 @@ export type Action =
     }
 
     export interface CreateLead {
-        datainicio: AdmActions.ADD_DATA_INICIO;
-        nome: string ;
-        origem: LeadsOrigin;
+        nome: string;
+        origem: string;
+        status: string;
+        datainicio: Date;
         nickname: string;
-        observacao: string;
         valorFicha: string;
-        status: UserStatus;
+        observacoes?: string;
     }
 
 

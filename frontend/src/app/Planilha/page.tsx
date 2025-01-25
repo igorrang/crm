@@ -4,6 +4,7 @@ import DialogCadastrarCliente from "@/components/dialogs/dialogCadastrarCliente"
 import Header from "@/components/header";
 import Navbar from "@/components/narbar";
 import { DataTable } from "@/components/tables/dataTable";
+import { ExcelUpload } from "@/components/upload/ExcelUpload";
 
 import {
   Breadcrumb,
@@ -44,6 +45,7 @@ export default function Planilha() {
           
           <div className="container mx-auto py-10">
             <DialogCadastrarCliente></DialogCadastrarCliente>
+            <ExcelUpload />
             <DataTable></DataTable>
           </div>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { addDays, format } from "date-fns"
@@ -19,10 +19,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@
 import DialogEditarCliente from "../dialogs/dialogEditarCliente";
 import DialogFichas from "../dialogs/dialogFichas";
 
-const data: Payment[] = []
-
-export type Payment = {
-  id: string;
+export interface Payment {
+  _id: string;
   dataInicio: string;
   nome: string;
   origem: string;
@@ -31,7 +29,7 @@ export type Payment = {
   valorFicha: string;
   status: "Pendente" | "Processando" | "Sucesso" | "Fracassado";
   ultimaAtualizacao: string;
-};
+}
 
 export const columns: ColumnDef<Payment>[] = [
   
@@ -137,17 +135,33 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Função para listar os dados da tabela assim que entrar na pagina da planilha
   const listarDados = async () => {
-    const res = await axios.get("/api/table");
-    setData(res.data); // Atualiza o estado com os dados recebidos
+    setIsLoading(true);
+    try {
+      const res = await axios.get("/api/table");
+      setData(res.data); // Atualiza o estado com os dados recebidos
+    } catch (error) {
+      console.error("Erro ao carregar dados:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   
   // Inicia uma função ao carregar a pagina
-  useEffect( () => {
-    listarDados(); 
-  },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await listarDados();
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
     
 
   const table = useReactTable({
@@ -177,19 +191,40 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
 
   // Função que realizará o filtro de uma data ate outra data e carregar todos dados correspondentes
   const filtroDataFromTo = async () => {
-    const dateFrom = date?.from // Pegando a data inicial do filtro
-    const dateTo = date?.to // Pegando a data final do filtro
-    
-    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
-    setData(res.data)
+    setIsLoading(true);
+    try {
+      const dateFrom = date?.from;
+      const dateTo = date?.to;
+      
+      if (!dateFrom || !dateTo) return;
+
+      const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+      setData(res.data)
+    } catch (error) {
+      console.error("Erro ao filtrar dados:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
   
   // Função para o filtrar por periodos
   const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
-    const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
-    setData(res.data)
+    setIsLoading(true);
+    try {
+      const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
+      setData(res.data)
+    } catch (error) {
+      console.error("Erro ao filtrar por período:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
   
+  // Melhore a performance usando useCallback para funções que são passadas como props
+  const handleColumnVisibilityChange = useCallback((value: VisibilityState) => {
+    setColumnVisibility(value);
+  }, []);
+
   return (
     <div className="w-full ">      
 
@@ -335,6 +370,13 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
           <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>Próximo</Button>
         </div>
       </div>
+      
+      {/* Adicione loading state */}
+      {isLoading && (
+        <div className="flex justify-center items-center h-24">
+          <span className="text-white">Carregando...</span>
+        </div>
+      )}
     </div>
   );
 }

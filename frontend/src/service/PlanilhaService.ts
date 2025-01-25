@@ -106,6 +106,48 @@ const deleteLead = async (id:string) => {
     return {success: true, message:'User delete',leadId: id}
 }
 
+const listarPlanilhas = async () => {
+    await connectMongoDB();
+    try {
+        const planilhas = await PlanilhaTabela.find({}).sort({ datainicio: -1 });
+        return planilhas;
+    } catch (error) {
+        console.error('Erro ao listar planilhas:', error);
+        throw error;
+    }
+}
+
+const filtrarPorData = async (dateFrom: Date, dateTo: Date) => {
+    await connectMongoDB();
+    try {
+        const planilhas = await PlanilhaTabela.find({
+            datainicio: {
+                $gte: new Date(dateFrom),
+                $lte: new Date(dateTo)
+            }
+        }).sort({ datainicio: -1 });
+        
+        return planilhas;
+    } catch (error) {
+        console.error('Erro ao filtrar por data:', error);
+        throw error;
+    }
+}
+
+const deletePlanilha = async (id: string) => {
+    await connectMongoDB();
+    try {
+        const result = await PlanilhaTabela.findByIdAndDelete(id);
+        if (!result) {
+            throw new Error('Planilha não encontrada');
+        }
+        return { success: true, message: 'Planilha excluída com sucesso' };
+    } catch (error) {
+        console.error('Erro ao excluir planilha:', error);
+        throw error;
+    }
+}
+
 export default {
     findLeedById,
     createLeed,
@@ -113,5 +155,8 @@ export default {
     findDataInicio,
     findByName,
     updateLead,
-    deleteLead
+    deleteLead,
+    deletePlanilha,
+    listarPlanilhas,
+    filtrarPorData
 }
