@@ -1,27 +1,32 @@
 import { NextResponse } from 'next/server';
-import { connectMongoDB } from '@/service/lib/mongodb';
 import PlanilhaTabela from '@/models/Planilha';
+import { connectDB } from '@/service/db';
 
 export async function DELETE(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
-        await connectMongoDB();
-        const result = await PlanilhaTabela.findByIdAndDelete(params.id);
-        
-        if (!result) {
+        await connectDB();
+        const id = params.id;
+
+        const deletedPlanilha = await PlanilhaTabela.findByIdAndDelete(id);
+
+        if (!deletedPlanilha) {
             return NextResponse.json(
-                { error: 'Planilha não encontrada' },
+                { error: 'Registro não encontrado' },
                 { status: 404 }
             );
         }
 
-        return NextResponse.json({ success: true });
+        return NextResponse.json(
+            { message: 'Registro excluído com sucesso' },
+            { status: 200 }
+        );
     } catch (error) {
         console.error('Erro ao excluir:', error);
         return NextResponse.json(
-            { error: 'Erro ao excluir planilha' },
+            { error: 'Erro ao excluir registro' },
             { status: 500 }
         );
     }

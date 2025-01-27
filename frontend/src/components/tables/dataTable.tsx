@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import axios from "axios";
 import { addDays, format } from "date-fns"
 
-import { Calendar as CalendarIcon } from "lucide-react"
+import { Calendar as CalendarIcon, Trash2, FileX } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { cn } from "@/service/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -18,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import DialogEditarCliente from "../dialogs/dialogEditarCliente";
 import DialogFichas from "../dialogs/dialogFichas";
+import axios from "axios";
 
 export interface Payment {
   _id: string;
@@ -32,7 +32,6 @@ export interface Payment {
 }
 
 export const columns: ColumnDef<Payment>[] = [
-  
   {
     accessorKey: "dataInicio",
     header: "Data de Inicio",
@@ -75,7 +74,7 @@ export const columns: ColumnDef<Payment>[] = [
         style: "currency",
         currency: "BRL",
       }).format(valorFicha)
- 
+
       return <div className="text-right font-medium text-white">{formatted}</div>
     },
   },
@@ -108,6 +107,18 @@ export const columns: ColumnDef<Payment>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
+      const handleDelete = async () => {
+        if (confirm("Tem certeza que deseja excluir este registro?")) {
+          try {
+            await axios.delete(`/api/planilha/${row.original._id}`);
+            window.location.reload();
+          } catch (error) {
+            console.error("Erro ao excluir:", error);
+            alert("Erro ao excluir o registro");
+          }
+        }
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -118,9 +129,11 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DialogFichas identificador_props={row.getValue("id_cliente")} /> 
-            <DropdownMenuSeparator />
-            <DropdownMenuItem></DropdownMenuItem>
+            <DialogFichas identificador_props={row.getValue("id_cliente")} />
+            <DropdownMenuItem onClick={handleDelete} className="text-red-600">
+              <Trash2 className="mr-2 h-4 w-4" />
+              Excluir
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -129,7 +142,6 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
-
   const [data, setData] = useState<Payment[]>([]); // UseState resposavel por listar as linhas da tabela
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -141,8 +153,9 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   const listarDados = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("/api/table");
-      setData(res.data); // Atualiza o estado com os dados recebidos
+      const res = await fetch("/api/table");
+      const dados = await res.json();
+      setData(dados);
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
     } finally {
@@ -166,7 +179,7 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -198,8 +211,16 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
       
       if (!dateFrom || !dateTo) return;
 
-      const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
-      setData(res.data)
+      const res = await fetch("/api/filtroTable", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ dateFrom, dateTo })
+      });
+      
+      const dados = await res.json();
+      setData(dados);
     } catch (error) {
       console.error("Erro ao filtrar dados:", error);
     } finally {
@@ -211,8 +232,16 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   const filtroPeriodo = async (dateFrom: Date, dateTo: Date): Promise<void> => {    
     setIsLoading(true);
     try {
-      const res = await axios.post("/api/filtroTable", {dateFrom, dateTo});
-      setData(res.data)
+      const res = await fetch("/api/filtroTable", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ dateFrom, dateTo })
+      });
+      
+      const dados = await res.json();
+      setData(dados);
     } catch (error) {
       console.error("Erro ao filtrar por período:", error);
     } finally {
@@ -225,62 +254,47 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
     setColumnVisibility(value);
   }, []);
 
-  return (
-    <div className="w-full ">      
+  // Adicione esta função
+  const handleDeleteAll = async () => {
+    if (confirm("Tem certeza que deseja excluir toda a planilha? Esta ação não pode ser desfeita.")) {
+      try {
+        const res = await fetch('/api/planilha', {
+          method: 'DELETE'
+        });
 
+        if (res.ok) {
+          setData([]); // Limpa os dados localmente
+          alert("Planilha excluída com sucesso!");
+        } else {
+          throw new Error('Erro ao excluir planilha');
+        }
+      } catch (error) {
+        console.error("Erro ao excluir planilha:", error);
+        alert("Erro ao excluir a planilha");
+      }
+    }
+  };
+
+  return (
+    <div className="w-full">
       <div className="flex items-center flex-wrap py-4">
         <div className={cn("grid gap-2", className)}>
-          {/* Popover para filtrar os dados de uma data ate outra data */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "w-[300px] justify-start text-left font-normal m-1 ml-0",
-                  !date && "text-white/60"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "LLL dd, y")} -{" "}
-                      {format(date.to, "LLL dd, y")}
-                    </>
-                  ) : (
-                    format(date.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Escolha uma data</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 flex" align="start">
-              <div>
-                <Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={setDate} numberOfMonths={2}/>
-                <div className="flex justify-end mx-4 my-2">
-                  <Button onClick={filtroDataFromTo}>Filtrar</Button>
-                </div>
-              </div>
-              {/* Filtro por períodos já pré estabelecidos */}
-              <div className=" mx-4 my-3">
-                <h1 className="text-white/80">Períodos</h1>
-                <div className="mx-3 flex flex-col items-start">
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={listarDados}>Máximo</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(), new Date())}>Hoje</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1)))}>Ontem</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 7)), new Date())}>Últimos 7 dias</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().setDate(new Date().getDate() - 14)), new Date())}>Últimos 14 dias</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date())}>Este mês</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5" onClick={() => filtroPeriodo(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1), new Date(new Date().getFullYear(), new Date().getMonth(), 0))}>Mês passado</Button>
-                  <Button variant='clean' size='clean' className="text-white/80 my-0.5"></Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+          <Link href="/Cadastro">
+            <Button variant="outline" className="text-white">
+              Cadastrar Cliente
+            </Button>
+          </Link>
+          
+          <Button 
+            variant="outline"
+            onClick={handleDeleteAll}
+            className="flex items-center gap-2 text-white hover:text-red-600 ml-2"
+          >
+            <FileX className="h-4 w-4" />
+            Excluir Planilha
+          </Button>
         </div>
-        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value) } />
+        <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
         <DropdownMenu>

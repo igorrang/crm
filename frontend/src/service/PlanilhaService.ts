@@ -1,162 +1,97 @@
-import { CreateLead, UpdateLead } from './../models/types/AdminTypes';
-import {connectMongoDB} from './lib/mongodb'
+import { CreateLead, UpdateLead } from '../models/types/AdminTypes';
+import { connectMongoDB } from './lib/mongodb';
 import mongoose, { UpdateQuery } from 'mongoose';
-import PlanilhaTabela,{Planilha} from '@/models/Planilha';
+import PlanilhaTabela, { Planilha } from '@/models/Planilha';
 
-
-const findLeedById = async (id:string) => {
-    await connectMongoDB()
-    const leed = await PlanilhaTabela.findById(id).select(['credentials'])
-    if (leed ){
-        return leed
-    }
-    return null
-}
-
-const createLeed = async (CreateLead:CreateLead) => {
-    await connectMongoDB()
-
-    let dbData: Planilha | null = null;
-    dbData = await PlanilhaTabela.create({
-        nome: CreateLead.nome,
-        origem: CreateLead.origem,
-        status: CreateLead.status,
-        datainicio: CreateLead.datainicio,
-        nickname: CreateLead.nickname,
-        valordasfichas: CreateLead.valorFicha,
-        ultimatualizacao: CreateLead.status,
-        editar: CreateLead.status
-    })
-}
-const findLeedByNickName = async (nickname:string) => {
-    await connectMongoDB()
-
-    let dbData = null 
+class PlanilhaService {
+  // Criar novo registro
+  static async createLeed(createLead: CreateLead) {
     try {
-        dbData = await PlanilhaTabela.findOne({nickname: nickname})
-    } catch(error) {
-        return dbData
+      await connectMongoDB();
+      
+      console.log('Tentando salvar:', createLead);
+      
+      const dbData = await PlanilhaTabela.create({
+        nome: createLead.nome,
+        origem: createLead.origem,
+        status: createLead.status,
+        datainicio: createLead.datainicio,
+        nickname: createLead.nickname,
+        valordasfichas: createLead.valorFicha,
+        ultimatualizacao: new Date().toISOString(),
+        editar: createLead.status,
+        bonus: createLead.bonus,
+        anuncio: createLead.anuncio,
+        instagram: createLead.instagram,
+        contato: createLead.contato
+      });
+
+      console.log('Dados salvos com sucesso:', dbData);
+      return { success: true, data: dbData };
+      
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      throw error;
     }
-    return null
-}
+  }
 
-const findDataInicio= async (datainicio:string) =>{
-    await connectMongoDB()
+  // Buscar por ID
+  static async findLeedById(id: string) {
+    await connectMongoDB();
+    return await PlanilhaTabela.findById(id);
+  }
 
-    let dbData = null
-
-    try {
-        dbData = await PlanilhaTabela.findOne({datainicio:datainicio})
-    } catch(error){
-        console.log(error)
-    }
-
-    if (dbData) {
-        return dbData
-    }
-
-    return null
-}
-
-const findByName = async (nome:string) => {
-    await connectMongoDB()
-
-    let dbData = null
-
-    try {
-        dbData = await PlanilhaTabela.findOne({nome:nome})
-    } catch(error) {
-        console.log(error)
-    }
-
-    if (dbData) {
-        return dbData
-    }
-}
-
-
-const updateLead = async(id:string, UpdateLead:UpdateLead) => {
-    await connectMongoDB()
+  // Atualizar registro
+  static async updateLead(id: string, updateLead: UpdateLead) {
+    await connectMongoDB();
     
-    const updateQuery: UpdateQuery<Planilha> = Object.keys(UpdateLead)
-    .filter((key)=> UpdateLead[key as keyof UpdateLead]!== undefined)
-    .reduce((acc, key) => {
-        acc[key as keyof UpdateQuery<Planilha>] = UpdateLead[key as keyof UpdateLead]
-        return acc
-    }, {} as UpdateQuery<Planilha>)
+    const updateQuery: UpdateQuery<Planilha> = Object.keys(updateLead)
+      .filter((key) => updateLead[key as keyof UpdateLead] !== undefined)
+      .reduce((acc, key) => {
+        acc[key as keyof UpdateQuery<Planilha>] = updateLead[key as keyof UpdateLead];
+        return acc;
+      }, {} as UpdateQuery<Planilha>);
 
-    if (Object.keys(updateQuery).length === 0 ){
-        throw new Error('No fields to update')
+    if (Object.keys(updateQuery).length === 0) {
+      throw new Error('No fields to update');
     }
 
-    await PlanilhaTabela.findByIdAndUpdate(id,updateQuery,{new:true})
-}
+    return await PlanilhaTabela.findByIdAndUpdate(id, updateQuery, { new: true });
+  }
 
-const deleteLead = async (id:string) => {
-    if (!mongoose.Types.ObjectId.isValid(id)){
-        throw new Error('ID invalid')
-    }
-
-    const lead = await PlanilhaTabela.findById(id)
-    if (!lead){
-        throw new Error('Lead not found')
-    }
-    await PlanilhaTabela.deleteOne({_id: id})
-
-    return {success: true, message:'User delete',leadId: id}
-}
-
-const listarPlanilhas = async () => {
+  // Deletar registro
+  static async deleteLead(id: string) {
     await connectMongoDB();
-    try {
-        const planilhas = await PlanilhaTabela.find({}).sort({ datainicio: -1 });
-        return planilhas;
-    } catch (error) {
-        console.error('Erro ao listar planilhas:', error);
-        throw error;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error('ID invalid');
     }
-}
 
-const filtrarPorData = async (dateFrom: Date, dateTo: Date) => {
+    const lead = await PlanilhaTabela.findById(id);
+    if (!lead) {
+      throw new Error('Lead not found');
+    }
+
+    await PlanilhaTabela.deleteOne({ _id: id });
+    return { success: true, message: 'Lead deleted', leadId: id };
+  }
+
+  // Listar todos os registros
+  static async listarPlanilhas() {
     await connectMongoDB();
-    try {
-        const planilhas = await PlanilhaTabela.find({
-            datainicio: {
-                $gte: new Date(dateFrom),
-                $lte: new Date(dateTo)
-            }
-        }).sort({ datainicio: -1 });
-        
-        return planilhas;
-    } catch (error) {
-        console.error('Erro ao filtrar por data:', error);
-        throw error;
-    }
-}
+    return await PlanilhaTabela.find({}).sort({ datainicio: -1 });
+  }
 
-const deletePlanilha = async (id: string) => {
+  // Filtrar por data
+  static async filtrarPorData(dateFrom: Date, dateTo: Date) {
     await connectMongoDB();
-    try {
-        const result = await PlanilhaTabela.findByIdAndDelete(id);
-        if (!result) {
-            throw new Error('Planilha não encontrada');
-        }
-        return { success: true, message: 'Planilha excluída com sucesso' };
-    } catch (error) {
-        console.error('Erro ao excluir planilha:', error);
-        throw error;
-    }
+    return await PlanilhaTabela.find({
+      datainicio: {
+        $gte: new Date(dateFrom),
+        $lte: new Date(dateTo)
+      }
+    }).sort({ datainicio: -1 });
+  }
 }
 
-export default {
-    findLeedById,
-    createLeed,
-    findLeedByNickName,
-    findDataInicio,
-    findByName,
-    updateLead,
-    deleteLead,
-    deletePlanilha,
-    listarPlanilhas,
-    filtrarPorData
-}
+export default PlanilhaService;

@@ -51,17 +51,24 @@ export type Action =
         datainicio: Date;
         nickname: string;
         valorFicha: string;
-        observacoes?: string;
+        observacoes: string;
+        bonus: string;
+        anuncio: string;
+        instagram: string;
+        contato: string;
     }
 
 
-    export interface UpdateLead{
-        datainicio: string;
-        nome: string;
-        origem: string;
-        nickname: string;
-        observacao: string;
-        valorFicha: string;
-        status: string;
-        ultimatualizacao: string;
+    export interface UpdateLead {
+        nome?: string;
+        origem?: string;
+        status?: string;
+        datainicio?: Date;
+        nickname?: string;
+        valorFicha?: string;
+        observacoes?: string;
+        bonus?: string;
+        anuncio?: string;
+        instagram?: string;
+        contato?: string;
     }
