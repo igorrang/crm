@@ -1,4 +1,4 @@
-import {Divider} from '@/components/Divider/divider'
+import {Divider} from '@/components/Divider'
 
 
 interface UnreadMessagesTemplateProps {

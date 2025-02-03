@@ -14,7 +14,7 @@ export const getData = async (url: string) => {
 
 
 export const patchData = async (data:any , url:string) => {
-    const response = await fetch (`/api/${url}`,{
+    const response = await fetch (`${url}`,{
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const patchData = async (data:any , url:string) => {
         return response.json()
     }
 export const listData = async (data:any , url:string) => {
-    const response = await fetch (`/api/${url}`,{
+    const response = await fetch (`${url}`,{
         method: 'LIST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const listData = async (data:any , url:string) => {
 }
 
     export const postData = async(data:any , url:string) => {
-        const response = await fetch(`/api/${url}`,{
+        const response = await fetch(`${url}`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const listData = async (data:any , url:string) => {
     }
 
     export const deleteData = async(data:any, url:string) => {
-        const response = await fetch(`/api/${url}`,{
+        const response = await fetch(`${url}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -66,3 +66,13 @@ export const listData = async (data:any , url:string) => {
         }
         return response.json()
     }
+
+const APIService = {
+  post: postData,
+  get: getData,
+  put: patchData,
+  delete: deleteData,
+  // outros métodos...
+};
+
+export default APIService;

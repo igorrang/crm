@@ -1,24 +1,56 @@
-import * as  yup from 'yup'
+import * as yup from 'yup';
+
+export const validateCpf = (cpf : string ) => {
+  cpf = cpf.replace(/\D/g, '')
+  if (cpf.length !== 11 || /ˆ(\d)\1+$/.test(cpf)) return false 
+
+  let sum = 0 
+  let remainder
+
+  for (let i = 1; i <= 9; i++) {
+    sum += parseInt(cpf.substring(i -1, i)) * (11 -  i )
+  }
+  remainder = (sum * 10) % 11
+
+  if (remainder === 10 || remainder === 11 ) remainder = 0
+  if (remainder !== parseInt(cpf.substring(9, 10))) return false
+
+  sum = 0 
+  for (let i = 1; i <= 10; i++){
+    sum += parseInt(cpf.substring(i - 1, i)) * (12 - i)
+  }
+  remainder = (sum * 10) % 11
+
+  if (remainder === 10 || remainder === 11) remainder = 0
+  if (remainder !== parseInt(cpf.substring(10, 11))) return false
+
+  return true
+
+}
 
 export const loginSchema = yup.object().shape({
-    email: yup.string().email('Email inválido').required('Campo obrigatório')
-    .transform((value) =>{
-        const nonSpecialChars = value.replace(/[-.]/g,'');
-        const isPotentialCpf =  /ˆ\d{11}$/.test(value)
-        //return isEmail || isCpf
-        return  isPotentialCpf ? nonSpecialChars : value
-    })
+  email: yup
+    .string()
+    .required('O campo é obrigatório')
+    .transform((value) => {
+      const nonSpecialChars = value.replace(/[-.]/g, '');
+      const isPotentialCpf = /^\d{11}$/.test(nonSpecialChars);
+      return isPotentialCpf ? nonSpecialChars : value;
+    }) 
     .test(
-        'is valid',
-        'Digite um email válido ou um CPF com 11 caracteres',
-        (value) => {
-            if(value.includes('@')){
-                return true
-            }
-            return value.length === 11
-        }
-
-
+      'is-valid',
+      'Digite um email válido ou um CPF com 11 caracteres',
+      (value) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmail = emailRegex.test(value);
+        const isCpf =  validateCpf(value)
+        return isEmail || isCpf;
+      }
     ),
-    password: yup.string().min(8,'a senha deve ter ao menos 8 caracteres').required('Campo obrigatório')
-})
+   
+  
+  password: yup
+    .string()
+    .min(8, 'A senha deve ter pelo menos 8 caracteres')
+    .required('A senha é obrigatória'),
+});

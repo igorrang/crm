@@ -42,7 +42,7 @@ const handleSubmit = async (values: {code:string}) => {
         )
         toast.success('Email verificado com sucesso!')
 
-        router.push('/login')
+        router.push('/user/dashboard')
     } catch (error){
         toast.error('Ocorreu um erro ao verificar o código de verificação')
     }

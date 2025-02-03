@@ -1,5 +1,5 @@
 import User, {IUser,IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/frontend/src/models/User'
-import {connectMongoDB} from './lib/mongodb'
+import {connectToDatabase} from './lib/mongodb'
 
 import {
     CreateUserDto,
@@ -15,12 +15,13 @@ import UserDeleteReason from '@/models/UserDeleteReason';
 import { VerificationCodeTypes } from '@/models/VerificationCode';
 import { Resend } from 'resend';
 import { EmailVerificationTemplate } from '@/components/EmailVerificationTemplate';
+import { RegisterFormData } from '@/components/RegisterForm/types';
 
 const resend = new Resend (process.env.RESEND_API_KEY)
 
 
 const findUserById = async (id:string) => {
-    await connectMongoDB();
+    await connectToDatabase();
     const user = await User.findById(id).select(['-credentials']);
     if (user){
         return user;
@@ -30,7 +31,7 @@ const findUserById = async (id:string) => {
 }
 
 const createUser = async (createUserDto: CreateUserDto) => {
-    await connectMongoDB();
+    await connectToDatabase();
 
     const salt = randomBytes(16).toString('hex');
     const hashedPassword = await hashPassword(createUserDto.password, salt);
@@ -82,7 +83,7 @@ const createUser = async (createUserDto: CreateUserDto) => {
 }
 
 const createUserFromGoogle = async (createUserDto: CreateUserDtoFromGoogle) => {
-    await connectMongoDB()
+    await connectToDatabase()
 
     let dbData: IUserFromGoogle | null = null
     dbData = await User.create({
@@ -103,7 +104,7 @@ const createUserFromGoogle = async (createUserDto: CreateUserDtoFromGoogle) => {
 }
 
 const findByEmail = async (email: string) => {
-    await connectMongoDB()
+    await connectToDatabase()
 
     let dbData = null 
     try {
@@ -120,7 +121,7 @@ const findByEmail = async (email: string) => {
 }
 
 const findByCpf = async (cpf: string) =>{
-    await connectMongoDB()
+    await connectToDatabase()
 
     let dbData = null
 
@@ -148,7 +149,7 @@ const patchUserFromGoogleAuth = async (
     id: string,
     updateUserDto : CadastralUpdateFromGoogleSource) =>
         {
-            await connectMongoDB()
+            await connectToDatabase()
             let updateQuery: UpdateQuery<IUser> = {}
 
             if(updateUserDto.cpf) {
@@ -172,7 +173,7 @@ const patchUserFromGoogleAuth = async (
 
 
         const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
-            await connectMongoDB()
+            await connectToDatabase()
             let updateQuery: UpdateQuery<IUser> = {}
         
             if (updateUserDto.email) {
@@ -229,7 +230,7 @@ const deleteUser = async (id:string ) => {
 const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReasonDTO,
     userId: string
 ) => {
-    await connectMongoDB()
+    await connectToDatabase()
 
     const user = await User.findById(userId)
     if(!user){
@@ -246,9 +247,36 @@ const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReaso
     return userDeleteReason
 }
 
+const register = async (data: RegisterFormData) => {
+  await connectToDatabase();
+  
+  const cpfSemMascara = data.cpf.replace(/[-.]/g, '');
+  const phoneSemMascara = data.phone.replace(/\D/g, '');
+  
+  const salt = randomBytes(16).toString('hex');
+  const hashedPassword = await hashPassword(data.password, salt);
 
-export default {
+  const userData = {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    cpf: cpfSemMascara,
+    phone: phoneSemMascara,
+    birthdate: data.birthdate,
+    banned: false,
+    emailVerified: false,
+    credentials: {
+      password: hashedPassword,
+      salt: salt,
+    },
+    provider: 'email'
+  };
 
+  const user = await User.create(userData);
+  return user;
+}
+
+export const UserService = {
     findUserById,
     findByCpf,
     createUser,
@@ -261,5 +289,5 @@ export default {
     deleteUser,
     createUserDeleteReason,
     updateUserPasswordById,
-   
+    register,
 }

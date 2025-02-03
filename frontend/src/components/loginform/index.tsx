@@ -2,7 +2,7 @@ import { Box } from '@/components/Box';
 import {Formik,Form} from 'formik'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google'
-import { Divider } from '../Divider/divider'
+import { Divider } from '../Divider'
 import {useState} from 'react'
 import {signIn} from 'next-auth/react'
 import {useRouter} from 'next/navigation'
@@ -52,7 +52,7 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
             return
         }
         setIsLoading(false)
-        router.replace('/Planilha')
+        router.replace('/login')
     };
 
 
