@@ -1,11 +1,11 @@
 import '/Users/igorrangelkonvictus/crm/frontend/src/app/globals.css'
 import type {Metadata} from 'next'
 import {DM_Sans} from 'next/font/google'
-import NextAuthSessionProvider from '@/models/providers/sessionProvider'
 import {getServerSession} from 'next-auth'
 import {redirect} from 'next/navigation'
 import {Toaster} from 'react-hot-toast'
-import { nextAuthOption } from '@/service/utils/AuthOptions'
+import { nextAuthOptions } from '../../service/utils/AuthOptions'
+import { AuthProvider } from '@/providers/SessionProvider'
 
 const DMSans = DM_Sans({subsets: ['latin']})
 
@@ -19,9 +19,9 @@ export default async function LoginAreaLayout({
 }: {
     children: React.ReactNode
 }) {
-    const session = await getServerSession(nextAuthOption)
+    const session = await getServerSession(nextAuthOptions)
     if (session) {
-        redirect( '/Planilha')
+        redirect('/Planilha')
     }
 
     return (
@@ -29,7 +29,9 @@ export default async function LoginAreaLayout({
             <body
             className={`${DMSans.className} flex flex-col h-screen w-screen`}
             >
-                <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+                <AuthProvider>
+                    {children}
+                </AuthProvider>
             </body>
         </html>
     )

@@ -1,12 +1,10 @@
-
 import mongoose, {Schema, Document} from 'mongoose'
 //import {BankAccount, Credentials,} from './types/userTypes'
 
 export interface IUser extends Document {
   name: string;
-  surname: string ;
+  surname: string;
   email: string;
-  password: string;
   phone: string;
   banned: boolean;
   birthdate: Date;
@@ -17,9 +15,12 @@ export interface IUser extends Document {
   metadata: {
     needsCadastralUpdate: boolean
   };
-  phoneVerified?: boolean ;
-  
- 
+  phoneVerified?: boolean;
+  credentials: {
+    password: string;
+    salt: string;
+  };
+  createdAt: Date;
 }
 
 export interface IUserFromGoogle
@@ -30,29 +31,34 @@ export interface IUserFromGoogle
     }
 
 
-const userSchema = new Schema < IUser| IUserFromGoogle> (
-    {
-        name :String,
-        surname: String,
-        email:{ type:String, index: {unique: true}},
-        phone: String,
-        banned: Boolean,
-        birthdate: Date,
-        cpf: String,
-        emailVerified: Boolean,
-        provider: String,
-        metadata:{
-            needsCadastralUpdate: Boolean,
-        },
-        phoneVerified: Boolean,
-        documentsVerifiedStatus: {
-            type: String,
-            default: 'NOT_VERIFIED'
-        },
+const userSchema = new Schema<IUser | IUserFromGoogle>({
+   name: String,
+   surname: String,
+   email: {type: String, index: { unique: true }},
+   phone: String,
+   banned: Boolean,
+   birthdate: Date,
+   cpf:String ,
+   emailVerified: Boolean,
+   credentials: {
+    password: String,
+    salt: String,
+   },
+   provider: String,
+   createdAt: {type: Date, default: Date.now},
+   documentsVerifiedStatus: {
+    type: String,
+    default: 'NOT_VERIFIED'    
+   },
+   metadata: {
+    needsCadastralUpdate: Boolean,
+   },
+   phoneVerified: Boolean,
+},
+{
+    timestamps: true,
+})
 
-      
-    }
-)
 
 const User =
     mongoose?.models?.User ||

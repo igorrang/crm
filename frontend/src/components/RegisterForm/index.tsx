@@ -54,45 +54,46 @@ const registerValues = {
           confirmPassword: values.confirmPassword
         }
   
-        const signup = await postData(data, 'user')
-        if (signup?.error) {
-          toast.error(signup?.error)
+        console.log('Dados enviados:', data)
+  
+        const submitData = {
+          name: data.name,
+          surname: data.surname,
+          email: data.email,
+          cpf: data.cpf,
+          phone: data.phone,
+          password: data.password,
+          birthdate: new Date(data.birthdate).toISOString()
         }
   
-        // Usuário fará login automaticamente após criar a conta? Caso faça, terá de implementar a validação por dentro do sistema na seção do perfil.
-        // Caso tenha o login, não será necessário o link de verificação de e-mail, somente o código.
+        console.log('Dados a serem enviados:', submitData)
   
-        // const result = await signIn('credentials', {
-        //   redirect: false,
-        //   credential: values.email,
-        //   password: values.password,
-        //   provider: 'EMAIL_PASSWORD'
-        // })
-  
-        // if (result?.error) {
-        //   console.log(result.error)
-        //   return
-        // }
-  
-        register(false)
+        const signup = await postData(submitData, 'user')
+        if (signup?.error) {
+          toast.error(signup.error)
+          return
+        }
   
         toast.custom((t: any) => (
-          <div
-            className={`w-[760px] h-[56px] bg-[#75B798] p-4 flex gap-3 items-center rounded-md justify-center ${
-              t.visible ? 'animate-enter' : 'animate-leave'
-            }`}
-          >
+          <div className={`w-[760px] h-[56px] bg-[#75B798] p-4 flex gap-3 items-center rounded-md justify-center ${
+            t.visible ? 'animate-enter' : 'animate-leave'
+          }`}>
             <FaRegSmileBeam size={24} />
             <p className="text-xl font-[#0A3622]">
-              Conta criada com sucesso! Faça a verificação do e-mail para ter
-              acesso
+              Conta criada com sucesso! Faça a verificação do e-mail para ter acesso
             </p>
             <Button onClick={() => toast.dismiss(t.id)}>
               <AiOutlineClose size={24} />
             </Button>
           </div>
         ))
-      } catch (error) {
+  
+        setTimeout(() => {
+          register(false)
+        }, 2000)
+  
+      } catch (error: any) {
+        console.error('Erro completo:', error)
         toast.error('Ocorreu um erro ao criar a conta')
       }
     }
@@ -166,7 +167,7 @@ const registerValues = {
                   id="email"
                 />
                 <Input
-                  type="email"
+                  type="confirmEmail"
                   placeholder="Confirmar E-mail*"
                   onChange={e => setFieldValue('confirmEmail', e.target.value)}
                   name="confirmEmail"
@@ -185,7 +186,7 @@ const registerValues = {
                   />
                   <p className="text-xs ml-2">Mínimo 8 caracteres</p>
                   <Input
-                    placeholder="Senha*"
+                    placeholder=" Confirma Senha*"
                     onChange={e =>
                       setFieldValue('confirmPassword', e.target.value)
                     }

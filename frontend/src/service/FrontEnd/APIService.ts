@@ -31,19 +31,26 @@ export const patchData = async (data: any, url:string) => {
 }
 
 export const postData = async (data: any, url:string) => {
-    const response = await fetch(`/api/${url}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
+    try {
+        const response = await fetch(`/api/${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
 
-    if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'failed to post data')
+        const result = await response.json()
+        
+        if (!response.ok) {
+            throw new Error(result.error || 'Failed to post data')
+        }
+
+        return result
+    } catch (error: any) {
+        console.error('Erro na requisição:', error)
+        throw error
     }
-    return response.json()
 }
 
 export const putData = async (data: any, url:string) => {

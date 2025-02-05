@@ -1,112 +1,124 @@
-import { Box } from '@/components/Box';
-import {Formik,Form} from 'formik'
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
-import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google'
-import { Divider } from '../Divider/divider'
-import {useState} from 'react'
-import {signIn} from 'next-auth/react'
-import {useRouter} from 'next/navigation'
-import toast from 'react-hot-toast'
-import {loginSchema} from '@/app/schemas/LoginSchema'
-import Email from 'next-auth/providers/email';
-import { Input } from '@/components/input/input';
-import { Button } from '@/components/Button';
+import { Formik, Form } from 'formik';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { BiLogoGoogle } from 'react-icons/bi';
+import { Box } from '../Box';
+import { Divider } from '/Users/igorrangelkonvictus/crm/frontend/src/components/Divider/divider';
+import { useState } from 'react';
+import { Input } from '/Users/igorrangelkonvictus/crm/frontend/src/components/input/input';
+import { Button } from '../Button';
+import { useRouter } from 'next/navigation';
+import { loginSchema } from '@/app/schemas/LoginSchema';
+import { signIn } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import { insertMaskInCpf } from '@/shared/cpf';
 
-type LoginFormProps ={
-    register?: any;
-    forgotPassword?: any;
-}
+type LoginFormProps = {
+  register?: any;
+  forgotPassword?: any;
+};
+export const LoginForm = ({ register, forgotPassword }: LoginFormProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
-    const [showPasswor,setShowPassword] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const router = useRouter()
+  const loginWithGoogle = async (credentialResponse: any) => {
+    setIsLoading(true);
+    const result = await signIn('credentials', {
+      redirect: false,
+      ...credentialResponse,
+      provider: 'GOOGLE_AUTH',
+    });
 
-    const loginWithGoogle = async (credentialsResponse: any) => {
-        setIsLoading(true)
-        const result = await signIn('credentials', {
-            redirect: false,
-            ...credentialsResponse,
-            provider: 'GOOGLE_AUTH'
-        })
-
-        if (result?.error){
-            toast.error('erro na autenticacao com o google')
-            return
-        }
-
-        setIsLoading(false)
-        router.replace('/Planilha')
+    if (result?.error) {
+      toast.error('Erro na autenticação com Google');
+      return;
     }
+    setIsLoading(false);
+    router.replace('/Planilha');
+  };
+  
 
-    const handleSubmit = async (values: {email:string; password:string}) => {
-        const result = await signIn('credentials', {
-            redirect: false,
-            credentials: values.email,
-            password: values.password,
-            provider: 'EMAIL_PASSWORD'
-        })
+  const handleSubmit = async (values: { credential: string; password: string; }) => {
+    console.log('Submitting login form with:', values);
+    const result = await signIn('credentials', {
+        redirect: false,
+        credential: values.credential,
+        password: values.password,
+    });
 
-        if (result?.error){
-            toast.error(result.error)
-            return
-        }
-        setIsLoading(false)
-        router.replace('/Planilha')
-    };
+    if (result?.error) {
+        console.error('Login error:', result.error);
+        toast.error(result.error);
+        return;
+    }
+    router.replace('/Planilha');
+  };
 
-
-    return (
-        <>
-        <Box className='w-[610]'>
-         <h1 className='text-3xl'> entre na sua conta </h1>   
-          <Formik initialValues={{
-            email:'',
-            password: ''
-
+  return (
+    <>
+      <Box className="w-[610px]">
+        <h1 className="text-3xl">Entre na sua conta</h1>
+        <Formik
+          initialValues={{
+            credential: '',
+            email: '',
+            password: '',
+            cpf:''
           }}
           onSubmit={handleSubmit}
-          validationSchema={loginSchema}>
-            {({ setFieldValue, values}:any) =>(
-               <Form className=' flex flex-col gap-6 mt-8 mb-[35px]'>
-                <Input
-                type='text'
-                placeholder='Email ou cpf'
-                onChange={(e) => setFieldValue('email', e.target.value)}
-                name='email'
-                id ='email' 
-                />
+          validationSchema={loginSchema}
+        >
+          {({ setFieldValue, values }: any) => (
+            <Form className="flex flex-col gap-6 mt-8 mb-[35px]">
+              <Input
+                type="text"
+                placeholder="Email ou CPF*"
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (value.includes('@')){
+                    setFieldValue('email', value)
+                  } else {
+                    setFieldValue('cpf', insertMaskInCpf(value))
+                  }
+                }
+                }
+                value={values.email || values.cpf}
+                name="email-cpf"
+                id="emailCpf"
+              />
 
+              <Input
+                placeholder="Senha*"
+                onChange={(e) => setFieldValue('password', e.target.value)}
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                icon={showPassword ? AiOutlineEyeInvisible : AiOutlineEye}
+                onClickIcon={() => setShowPassword(!showPassword)}
+                className="flex-row-reverse pr-4"
+              />
 
-                <Input
-                 placeholder='Senhas*'
-                 onChange={(e) => setFieldValue('password', e.target.value)}
-                 name="password"
-                 id="password"
-                 type={showPasswor? 'text' : 'password'}
-                 icon={showPasswor? AiOutlineEyeInvisible : AiOutlineEye}
-                 onClickIcon={() => setShowPassword(!showPasswor)}
-                 className='flex-row-reverse pr-4'   
-                />
+              <Button
+                variant="primary"
+                className="self-center mt-11 text-xl w-[270px] h-[56px]"
+                type="submit"
+              >
+                Entrar
+              </Button>
 
-                <Button variant="primary"
-                className='self-center mt-11 text-xl w-[270] h-[56]'
-                 type='submit'>
-                    Entrar
-                </Button>
-
-                <Button
-                className='mt-7 underline hover:opacity-50 w-fit self-center'
-                type='button'
+              <Button
+                className="mt-7 underline hover:opacity-50 w-fit self-center"
+                type="button"
                 onClick={() => forgotPassword(true)}
-                >
-                 Esqueci a minha senha
-                </Button>
-                
-               </Form> 
-            )}
-          </Formik>  
-          <Box className="w-[610px]">
+              >
+                Esqueci minha senha.
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+      <Box className="w-[610px]">
         <div className="flex flex-col gap-4">
           <p className="font-bold text-xl">
             Entre ou cadastre-se com as suas redes <br /> sociais.
@@ -143,10 +155,6 @@ export const LoginForm = ({ register, forgotPassword}: LoginFormProps)=>{
           Criar conta
         </Button>
       </Box>
-        </Box> 
-
-
-        
-        </>
-    )
-}
+    </>
+  );
+};

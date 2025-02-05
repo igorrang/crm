@@ -149,7 +149,7 @@ const VerificationService = {
     findVerificationCodes,
     updateVerificationCodes,
     insertCodeOnDatabase,
-    verificationPhoneCode
+    verificationPhoneCode,
 }
 
 export default VerificationService
