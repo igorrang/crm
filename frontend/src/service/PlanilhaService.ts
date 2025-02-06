@@ -1,5 +1,5 @@
 import { CreateLead, UpdateLead } from '../models/types/AdminTypes';
-import { connectToDatabase } from './lib/mongodb';
+import {connectMongoDB } from './lib/mongodb';
 import mongoose, { UpdateQuery } from 'mongoose';
 import PlanilhaTabela, { Planilha } from '@/models/Planilha';
 
@@ -7,7 +7,7 @@ class PlanilhaService {
   // Criar novo registro
   static async createLeed(createLead: CreateLead) {
     try {
-      await connectToDatabase();
+      await connectMongoDB();
       
       console.log('Tentando salvar:', createLead);
       
@@ -37,13 +37,13 @@ class PlanilhaService {
 
   // Buscar por ID
   static async findLeedById(id: string) {
-    await connectToDatabase();
+    await connectMongoDB();
     return await PlanilhaTabela.findById(id);
   }
 
   // Atualizar registro
   static async updateLead(id: string, updateLead: UpdateLead) {
-    await connectToDatabase();
+    await connectMongoDB();
     
     const updateQuery: UpdateQuery<Planilha> = Object.keys(updateLead)
       .filter((key) => updateLead[key as keyof UpdateLead] !== undefined)
@@ -61,7 +61,7 @@ class PlanilhaService {
 
   // Deletar registro
   static async deleteLead(id: string) {
-    await connectToDatabase();
+    await connectMongoDB();
     
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new Error('ID invalid');
@@ -78,13 +78,13 @@ class PlanilhaService {
 
   // Listar todos os registros
   static async listarPlanilhas() {
-    await connectToDatabase();
+    await connectMongoDB();
     return await PlanilhaTabela.find({}).sort({ datainicio: -1 });
   }
 
   // Filtrar por data
   static async filtrarPorData(dateFrom: Date, dateTo: Date) {
-    await connectToDatabase();
+    await connectMongoDB ();
     return await PlanilhaTabela.find({
       datainicio: {
         $gte: new Date(dateFrom),

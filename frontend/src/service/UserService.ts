@@ -1,5 +1,5 @@
 import User, {IUser,IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/frontend/src/models/User'
-import {connectToDatabase} from './lib/mongodb'
+import {connectMongoDB} from './lib/mongodb'
 
 import {
     CreateUserDto,
@@ -21,7 +21,7 @@ const resend = new Resend (process.env.RESEND_API_KEY)
 
 
 const findUserById = async (id:string) => {
-    await connectToDatabase();
+    await connectMongoDB();
     const user = await User.findById(id).select(['-credentials']);
     if (user){
         return user;
@@ -31,7 +31,7 @@ const findUserById = async (id:string) => {
 }
 
 const createUser = async (createUserDto: CreateUserDto) => {
-    await connectToDatabase();
+    await connectMongoDB();
 
     const salt = randomBytes(16).toString('hex');
     const hashedPassword = await hashPassword(createUserDto.password, salt);
@@ -83,7 +83,7 @@ const createUser = async (createUserDto: CreateUserDto) => {
 }
 
 const createUserFromGoogle = async (createUserDto: CreateUserDtoFromGoogle) => {
-    await connectToDatabase()
+    await connectMongoDB()
 
     let dbData: IUserFromGoogle | null = null
     dbData = await User.create({
@@ -104,7 +104,7 @@ const createUserFromGoogle = async (createUserDto: CreateUserDtoFromGoogle) => {
 }
 
 const findByEmail = async (email: string) => {
-    await connectToDatabase()
+    await connectMongoDB()
 
     let dbData = null 
     try {
@@ -121,7 +121,7 @@ const findByEmail = async (email: string) => {
 }
 
 const findByCpf = async (cpf: string) =>{
-    await connectToDatabase()
+    await connectMongoDB()
 
     let dbData = null
 
@@ -149,7 +149,7 @@ const patchUserFromGoogleAuth = async (
     id: string,
     updateUserDto : CadastralUpdateFromGoogleSource) =>
         {
-            await connectToDatabase()
+            await connectMongoDB()
             let updateQuery: UpdateQuery<IUser> = {}
 
             if(updateUserDto.cpf) {
@@ -173,7 +173,7 @@ const patchUserFromGoogleAuth = async (
 
 
         const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
-            await connectToDatabase()
+            await connectMongoDB()
             let updateQuery: UpdateQuery<IUser> = {}
         
             if (updateUserDto.email) {
@@ -230,7 +230,7 @@ const deleteUser = async (id:string ) => {
 const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReasonDTO,
     userId: string
 ) => {
-    await connectToDatabase()
+    await connectMongoDB()
 
     const user = await User.findById(userId)
     if(!user){
@@ -248,7 +248,7 @@ const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReaso
 }
 
 const register = async (data: RegisterFormData) => {
-  await connectToDatabase();
+  await connectMongoDB();
   
   const cpfSemMascara = data.cpf.replace(/[-.]/g, '');
   const phoneSemMascara = data.phone.replace(/\D/g, '');
@@ -290,4 +290,5 @@ export const UserService = {
     createUserDeleteReason,
     updateUserPasswordById,
     register,
+    
 }
