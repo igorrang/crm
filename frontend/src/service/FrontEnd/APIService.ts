@@ -31,7 +31,7 @@ export const patchData = async (data: any, url:string) => {
 }
 
 export const postData = async (data: any, url:string) => {
-    const response = await fetch(`/api/${url}`, {
+    const response = await fetch(`app/api/${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
