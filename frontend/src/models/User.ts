@@ -16,11 +16,6 @@ export interface IUser extends Document {
     needsCadastralUpdate: boolean;
   };
   phoneVerified?: boolean;
-  documentsVerifiedStatus?: String;
-  verificationDocuments?: {
-    documentUrl: String;
-    selfieUrl: String;
-  };
 }
 
 export interface IUserFromGoogle
@@ -50,15 +45,7 @@ const userSchema = new Schema<IUser | IUserFromGoogle>(
       needsCadastralUpdate: Boolean,
     },
     phoneVerified: Boolean,
-    documentsVerifiedStatus: {
-      type: String,
-      default: 'NOT_VERIFIED',
-    },
-
-    verificationDocuments: {
-      documentUrl: String,
-      selfieUrl: String,
-    },
+  
   },
   {
     timestamps: true,

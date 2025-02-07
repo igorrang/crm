@@ -45,7 +45,7 @@ export const CreateUserSchema = yup.object().shape({
          .string()
          .nullable()
          .oneOf(
-            [yup.ref('password')],
+            [yup.ref('email')],
             'As senhas devem ser iguais'
          )
          .required('a senha de confirmação é obrigatória'),
