@@ -1,5 +1,5 @@
 export const getData = async (url: string) => {
-    const response = await fetch(`/app/api/${url}`,{
+    const response = await fetch(`/api/${url}`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export const getData = async (url: string) => {
 
 
 export const patchData = async (data:any , url:string) => {
-    const response = await fetch (`/app/api/${url}`,{
+    const response = await fetch (`/api/${url}`,{
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const patchData = async (data:any , url:string) => {
         return response.json()
     }
 export const listData = async (data:any , url:string) => {
-    const response = await fetch (`/app/api/${url}`,{
+    const response = await fetch (`/api/${url}`,{
         method: 'LIST',
         headers: {
             'Content-Type': 'application/json',

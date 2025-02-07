@@ -54,7 +54,7 @@ export const RegisterForm = ({
         confirmPassword: values.confirmPassword
       }
 
-      const signup = await postData(data, '/user/')
+      const signup = await postData(data, 'user')
       console.log(signup)
       if (signup?.error) {
         console.log(signup.error)
