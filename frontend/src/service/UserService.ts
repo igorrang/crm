@@ -33,7 +33,7 @@ const createUser = async (createUserDto: CreateUserDto) => {
     await connectMongoDB();
 
     const salt = randomBytes(16).toString('hex');
-    const hashedPassword = await hashPassword(createUserDto.password, salt);
+    const hashedPassword = await hashPassword(createUserDto.password);
     
     let dbData: IUser | null = null;
     dbData = await User.create({
@@ -137,8 +137,13 @@ const findByCpf = async (cpf: string) =>{
     return null
 }
 
-const hashPassword = async (password:string, salt: string) => {
-    return pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
+const hashPassword = async (password:string) => {
+   
+   
+    const salt = randomBytes(16).toString('hex');  // Criando um salt aleatório
+    const hashedPassword = pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+    return { hashedPassword, salt };
+
 }
 
 const markUserAsVerified = async (email:string) => {
@@ -173,7 +178,7 @@ const patchUserFromGoogleAuth = async (
 
         const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
             await connectMongoDB()
-            let updateQuery: UpdateQuery<IUser> = {}
+            let updateQuery: UpdateQuery<IUser> = {};
         
             if (updateUserDto.email) {
                 updateQuery = {
@@ -186,7 +191,7 @@ const patchUserFromGoogleAuth = async (
                     phone: updateUserDto.phone
                 }
             }
-            return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true})
+            return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true});
         }
 
 const updateUserPasswordById = async (

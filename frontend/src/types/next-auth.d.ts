@@ -11,6 +11,6 @@ declare module 'next-auth' {
    }
 
 export interface LoginDto {
-    credentials: string
+    credential: string
     password: string
 }

@@ -25,19 +25,22 @@ export const nextAuthOption: NextAuthOptions = {
             },
 
             async authorize(credentials:any , req:any) {
+                console.log('credentials', credentials) 
                 let user
                 if (credentials.provider === UserProvider.EMAIL_PASSWORD) {
+                    console.log("📌 Tentando autenticar usuário...");
                     user = await LoginService.login({
-                        credentials: credentials.email,
+                        credential: credentials.credential,
                         password: credentials.password
                     })
+                    console.log("📌 Resultado da autenticação:", user);
                 } else {
                     try{
 
                         const client = new OAuth2Client()
                         const ticket = await client.verifyIdToken ({
-                            idToken: credentials.credentials,
-                            audience: credentials.client_id
+                            idToken: credentials.credential,
+                            audience: credentials.client_id,
                         })
 
                         const  payload = ticket.getPayload()
