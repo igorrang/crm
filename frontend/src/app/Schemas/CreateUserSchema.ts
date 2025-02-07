@@ -47,6 +47,13 @@ export const CreateUserSchema = yup.object().shape({
          .oneOf(
             [yup.ref('email')],
             'As senhas devem ser iguais'
+         ),
+         confirmPassword: yup 
+         .string()
+         .nullable()
+         .oneOf(
+            [yup.ref('password')],
+            'As senhas devem ser iguais'
          )
          .required('a senha de confirmação é obrigatória'),
          birthdate:yup.date().required('A data de nascimento é obrigatória'),
