@@ -33,7 +33,7 @@ const createUser = async (createUserDto: CreateUserDto) => {
     await connectMongoDB();
 
     const salt = randomBytes(16).toString('hex');
-    const hashedPassword = await hashPassword(createUserDto.password);
+    const hashedPassword = await hashPassword(createUserDto.password, salt);
     
     let dbData: IUser | null = null;
     dbData = await User.create({
@@ -137,13 +137,8 @@ const findByCpf = async (cpf: string) =>{
     return null
 }
 
-const hashPassword = async (password:string) => {
-   
-   
-    const salt = randomBytes(16).toString('hex');  // Criando um salt aleatório
-    const hashedPassword = pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
-    return { hashedPassword, salt };
-
+const hashPassword = async (password:string, salt: string) => {
+    return pbkdf2Sync(password,salt,1000,64, 'sha512' ).toString('hex')
 }
 
 const markUserAsVerified = async (email:string) => {
@@ -201,8 +196,7 @@ const updateUserPasswordById = async (
 )=> {
     try {
         await User.updateOne(
-            { _id: id
-            },
+            { _id: id},
             {
                 $set: {
                     credentials:{

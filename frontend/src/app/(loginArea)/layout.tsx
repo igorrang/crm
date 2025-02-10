@@ -21,7 +21,7 @@ export default async function LoginAreaLayout({
 }) {
     const session = await getServerSession(nextAuthOption)
     if (session) {
-        redirect( '/Planilha')
+   
     }
 
     return (

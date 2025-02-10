@@ -36,7 +36,7 @@ export default function Planilha() {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link href="/Planilha">Planilha</Link>
+                    <Link href="/planilha">Planilha</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>

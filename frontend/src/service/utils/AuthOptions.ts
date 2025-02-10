@@ -28,12 +28,12 @@ export const nextAuthOption: NextAuthOptions = {
                 console.log('credentials', credentials) 
                 let user
                 if (credentials.provider === UserProvider.EMAIL_PASSWORD) {
-                    console.log("📌 Tentando autenticar usuário...");
+                    console.log("📌 Tentando autenticar usuário...")
                     user = await LoginService.login({
                         credential: credentials.credential,
                         password: credentials.password
                     })
-                    console.log("📌 Resultado da autenticação:", user);
+                    console.log("📌 Resultado da autenticação:", user)
                 } else {
                     try{
 
@@ -68,16 +68,18 @@ export const nextAuthOption: NextAuthOptions = {
                         return null
                     }
                 }
-                if(!user){
-                    console.log('authenticated')
-                    return {
-                        id: user._id,
-                        name: user.name,
-                        email: user.email
-                    }
-            }
-            console.log('authentication failed')
-                return null
+                if (!user) {
+                    console.error('❌ Usuário não autenticado - Retornando null.');
+                    return null;
+                }
+                
+                console.log('✅ Usuário autenticado:', user);
+                
+                return {
+                    id: user._id.toString(),  // Converter ObjectId para string
+                    name: user.name,
+                    email: user.email
+                };
         }
 
         })

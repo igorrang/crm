@@ -32,8 +32,7 @@ export const LoginForm = ({ register, forgotPassword }: LoginFormProps) => {
       toast.error('Erro na autenticação com Google');
       return;
     }
-    setIsLoading(false);
-    router.replace('/planilha');
+    
   };
 
   const handleSubmit = async (values: { email: string; password: string }) => {

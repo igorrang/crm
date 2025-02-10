@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import PlanilhaTabela from '@/models/Planilha';
-import { connectDB } from '@/service/db';
+import { connectMongoDB } from '/Users/igorrangelkonvictus/crm/frontend/src/service/lib/mongodb';
 
 export async function DELETE(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
-        await connectDB();
+        await  connectMongoDB();
         const id = params.id;
 
         const deletedPlanilha = await PlanilhaTabela.findByIdAndDelete(id);
