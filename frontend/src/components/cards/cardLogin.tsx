@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast';
 import { Box } from 'lucide-react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { Divider } from '../Divider/divider';
+import { Divider } from '../Divider';
 import { loginSchema } from '../../app/schemas/LoginSchema';
 
 type LoginFormProps = {

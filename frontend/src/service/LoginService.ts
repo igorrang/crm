@@ -1,4 +1,4 @@
-import UserService from './UserService' 
+import {UserService}from '/Users/igorrangelkonvictus/crm/frontend/src/service/UserService' 
 import {LoginDto} from '@/types/next-auth'
 import {loginByEmailPasswordType, LoginType} from '@/app/utils/credentials'
 import { pbkdf2Sync, randomBytes } from 'crypto';

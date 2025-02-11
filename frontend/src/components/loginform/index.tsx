@@ -1,9 +1,10 @@
+
 import { Formik, Form } from 'formik';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { BiLogoGoogle } from 'react-icons/bi';
 import { Box } from '../Box';
-import { Divider } from '../Divider/divider';
+import { Divider } from '../Divider';
 import { useState } from 'react';
 import { Input } from '../input/input';
 import { Button } from '../Button';
@@ -19,6 +20,7 @@ export const LoginForm = ({ register, forgotPassword }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
 
   const loginWithGoogle = async (credentialResponse: any) => {
     setIsLoading(true);
@@ -42,6 +44,7 @@ export const LoginForm = ({ register, forgotPassword }: LoginFormProps) => {
       password: values.password,
       provider: 'EMAIL_PASSWORD',
     });
+
 
     if (result?.error) {
       toast.error(result.error);

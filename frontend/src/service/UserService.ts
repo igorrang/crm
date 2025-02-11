@@ -15,6 +15,7 @@ import UserDeleteReason from '@/models/UserDeleteReason';
 import { VerificationCodeTypes } from '@/models/VerificationCode';
 import { Resend } from 'resend';
 import { EmailVerificationTemplate } from '@/components/EmailVerificationTemplate';
+import { RegisterFormData } from '@/components/RegisterForm/types';
 
 const resend = new Resend (process.env.RESEND_API_KEY)
 
@@ -245,9 +246,36 @@ const createUserDeleteReason = async (userDeleteReasonDto: CreateUserDeleteReaso
     return userDeleteReason
 }
 
+const register = async (data: RegisterFormData) => {
+  await connectMongoDB();
+  
+  const cpfSemMascara = data.cpf.replace(/[-.]/g, '');
+  const phoneSemMascara = data.phone.replace(/\D/g, '');
+  
+  const salt = randomBytes(16).toString('hex');
+  const hashedPassword = await hashPassword(data.password, salt);
 
-export default {
+  const userData = {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    cpf: cpfSemMascara,
+    phone: phoneSemMascara,
+    birthdate: data.birthdate,
+    banned: false,
+    emailVerified: false,
+    credentials: {
+      password: hashedPassword,
+      salt: salt,
+    },
+    provider: 'email'
+  };
 
+  const user = await User.create(userData);
+  return user;
+}
+
+export const UserService = {
     findUserById,
     findByCpf,
     createUser,
@@ -260,5 +288,6 @@ export default {
     deleteUser,
     createUserDeleteReason,
     updateUserPasswordById,
-   
+    register,
+    
 }

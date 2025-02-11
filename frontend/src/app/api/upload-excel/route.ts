@@ -85,7 +85,7 @@ export async function POST(request: Request) {
         });
 
         savedRecords.push(result.data);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Erro ao processar linha:', error);
         errors.push({ row, error: error.message });
       }
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
       errors: errors.length > 0 ? errors : undefined
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erro no processamento:', error);
     return NextResponse.json(
       { error: 'Erro ao processar arquivo', details: error.message },

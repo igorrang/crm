@@ -1,5 +1,5 @@
 import { CreateLead, UpdateLead } from '../models/types/AdminTypes';
-import { connectMongoDB } from './lib/mongodb';
+import {connectMongoDB } from './lib/mongodb';
 import mongoose, { UpdateQuery } from 'mongoose';
 import PlanilhaTabela, { Planilha } from '@/models/Planilha';
 
@@ -84,7 +84,7 @@ class PlanilhaService {
 
   // Filtrar por data
   static async filtrarPorData(dateFrom: Date, dateTo: Date) {
-    await connectMongoDB();
+    await connectMongoDB ();
     return await PlanilhaTabela.find({
       datainicio: {
         $gte: new Date(dateFrom),

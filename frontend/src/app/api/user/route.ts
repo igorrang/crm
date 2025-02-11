@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextRequest, NextResponse } from 'next/server';
 import UserService from '@/service/UserService';
 import {
@@ -130,3 +131,4 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(error, { status: 500 });
   }
 }
+

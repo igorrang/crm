@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import { cpf } from 'cpf-cnpj-validator';
 
 export const CreateUserSchema = yup.object().shape({
+<<<<<<< HEAD
   name: yup.string().required('O nome é obrigatório'),
   surname: yup.string().required('O sobrenome é obrigatório'),
   cpf: yup
@@ -61,3 +62,5 @@ export const CreateUserSchema = yup.object().shape({
     .boolean()
     .oneOf([true], 'Você precisa aceitar os termos de uso.')
 })
+
+   
