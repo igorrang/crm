@@ -1,5 +1,5 @@
 'use client'
-import {postData} from '@/service/APIService'
+import {postData} from '/Users/igorrangelkonvictus/crm/frontend/src/service/FrontEnd/APIService'
 import CardDashBoard from "/Users/igorrangelkonvictus/crm/frontend/src/components/cards/cardDashBoard";
 import Header from "/Users/igorrangelkonvictus/crm/frontend/src/components/header";
 import MensagemBemVindo from "/Users/igorrangelkonvictus/crm/frontend/src/components/mensagemBemVindo";

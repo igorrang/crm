@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({message: 'usuário já é verificado por sms'}, {status:400})
             }
 
-            const code: string = VerificationService.generateCode(VerificationCodeTypes.PHONE_VERIFICATION)
-            await VerificationService.insertCodeOnDatabase(code,VerificationCodeTypes.EMAIL_VERIFICATION, user.id)
-            smsProvider.sendUnique 
+           
         
+        } catch(error) {
+            console.log(error)
         }
-}
+} 

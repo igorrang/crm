@@ -139,7 +139,7 @@ const findByCpf = async (cpf: string) =>{
 }
 
 const hashPassword = async (password:string, salt: string) => {
-    return pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
+    return pbkdf2Sync(password,salt,1000,64, 'sha512' ).toString('hex')
 }
 
 const markUserAsVerified = async (email:string) => {
@@ -174,7 +174,7 @@ const patchUserFromGoogleAuth = async (
 
         const patchUser = async (id:string , updateUserDto:UpdateUserDto ) => {
             await connectMongoDB()
-            let updateQuery: UpdateQuery<IUser> = {}
+            let updateQuery: UpdateQuery<IUser> = {};
         
             if (updateUserDto.email) {
                 updateQuery = {
@@ -187,7 +187,7 @@ const patchUserFromGoogleAuth = async (
                     phone: updateUserDto.phone
                 }
             }
-            return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true})
+            return await User.findByIdAndUpdate(id,{updateUserDto}, {new:true});
         }
 
 const updateUserPasswordById = async (
@@ -197,8 +197,7 @@ const updateUserPasswordById = async (
 )=> {
     try {
         await User.updateOne(
-            { _id: id
-            },
+            { _id: id},
             {
                 $set: {
                     credentials:{

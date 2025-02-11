@@ -1,4 +1,4 @@
-import { ChangePasswordRequest } from './../../../../models/types/userTypes';
+import { ChangePasswordRequest } from '../../../../models/types/userTypes';
 import { Schema } from 'mongoose';
 import { NextRequest, NextResponse  } from "next/server";
 import VerificationService from '@/service/VerificationService'

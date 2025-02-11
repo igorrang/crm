@@ -45,6 +45,13 @@ export const CreateUserSchema = yup.object().shape({
          .string()
          .nullable()
          .oneOf(
+            [yup.ref('email')],
+            'As senhas devem ser iguais'
+         ),
+         confirmPassword: yup 
+         .string()
+         .nullable()
+         .oneOf(
             [yup.ref('password')],
             'As senhas devem ser iguais'
          )

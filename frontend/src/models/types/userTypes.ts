@@ -51,7 +51,7 @@ export interface ForgotPasswordCodeVerifyRequest {
     email: string;
     code: string;
     password:string;
-    passwordConfirmatiom: string;
+    passwordConfirmation: string;
 }
 
 export interface UserDeleteResonDTO{
@@ -92,8 +92,8 @@ export interface Item {
   }
   
   export interface Credentials {
-    reason: string;
-    confirmEmail: string;
+    password: string;
+    salt: string;
   }
 
   export interface CreateUserDeleteReasonDTO {

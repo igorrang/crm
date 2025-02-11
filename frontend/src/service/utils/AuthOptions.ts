@@ -13,7 +13,7 @@ export const nextAuthOption: NextAuthOptions = {
 
     providers: [
         GoogleProvider({clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRE!
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
         }),
         CredentialsProvider({
             name: 'credentials',
@@ -24,19 +24,22 @@ export const nextAuthOption: NextAuthOptions = {
             },
 
             async authorize(credentials:any , req:any) {
+                console.log('credentials', credentials) 
                 let user
                 if (credentials.provider === UserProvider.EMAIL_PASSWORD) {
+                    console.log("📌 Tentando autenticar usuário...")
                     user = await LoginService.login({
-                        credentials: credentials.email,
+                        credential: credentials.credential,
                         password: credentials.password
                     })
+                    console.log("📌 Resultado da autenticação:", user)
                 } else {
                     try{
 
                         const client = new OAuth2Client()
                         const ticket = await client.verifyIdToken ({
-                            idToken: credentials.credentials,
-                            audience: credentials.client_id
+                            idToken: credentials.credential,
+                            audience: credentials.client_id,
                         })
 
                         const  payload = ticket.getPayload()
@@ -64,16 +67,18 @@ export const nextAuthOption: NextAuthOptions = {
                         return null
                     }
                 }
-                if(!user){
-                    console.log('authenticated')
-                    return {
-                        id: user._id,
-                        name: user.name,
-                        email: user.email
-                    }
-            }
-            console.log('authentication failed')
-                return null
+                if (!user) {
+                    console.error('❌ Usuário não autenticado - Retornando null.');
+                    return null;
+                }
+                
+                console.log('✅ Usuário autenticado:', user);
+                
+                return {
+                    id: user._id.toString(),  // Converter ObjectId para string
+                    name: user.name,
+                    email: user.email
+                };
         }
 
         })
