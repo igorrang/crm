@@ -65,6 +65,41 @@ function Index() {
       toast.error('nao foi possivel listar essa data')
      }
   
+
+  const cadastrarCliente = async () => {
+    const dadosUsuario = {
+      dataInicio: "01/11/2023",
+      nome: "teste",
+      origem: "Instagram (Bio)",
+      nickname: "teste",
+      observacao: "teste",
+      valorFichas: 111,
+      status: "Fracassado",
+      ultimaAtualizacao: "08/11/2024",
+
+    }
+    try {
+      console.log('enviando dados para a api', dadosUsuario)
+      const response = await fetch('/api/table',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dadosUsuario)  
+      })
+
+      const data = await response.json()
+      console.log('dados retornados da api', data)
+      
+      if (!response.ok){
+        throw new Error(data.error || 'Erro desconhecido')
+      }
+      alert('Cliente cadastrado com sucesso')
+    } catch(error){
+        console.error('Erro ao cadastrar cliente', error)
+        alert('Erro ao cadastrar cliente')
+    }
+  }
   // Função para o filtrar por periodos
   const filtroPeriodo = async (dateFrom: Date, dateTo: Date, ) => {    
     try {

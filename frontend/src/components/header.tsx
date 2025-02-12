@@ -2,9 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IoMenuOutline, IoLogOutSharp } from "react-icons/io5";
-
-import { Button } from "./ui/button";
+import { IoMenuOutline, IoLogOutSharp} from "react-icons/io5";
 import { MdOutlineDashboard } from "react-icons/md";
 import { PiTableThin, PiUsersThreeLight } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";

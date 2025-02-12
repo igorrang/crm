@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 import PlanilhaService from '@/service/PlanilhaService';
 
+
+export async function POST(req: Request) {
+  try {
+    const { dateFrom, dateTo } = await req.json();
+    const planilhas = await PlanilhaService.filtrarPorData(dateFrom, dateTo);
+    return NextResponse.json(planilhas);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Erro ao filtrar planilhas' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET() {
   try {
     const planilhas = await PlanilhaService.listarPlanilhas();
