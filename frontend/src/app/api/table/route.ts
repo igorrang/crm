@@ -5,7 +5,6 @@ export async function GET() {
   try {
     const planilhas = await PlanilhaService.listarPlanilhas();
     
-    // Formata os dados para o formato esperado pelo DataTable
     const formattedData = planilhas.map(planilha => ({
       _id: planilha._id.toString(),
       dataInicio: new Date(planilha.datainicio).toLocaleDateString('pt-BR'),
@@ -27,3 +26,5 @@ export async function GET() {
     );
   }
 } 
+
+
