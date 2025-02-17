@@ -280,20 +280,18 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
       <div className="flex items-center flex-wrap py-4">
         <div className={cn("grid gap-2", className)}>
           <Link href="/Cadastro">
-            <Button variant="outline" className="text-white">
-              Cadastrar Cliente
-            </Button>
           </Link>
           
-          <Button 
+        
+        </div>
+        <Button 
             variant="outline"
             onClick={handleDeleteAll}
             className="flex items-center gap-2 text-white hover:text-red-600 ml-2"
           >
-            <FileX className="h-4 w-4" />
+            <FileX className="h-4 w-4 ml-0 m-1" />
             Excluir Planilha
-          </Button>
-        </div>
+          </Button> 
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>

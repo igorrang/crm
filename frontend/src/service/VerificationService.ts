@@ -2,7 +2,7 @@ import {createHash} from 'crypto';
 import {sendEmail} from './lib/NodeMailer'
 import {addHours} from 'date-fns'
 import VerificationCode, {VerificationCodeStatuses,VerificationCodeTypes,} from '@/models/VerificationCode';
-import {connectToDatabase} from '@/service/lib/mongodb';
+import {connectMongoDB } from '@/service/lib/mongodb';
 import { UserService } from '@/service/UserService';
 import { ObjectId } from 'mongodb';
 
@@ -23,7 +23,7 @@ const sendVerificationCode = async (email:string) => {
 
 const verifyCode = async (code:string) => {
     try{
-        await connectToDatabase();
+        await connectMongoDB ();
         const verificationCodeObj= await VerificationCode.findOne({code:code})
         await UserService.markUserAsVerified(verificationCodeObj.email)
     } catch (error){
@@ -37,7 +37,7 @@ const insertCodeOnDatabase = async (
     userId: string 
 ) => {
     try{
-        await connectToDatabase()
+        await connectMongoDB ()
         await VerificationCode.create({
             code,
             type,
@@ -87,7 +87,7 @@ const findVerificationCodes = async (
     type: VerificationCodeTypes,
 ) => {
     try{
-        await connectToDatabase();
+        await connectMongoDB ();
         const verificationCode = await VerificationCode.findOne({
             type,
             status: VerificationCodeStatuses.USABLE,
@@ -107,7 +107,7 @@ const findVerificationCodes = async (
 }
 const verificationPhoneCode = async (userId:string,code:string, type:VerificationCodeTypes) => {
     try{
-        await connectToDatabase()
+        await connectMongoDB ()
         const verificationCodePhone = await VerificationCode.findOne({
             userRef: new ObjectId(userId),
             type,
@@ -130,7 +130,7 @@ const updateVerificationCodes = async (
     newStatus: VerificationCodeStatuses
 ) => {
     try{
-        await connectToDatabase();
+        await connectMongoDB ();
         const  verificationCode = await VerificationCode.updateOne(
             {code},
             {$set: {status: newStatus}}

@@ -16,7 +16,7 @@ export default function LoginPage(){
             <div className='mt-[50px] 15inch:mt-2'>
                 <Link href={'/login'} className='cursor-pointer'>
                     <Image
-                    src='/images/tokio.jpg'
+                    src='/images/KonvictusLogoWhite.png'
                     alt='logo'  
                     width={197}
                     height={52}
@@ -31,6 +31,7 @@ export default function LoginPage(){
                     <ForgotPasswordForm forgotPassword={setForgotPassword}/>
                 ): !isRegister ? (
                     <LoginForm
+                    
                     register={setIsRegister}
                     forgotPassword={setForgotPassword}
                     ></LoginForm>
