@@ -8,6 +8,7 @@ import { Divider } from '../Divider';
 import { useState } from 'react';
 import { Input } from '../input/input';
 import { Button } from '../Button';
+import { RegisterForm } from '../RegisterForm';
 import { useRouter } from 'next/navigation';
 import { loginSchema } from '@/app/schemas/LoginSchema';
 import { signIn } from 'next-auth/react';
@@ -101,6 +102,7 @@ export const LoginForm = ({ register, forgotPassword }: LoginFormProps) => {
               >
                 Esqueci minha senha.
               </Button>
+              
             </Form>
           )}
         </Formik>

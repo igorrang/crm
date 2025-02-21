@@ -73,7 +73,7 @@ const registerValues = {
         //   console.log(result.error)
         //   return
         // }
-  
+        
         register(false)
   
         toast.custom((t: any) => (
@@ -101,7 +101,7 @@ const registerValues = {
       <>
         <Box className="w-[1060px] max-h-fit">
           <div className="flex gap-3 items-center">
-            <Button onClick={() => register(false)}>
+            <Button onClick={() => register(true)}>
               <BsArrowLeft size={24} />
             </Button>
             <h1 className="text-3xl font-bold mb-1">

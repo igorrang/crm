@@ -37,7 +37,9 @@ export default function LoginPage(){
                     ></LoginForm>
                 ):(
                     <RegisterForm
+                    
                     register={setIsRegister}
+                    
                     />
                 )}
             </main>

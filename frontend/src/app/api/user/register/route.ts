@@ -1,4 +1,4 @@
-import { connectToDatabase } from '@/service/lib/mongodb';
+import { connectMongoDB} from '@/service/lib/mongodb';
 import User from '@/models/User';
 import { randomBytes, pbkdf2Sync } from 'crypto';
 import { NextResponse } from 'next/server';
@@ -6,10 +6,14 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    await connectToDatabase();
+    await connectMongoDB();
 
+
+  const isDevelopment = process.env.NODE_ENV === 'development'
+    const email = isDevelopment? 'alexpadilha@konvictus.com' : data.email
+    const password = isDevelopment? 'senha1234'  : data.password
     const salt = randomBytes(16).toString('hex');
-    const hashedPassword = pbkdf2Sync(data.password, salt, 1000, 64, 'sha512').toString('hex');
+    const hashedPassword = pbkdf2Sync(password , salt, 1000, 64, 'sha512').toString('hex');
 
     const userData = {
       name: data.name,

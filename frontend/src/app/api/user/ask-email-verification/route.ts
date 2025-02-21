@@ -3,7 +3,7 @@ import VerificationService from '@/service/VerificationService'
 import { VerificationCodeTypes } from "@/models/VerificationCode";
 import { IUser } from "@/models/User";
 
-import UserService from '@/service/UserService'
+import {UserService} from '@/service/UserService'
 import {getServerSession} from 'next-auth'
 
 import {Resend} from 'resend'

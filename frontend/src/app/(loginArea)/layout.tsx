@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 }
 
 export default async function LoginAreaLayout({
+    
     children
 }: {
     children: React.ReactNode

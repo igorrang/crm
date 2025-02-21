@@ -8,7 +8,7 @@ import VerificationService from '@/service/VerificationService'
 import {VerificationCodeTypes} from '@/models/VerificationCode'
 import {IUser} from '@/models/User'
 
-import UserService from '@/service/UserService'
+import {UserService} from '/Users/igorrangelkonvictus/crm/frontend/src/service/UserService'
 
 const resend = new Resend(process.env.RESEND_API_KEY) 
 
