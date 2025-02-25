@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     try {
 
         let dadosPlanilha = await req.json()
-        let planilha = await PlanilhaService.criarPlanilha(dadosPlanilha)
+        
 
     } catch {
 

@@ -1,22 +1,24 @@
-import mongoose,{mongo} from "mongoose";
-import{CustomError, ECustomError} from "../utils/Errors"
+import mongoose from "mongoose";
+import { CustomError, ECustomError } from "../utils/Errors";
 
-var mongodb: typeof mongoose | null = null;
+let mongodb: typeof mongoose | null = null;
 
 export const connectMongoDB = async (forceUri?: string) => {
-    if (mongodb){return}
-
-    try{
-        mongodb = await mongoose?.connect(forceUri ? forceUri : String(process.env.MONGODB_URI));
-    }catch (error){
-        throw new CustomError(ECustomError.CONNECT_TO_MONGO_EREROR, 'error connecting to mongodb')
+    if (mongoose.connection.readyState === 1) {
+        return mongoose.connection; // Retorna a conexão existente
     }
-}
+
+    try {
+        await mongoose.connect(forceUri || String(process.env.MONGODB_URI));
+        return mongoose.connection; // Retorna a conexão após a conexão bem-sucedida
+    } catch (error) {
+        throw new CustomError(ECustomError.CONNECT_TO_MONGO_EREROR, 'Error connecting to MongoDB');
+    }
+};
 
 export const dropMongoDB = async () => {
-    if(mongodb){
-        await mongodb.connection?.dropDatabase();
-        await mongodb.connection?.close();
-        mongodb = null;
+    if (mongoose.connection.readyState !== 0) {
+        await mongoose.connection.dropDatabase();
+        await mongoose.connection.close();
     }
-}
+};

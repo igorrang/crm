@@ -43,7 +43,7 @@ export const CardLogin = ({register, forgotPassword}: LoginFormProps) => {
       return
     }
     setIsLoading(false);
-    router.replace('/Home');
+    router.replace('/Login');
   }
   // Envia o formulario com os dados inseridos e encontra um usuario no banco de dados.
   const handleSubmit = async (values:{email: string; password:string}) =>{
@@ -59,7 +59,7 @@ export const CardLogin = ({register, forgotPassword}: LoginFormProps) => {
       toast.error(result.error)
       return;
     }
-    router.replace('/Home');
+    router.replace('/Login');
   }
 
 

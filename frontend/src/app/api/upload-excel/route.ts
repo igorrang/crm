@@ -1,5 +1,5 @@
 import { Box } from '@/components/Box';
-import { NextResponse } from 'next/server';
+import { NextResponse} from 'next/server';
 import * as XLSX from 'xlsx';
 import PlanilhaService from '@/service/PlanilhaService';
 
@@ -107,8 +107,5 @@ export async function POST(request: Request) {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}; 
+
+
