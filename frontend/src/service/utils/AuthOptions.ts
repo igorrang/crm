@@ -1,5 +1,5 @@
 import { NextAuthOptions } from 'next-auth'
-import LoginService from '/Users/igorrangelkonvictus/crm/frontend/src/service/LoginService'
+import LoginService from '@/service/LoginService'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { CreateUserDtoFromGoogle, UserProvider } from '@/models/types/userTypes'

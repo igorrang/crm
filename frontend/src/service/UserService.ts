@@ -1,4 +1,4 @@
-import User, {IUser,IUserFromGoogle} from '/Users/igorrangelkonvictus/crm/frontend/src/models/User'
+import User, {IUser,IUserFromGoogle} from '@/models/User'
 import {connectMongoDB} from './lib/mongodb'
 
 import {
@@ -7,7 +7,7 @@ import {
     UpdateUserDto,
     CadastralUpdateFromGoogleSource,
     CreateUserDeleteReasonDTO
-} from '/Users/igorrangelkonvictus/crm/frontend/src/models/types/userTypes'
+} from '@/models/types/userTypes'
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import VerificationService from './VerificationService';
 import mongoose, { UpdateQuery } from 'mongoose';
