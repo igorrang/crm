@@ -10,7 +10,7 @@ import { Input } from '../input/input';
 import { Button } from '../Button';
 import { RegisterForm } from '../RegisterForm';
 import { useRouter } from 'next/navigation';
-import { loginSchema } from '@/app/Schemas/LoginSchema';
+import { loginSchema } from '@/app/schemas/LoginSchema';
 import { signIn } from 'next-auth/react';
 import toast from 'react-hot-toast';
 type LoginFormProps = {

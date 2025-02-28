@@ -43,7 +43,7 @@ const insertCodeOnDatabase = async (
             type,
             userRef: userId,
             status: VerificationCodeStatuses.USABLE,
-            experiesAt: addHours(new Date(),24),
+            experiesAt: new Date(Date.now() + 15 * 60 * 1000),
         })
 }catch(error){
     console.log(error)

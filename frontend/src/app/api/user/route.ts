@@ -17,10 +17,12 @@ import {
 
 export async function POST(request: NextRequest) {
   const createUserDto: CreateUserDto = await request.json();
+  console.log("📥 Dados recebidos no POST:", createUserDto); // 👈 Debug
 
   try {
     await CreateUserSchema.validate(createUserDto);
   } catch (error) {
+    console.error("❌ Erro na validação do esquema:", error); // 👈 Debug
     return NextResponse.json(error, { status: 400 });
   }
 
@@ -29,6 +31,7 @@ export async function POST(request: NextRequest) {
       ...createUserDto,
       provider: UserProvider.EMAIL_PASSWORD,
     });
+    console.log("✅ Usuário criado com sucesso:", user);
     if (!user) {
       return NextResponse.json({ status: 500 });
     }
@@ -36,6 +39,7 @@ export async function POST(request: NextRequest) {
     user.credentials = null;
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
+    console.error("❌ Erro ao criar usuário:", error); // 👈 Debug
     let asDatabaseError = error as DatabaseServerError;
     if (asDatabaseError.code === DATABASE_ERRORS.DUPLICATED_KEY) {
       if (asDatabaseError.keyPattern?.email) {

@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import React from "react";
-import { Providers } from './providers'
+import { Providers } from "./providers"; // Verifique se o caminho está correto
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["300", "600"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "600"],
+  style: "normal",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   title: "Crm Konvictus",
   description: "Desenvolvido por Konvictus",
   icons: {
-    icon: "KonvictusLogo.png"
+    icon: "/KonvictusLogo.png" // Certifique-se de que o arquivo está na pasta `public/`
   }
 };
 
