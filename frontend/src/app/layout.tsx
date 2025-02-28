@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+
 import "./globals.css";
 import React from "react";
 import { Providers } from './providers'
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["300", "600"] });
 
 export const metadata: Metadata = {
   title: "Crm Konvictus",
@@ -20,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <Providers>{children}</Providers>
+    <html lang="pt-br">
+      <body>
+        {children}
       </body>
     </html>
   );

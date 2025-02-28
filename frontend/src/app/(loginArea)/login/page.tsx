@@ -31,16 +31,13 @@ export default function LoginPage(){
                     <ForgotPasswordForm forgotPassword={setForgotPassword}/>
                 ): !isRegister ? (
                     <LoginForm
-                    
                     register={setIsRegister}
                     forgotPassword={setForgotPassword}
-                    ></LoginForm>
-                ):(
-                    <RegisterForm
-                    
-                    register={setIsRegister}
-                    
                     />
+                ): (
+                    <RegisterForm 
+                    register={setIsRegister} 
+                 />
                 )}
             </main>
         </div>

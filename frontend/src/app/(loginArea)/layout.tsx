@@ -22,15 +22,17 @@ export default async function LoginAreaLayout({
 }) {
     const session = await getServerSession(nextAuthOption)
     if (session) {
-   
+        
     }
 
     return (
         <html lang="pt-br">
             <body
-            className={`${DMSans.className} flex flex-col h-screen w-screen`}
+            className={`${DMSans.className} flex flex-col  h-screen w-screen `}
             >
                 <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+                
+        <Toaster />
             </body>
         </html>
     )
