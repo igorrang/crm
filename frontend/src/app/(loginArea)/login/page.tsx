@@ -1,10 +1,10 @@
 'use client'
-import {ForgotPasswordForm} from '@/components/ForgotPasswordForm/ForgotPasswordForm'
-import {useState} from 'react'
-import {LoginForm} from '@/components/LoginForm'
-import Image from 'next/image'
-import Link from 'next/link'
-import {RegisterForm} from '@/components/RegisterForm'
+import {ForgotPasswordForm} from '@/components/ForgotPasswordForm';
+import {useState} from 'react';
+import {LoginForm} from '@/components/LoginForm';
+import Image from 'next/image';
+import Link from 'next/link';
+import {RegisterForm} from '@/components/RegisterForm';
 
 
 export default function LoginPage(){
@@ -31,15 +31,12 @@ export default function LoginPage(){
                     <ForgotPasswordForm forgotPassword={setForgotPassword}/>
                 ): !isRegister ? (
                     <LoginForm
-                    
                     register={setIsRegister}
                     forgotPassword={setForgotPassword}
-                    ></LoginForm>
-                ):(
+                    />
+                ) : (
                     <RegisterForm
-                    
                     register={setIsRegister}
-                    
                     />
                 )}
             </main>
