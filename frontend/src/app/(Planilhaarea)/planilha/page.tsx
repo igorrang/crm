@@ -1,8 +1,8 @@
 "use client";
 
-import DialogCadastrarCliente from "@/components/dialogs/dialogCadastrarCliente";
-import Header from "@/components/Header";
-import Navbar from "@/components/Narbar";
+import DialogCadastrarCliente from "@/components/dialogCadastrarCliete/dialogCadastrarCliente";
+import Header from "@/components/Header/Header";
+import Navbar from "@/components/Narbar/Narbar";
 import { DataTable } from "@/components/DataTable/DataTable";
 import { ExcelUpload } from "@/components/ExcelUpload/ExcelUpload";
 
