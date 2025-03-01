@@ -1,4 +1,4 @@
-
+import '../globals.css'
 import type {Metadata} from 'next'
 import {DM_Sans} from 'next/font/google'
 import NextAuthSessionProvider from '@/models/providers/sessionProvider'
