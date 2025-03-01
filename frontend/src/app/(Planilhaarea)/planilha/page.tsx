@@ -3,7 +3,7 @@
 import DialogCadastrarCliente from "@/components/dialogCadastrarCliete";
 import Header from "@/components/Header";
 import Navbar from "@/components/Narbar";
-import { DataTable } from "@/components/DataTable/DataTable";
+import { DataTable } from "@/components/DataTable";
 import { ExcelUpload } from "@/components/ExcelUpload";
 
 import {

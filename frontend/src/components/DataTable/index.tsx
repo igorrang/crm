@@ -1,4 +1,4 @@
-"use client";
+
 import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { addDays, format } from "date-fns"
