@@ -3,8 +3,6 @@ import type {Metadata} from 'next'
 import {DM_Sans} from 'next/font/google'
 import NextAuthSessionProvider from '@/models/providers/sessionProvider'
 import {getServerSession} from 'next-auth'
-import {redirect} from 'next/navigation'
-import {Toaster} from 'react-hot-toast'
 import { nextAuthOption } from '@/service/utils/AuthOptions'
 
 const DMSans = DM_Sans({subsets: ['latin']})

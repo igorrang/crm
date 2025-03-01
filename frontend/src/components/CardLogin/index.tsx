@@ -1,17 +1,17 @@
 'use client'; // Garante que o componente seja renderizado no cliente
 import { Formik, Form } from 'formik';
-import { Input } from '../Input';
+import { Input } from '@/components/Input';
 import { useState } from 'react';
 import { redirect, useRouter } from 'next/navigation'; // Use 'next/navigation' para Next.js 13+ Client Components
 import React from 'react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { Box } from 'lucide-react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { Divider } from '../Divider';
-import { loginSchema } from '../../app/schemas/LoginSchema';
+import { Divider } from '@/components/Divider';
+import { loginSchema } from '@/schemas/LoginSchema';
 
 type LoginFormProps = {
   register?: any;

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import PlanilhaTabela from '@/models/Planilha';
-import { connectMongoDB } from '/Users/igorrangelkonvictus/crm/frontend/src/service/lib/mongodb';
+import { connectMongoDB } from '@/service/lib/mongodb';
 
 export async function DELETE(
     request: Request,

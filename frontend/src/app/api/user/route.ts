@@ -6,7 +6,7 @@ import {
   UpdateUserDto,
   UserProvider,
 } from '@/models/types/userTypes';
-import { CreateUserSchema } from '@/app/schemas/CreateUserSchema';
+import { CreateUserSchema } from '@/schemas/CreateUserSchema';
 import RouteUtils from '@/service/utils/RouteUtils';
 import { getServerSession } from 'next-auth';
 import { nextAuthOption } from '@/service/utils/AuthOptions';

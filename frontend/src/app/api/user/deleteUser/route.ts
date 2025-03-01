@@ -1,5 +1,5 @@
 import {CreateUserDeleteReasonDTO} from '@/models/types/userTypes'
-import {CreateUserDeleteSchema} from '/Users/igorrangelkonvictus/crm/frontend/src/app/schemas/CreateUserDeleteSchema'
+import {CreateUserDeleteSchema} from '../../../../schemas/CreateUserDeleteSchema'
 import {UserService} from '@/service/UserService'
 import { nextAuthOption} from '@/service/utils/AuthOptions'
 import RouteUtils from '@/service/utils/RouteUtils'
