@@ -3,7 +3,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import {Form, Formik , FormikProps} from 'formik'
 import { postData } from '@/service/APIService'
 import { useRouter , useSearchParams} from 'next/navigation'
-import {Input} from '@/components/input/input'
+import {Input} from '@/components/input'
 import { Button } from '@/components/Button'
 import { Box } from '@/components/Box/index'
 import {useEffect, useState} from 'react'

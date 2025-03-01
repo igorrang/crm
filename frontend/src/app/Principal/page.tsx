@@ -7,8 +7,8 @@ import axios from "axios";
 import { IoSend } from "react-icons/io5";
 import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
 import CardMensagemHistorico from "@/components/cards/cardMensagemHistorico";
-import Header from "@/components/Header/Header";
-import Navbar from "@/components/Narbar/Narbar";
+import Header from "@/components/Header";
+import Navbar from "@/components/Narbar";
 import { Input } from "@/components/ui/input";
 import {
   Breadcrumb,
