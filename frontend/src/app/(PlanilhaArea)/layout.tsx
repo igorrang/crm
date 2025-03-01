@@ -10,8 +10,8 @@ import { nextAuthOption } from '@/service/utils/AuthOptions'
 const DMSans = DM_Sans({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'Login - crm',
-    description: 'Página de Login -Crm Konvictus'
+    title: 'Planilha - crm',
+    description: 'Planilha -Crm Konvictus'
 }
 
 export default async function PlanilhaAreaLayout({
