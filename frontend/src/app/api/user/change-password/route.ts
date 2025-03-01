@@ -1,11 +1,11 @@
-import { ChangePasswordRequest } from '../../../../models/types/userTypes';
+import { ChangePasswordRequest } from '@/models/types/userTypes';
 import { Schema } from 'mongoose';
 import { NextRequest, NextResponse  } from "next/server";
 import VerificationService from '@/service/VerificationService'
 import{VerificationCodeStatuses, VerificationCodeTypes} from '@/models/VerificationCode'
 import {randomBytes} from 'crypto'
-import {UserService} from '/Users/igorrangelkonvictus/crm/frontend/src/service/UserService'       
-import {ChangePasswordSchema} from '../../../../schemas/ChangePasswordSchema'
+import {UserService} from '@/service/UserService'       
+import {ChangePasswordSchema} from '@/schemas/ChangePasswordSchema'
 export async function POST(request: NextRequest){
     const changePasswordRequest: ChangePasswordRequest = await request.json()
 

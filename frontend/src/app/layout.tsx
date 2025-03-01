@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
 import React from "react";
 import { Providers } from "./providers"; // Verifique se o caminho está correto
 
