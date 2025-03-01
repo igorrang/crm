@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Link from "next/link";
+
 
 
 export default function Planilha() {
@@ -26,6 +26,7 @@ export default function Planilha() {
 
         <div className="w-full min-h-[94vh]  text-black bg-gradient-to-l from-black via-black/90 to-black/85 ">
           <div className="hidden lg:flex w-full py-4 px-10">
+           
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -36,7 +37,7 @@ export default function Planilha() {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link href="/Planilha">Planilha</Link>
+                   
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
