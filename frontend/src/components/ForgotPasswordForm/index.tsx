@@ -1,7 +1,7 @@
 import {Form,Formik} from 'formik'
 import {Box} from '../Box'
 import {Button} from '../Button'
-import {Input} from '../input'
+import {Input} from '../Input'
 import {postData} from '@/service/FrontEnd/APIService'
 import { FaRegSmileBeam } from 'react-icons/fa'
 import {AiOutlineClose} from 'react-icons/ai'

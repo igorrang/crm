@@ -15,8 +15,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
-import DialogEditarCliente from "../dialogs/dialogEditarCliente";
-import DialogFichas from "../dialogs/dialogFichas";
+import DialogEditarCliente from "@/components/DialogEditarCliente";
+import DialogFichas from "@/components/DialogFichas";
 import axios from "axios";
 
 export interface Payment {

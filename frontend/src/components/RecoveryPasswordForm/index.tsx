@@ -1,5 +1,5 @@
 'use client'
-import { Input } from '@/components/input'
+import { Input } from '@/components/Input'
 import { Button } from '../Button'
 import {Form, Formik} from 'formik'
 import { Box } from 'lucide-react';

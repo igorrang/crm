@@ -18,8 +18,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import CardFiltroAnexo from "@/components/Cards/cardFiltroAnexo";
-import DialogEditarFichas from "@/components/dialogs/dialogEditarFichas";
 import React from "react";
 import { Item, Historico, Deposito } from "../../models/types/userTypes";
 

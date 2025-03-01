@@ -1,6 +1,6 @@
 'use client'; // Garante que o componente seja renderizado no cliente
 import { Formik, Form } from 'formik';
-import { Input } from '../input';
+import { Input } from '../Input';
 import { useState } from 'react';
 import { redirect, useRouter } from 'next/navigation'; // Use 'next/navigation' para Next.js 13+ Client Components
 import React from 'react';

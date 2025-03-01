@@ -6,7 +6,7 @@ import { BiLogoGoogle } from 'react-icons/bi';
 import { Box } from '../Box';
 import { Divider } from '../Divider';
 import { useState } from 'react';
-import { Input } from '../input';
+import { Input } from '../Input';
 import { Button } from '../Button';
 import { RegisterForm } from '../RegisterForm';
 import { useRouter } from 'next/navigation';
