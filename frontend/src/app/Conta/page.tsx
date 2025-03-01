@@ -1,6 +1,6 @@
 import Header from "@/components/Header"
 import Navbar from "@/components/Narbar"
-import { CardLogin } from "@/components/cards/cardLogin"
+import { CardLogin } from "@/components/Cards/cardLogin"
 export default function Conta() {
   return (
     <main>

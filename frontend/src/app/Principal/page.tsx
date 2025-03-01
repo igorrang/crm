@@ -5,8 +5,8 @@ import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { IoSend } from "react-icons/io5";
-import CardFiltroCliente from "@/components/cards/cardFiltroCliente";
-import CardMensagemHistorico from "@/components/cards/cardMensagemHistorico";
+import CardFiltroCliente from "@/components/Cards/cardFiltroCliente";
+import CardMensagemHistorico from "@/components/Cards/cardMensagemHistorico";
 import Header from "@/components/Header";
 import Navbar from "@/components/Narbar";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import CardFiltroAnexo from "@/components/cards/cardFiltroAnexo";
+import CardFiltroAnexo from "@/components/Cards/cardFiltroAnexo";
 import DialogEditarFichas from "@/components/dialogs/dialogEditarFichas";
 import React from "react";
 import { Item, Historico, Deposito } from "../../models/types/userTypes";
