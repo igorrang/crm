@@ -278,24 +278,22 @@ export function DataTable({className,}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className="w-full">
       <div className="flex items-center flex-wrap py-4">
-        <div className={cn("grid gap-2", className)}>
-          <Link href="/Cadastro">
-          </Link>
-          
         
-        </div>
         <Button 
             variant="outline"
             onClick={handleDeleteAll}
             className="flex items-center gap-2 text-white hover:text-red-600 ml-2"
           >
-            <FileX className="h-4 w-4 ml-0 m-1" />
+            <FileX  />
             Excluir Planilha
           </Button> 
+       {/* 
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por nome..." value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("nome")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por origem..." value={(table.getColumn("origem")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("origem")?.setFilterValue(event.target.value)} />
         <Input className="max-w-[300px] m-1 ml-0 bg-secondary" placeholder="Filtrar por data de inicio..." value={(table.getColumn("dataInicio")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("dataInicio")?.setFilterValue(event.target.value)}/>
+        */}
         <DropdownMenu>
+
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="">
               Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
