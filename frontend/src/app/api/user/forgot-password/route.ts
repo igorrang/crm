@@ -1,5 +1,5 @@
 import { ForgotPasswordRequest , UserProvider} from '@/models/types/userTypes';
-import {ForgotPasswordTemplate} from '../../../../components/forgotPasswordTemplate/forgotPasswordTemplate'
+import {ForgotPasswordTemplate} from '@/components/ForgotPasswordTemplate'
 
 
 import {Resend} from 'resend'
