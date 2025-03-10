@@ -20,19 +20,19 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="my-10 flex flex-col items-center justify-center text-white">
-          <Link href="/VerCliente" className="flex flex-col items-center">
+          <Link href="/vercliente" className="flex flex-col items-center">
             <PiUsersThreeLight className="text-[30px]"/>
             <h1 className="text-[12px] text-center">cliente</h1>
           </Link>
         </div>
         <div className="my-10 flex flex-col items-center justify-center text-white">
-          <Link href="/Planilha" className="flex flex-col items-center">
+          <Link href="/planilha" className="flex flex-col items-center">
             <PiTableThin className="text-[35px]" />
             <h1 className="text-[12px] text-center">planilha</h1>
           </Link>
         </div>
         <div className="my-10 flex flex-col items-center justify-center text-white">
-          <Link href="/Conta" className="flex flex-col items-center">
+          <Link href="/conta" className="flex flex-col items-center">
             <VscAccount className="text-[25px]"/>
             <h1 className="text-[12px] text-center">conta</h1>
           </Link>
