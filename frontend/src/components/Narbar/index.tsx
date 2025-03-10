@@ -38,7 +38,7 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="my-10 flex flex-col items-center justify-center text-white">
-          <Link href="/" className="flex flex-col items-center">
+          <Link href="/login" className="flex flex-col items-center">
             <GiExitDoor className="text-[28px]" />
             <h1 className="text-[12px] text-center">sair</h1>
           </Link>
