@@ -1,5 +1,7 @@
 import { ForgotPasswordRequest , UserProvider} from '@/models/types/userTypes';
+
 import {ForgotPasswordTemplate} from '@/components/ForgotPasswordTemplate'
+
 
 
 import {Resend} from 'resend'
@@ -44,6 +46,7 @@ export async function POST(request: NextRequest) {
         user.id
      )
 
+     {/*
      resend.emails.send({
         from : 'Acme <onboarding@resend.dev>',
         to: [user.email],
@@ -56,6 +59,7 @@ export async function POST(request: NextRequest) {
         text: 'Recuperação de Senha - Konvictus'
      })
      return Response.json({message: 'E-mail enviado com succes'})
+    */}
     }  catch(error) {
         console.log(error)
         return Response.json(error, {status: 500})
