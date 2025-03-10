@@ -13,23 +13,7 @@ const Header = ({  }) => {
 
   return (
     <div className="w-full py-3 z-50 flex justify-between items-center bg-gradient-to-l from-black/90 via-black/85 to-black/80 relative  text-white animate-items-appear">
-      <Link href="/Principal" className="ml-[10%] ">
-        <Image
-          src="/KonvictusLogoEscrita.png"
-          alt="logo"
-          width={2000}
-          height={0}
-          className="w-[200px]"
-        />
-      </Link>
-      <nav className="hidden xl:flex  lg:mr-[10%] gap-x-8">
-        <Link href="/Conta" className="">
-          Conta
-        </Link>
-        <Link href="/" className="">
-          Sair
-        </Link>
-      </nav>
+      
 
       <IoMenuOutline
         className="xl:hidden cursor-pointer mr-[10%] text-[30px] color-white "
