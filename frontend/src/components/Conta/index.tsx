@@ -2,8 +2,6 @@ import Header from "@/components/Header"
 import Navbar from "@/components/Narbar"
 import DadosConta from "@/components/DadosConta"
 import TituloCardConta from "@/components/TituloCardConta"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import Link from "next/link"
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhone } from "react-icons/fi";
 import { LiaUserEditSolid } from "react-icons/lia";
@@ -20,21 +18,7 @@ export default function Conta() {
 
       <div className="w-full min-h-[94vh] text-black bg-gradient-to-l from-black via-black/90 to-black/85 ">
           <div className="hidden lg:flex w-full py-4 px-10">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/principal">Principal</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/conta">Conta</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+           
           </div>
           
           {/* Container principal */}
