@@ -15,10 +15,7 @@ const Header = ({  }) => {
     <div className="w-full py-3 z-50 flex justify-between items-center bg-gradient-to-l from-black/90 via-black/85 to-black/80 relative  text-white animate-items-appear">
       
 
-      <IoMenuOutline
-        className="xl:hidden cursor-pointer mr-[10%] text-[30px] color-white "
-        onClick={() => setMenuOpen(!menuOpen)}
-      />
+     
       {menuOpen && (
         <div className="xl:hidden  absolute top-full left-0 w-full bg-primary p-4 rounded-b-2xl  shadow-md ">
           <div className="flex flex-col gap-y-2 ">
