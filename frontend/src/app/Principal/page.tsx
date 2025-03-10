@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { Item, Historico, Deposito } from "../../models/types/userTypes";
+import { Item, Historico, Deposito } from "@/models/types/userTypes";
 
 export default function VerCliente() {
   return (
@@ -118,13 +118,13 @@ function PageContent() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/Principal">Principal</Link>
+                <Link href="/principal">Principal</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/VerCliente">Ver Cliente</Link>
+                <Link href="/vercliente">Ver Cliente</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
