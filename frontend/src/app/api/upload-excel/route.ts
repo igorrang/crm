@@ -4,6 +4,21 @@ import fs from 'fs';
 import * as XLSX from 'xlsx';
 import PlanilhaService from '@/service/PlanilhaService';
 
+interface ExcelRow {
+  'Nome': string;
+  'Origem': string;
+  'Status': string;
+  'Data de Inicio': string;
+  'Apelido': string;
+  'Valor Fichas': string | number;
+  'Observações': string;
+  'Bônus':string;
+  'Anuncio':string;
+  '@instagra':string;
+  'contato':string ;
+
+}
+
 export const config = {
   api: {
     bodyParser: false, // Necessário para processar uploads de arquivos
@@ -16,9 +31,10 @@ const processExcelFile = (filePath: string) => {
   const workbook = XLSX.readFile(filePath);
   // Seleciona a primeira planilha
   const sheetName = workbook.SheetNames[0];
+  
   const worksheet = workbook.Sheets[sheetName];
   // Converte a planilha em JSON
-  const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  const jsonData = XLSX.utils.sheet_to_json<ExcelRow>(worksheet, { raw: false });
   return jsonData;
 };
 
@@ -45,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: 'Nenhum arquivo enviado' });
       }
 
-      const filePath = file.filepath;
+      const filePath = file;
       const excelData = processExcelFile(filePath);
 
       if (!Array.isArray(excelData) || excelData.length === 0) {
@@ -57,6 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const errors = [];
 
       for (const row of excelData) {
+        
         try {
           const planilhaData = {
             nome: row['Nome'] ?? '',
