@@ -19,11 +19,13 @@ interface ExcelRow {
 
 }
 
-export const config = {
-  api: {
-    bodyParser: false, // Necessário para processar uploads de arquivos
-  },
-};
+export const runtime = 'nodejs';
+
+export async function POST(req: NextApiRequest) {
+  const body = await req.body();
+  // Processar o corpo da requisição conforme necessário
+  return new Response(JSON.stringify({ message: 'Dados recebidos com sucesso' }), { status: 200 });
+}
 
 // Função auxiliar para ler e processar o arquivo Excel
 const processExcelFile = (filePath: string) => {
