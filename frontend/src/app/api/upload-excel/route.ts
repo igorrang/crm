@@ -21,7 +21,7 @@ interface ExcelRow {
 
 export const runtime = 'nodejs';
 
-export async function POST(req: NextApiRequest) {
+export async function GET(req: NextApiRequest) {
   const body = await req.body();
   // Processar o corpo da requisição conforme necessário
   return new Response(JSON.stringify({ message: 'Dados recebidos com sucesso' }), { status: 200 });
