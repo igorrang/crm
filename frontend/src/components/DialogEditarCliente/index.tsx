@@ -84,7 +84,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
             </div>
             <div className=" gap-4">
               <Label htmlFor="nome" className="text-right text-white"> Nome </Label>
-              <Input id="nome" className="" value={nome}  onChange={(e) => setNome(e.target.value)} required/>
+              <Input id="nome" className="bg-black" value={nome}  onChange={(e) => setNome(e.target.value)} required/>
             </div>
             <div className="flex flex-col py-1 gap-2">
               <Label className="text-start text-white"> Origem </Label>
