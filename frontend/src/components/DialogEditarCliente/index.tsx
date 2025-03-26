@@ -105,7 +105,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
             </div>
             <div className=" gap-4">
               <Label htmlFor="nickName" className="text-right text-white"> NickName </Label>
-              <Input id="nickName" className="" value={nickname}  onChange={(e) => setNickname(e.target.value)} required/>
+              <Input id="nickName" className="bg-black" value={nickname}  onChange={(e) => setNickname(e.target.value)} required/>
             </div>
           </div>
           <div>
