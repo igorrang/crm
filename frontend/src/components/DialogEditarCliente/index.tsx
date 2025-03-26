@@ -80,7 +80,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
             </div>
             <div className="  gap-4">
               <Label htmlFor="dataInicio" className="text-right text-white"> Data de Inicio </Label>
-              <Input id="dataInicio" type="date" className="" value={dataInicio}  onChange={(e) => setDataInicio(e.target.value)} required/>
+              <Input id="dataInicio" type="date" className="bg-black" value={dataInicio}  onChange={(e) => setDataInicio(e.target.value)} required/>
             </div>
             <div className=" gap-4">
               <Label htmlFor="nome" className="text-right text-white"> Nome </Label>
@@ -111,11 +111,11 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
           <div>
            <div className=" gap-4">
               <Label htmlFor="observacoes" className="text-right text-white"> Observacoes </Label>
-              <Input id="observacoes" className="" value={observacao}  onChange={(e) => setObservacao(e.target.value)} required/>
+              <Input id="observacoes" className="bg-black" value={observacao}  onChange={(e) => setObservacao(e.target.value)} required/>
             </div>
             <div className=" gap-4">
               <Label htmlFor="valorFichas" className="text-right text-white"> Valor Fichas </Label>
-              <Input id="valorFichas" className="" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required/>
+              <Input id="valorFichas" className="bg-black" value={valorFicha}  onChange={(e) => setValorFicha(e.target.value)} required/>
             </div>
           <div className="flex flex-col py-1 gap-2">
               <Label className="text-start text-white"> Status </Label>
@@ -137,7 +137,7 @@ export default function DialogEditarCliente({identificador_props,dataInicio_prop
             </div>
             <div className=" gap-4">
               <Label htmlFor="ultimaAtualizacao" className="text-right text-white"> Ultima Atualizacao </Label>
-              <Input id="ultimaAtualizacao" type="date" className="" value={ultimaAtualizacao}  onChange={(e) => setUltimaAtualizacao(e.target.value)} required/>
+              <Input id="ultimaAtualizacao" type="date" className="bg-black" value={ultimaAtualizacao}  onChange={(e) => setUltimaAtualizacao(e.target.value)} required/>
             </div>
             <DialogFooter className="mt-24">
               <Button type="submit">Confirmar</Button>
