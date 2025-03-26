@@ -56,7 +56,7 @@ export default function DialogCadastrarCliente() {
         <form onSubmit={cadastrandoCliente} className="grid grid-cols-2 gap-4 py-4">
           <div>
             <div className=" items-center gap-4">
-              <Label htmlFor="dataInicio" className="text-right text-black">
+              <Label htmlFor="dataInicio" className="text-right text-blue-500">
                 Data de Inicio
               </Label>
               <Input
@@ -69,7 +69,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="nome" className="text-right text-black">
+              <Label htmlFor="nome" className="text-right text-blue-500">
                 Nome
               </Label>
               <Input
@@ -98,7 +98,7 @@ export default function DialogCadastrarCliente() {
               </DropdownMenu>
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="nickName" className="text-right text-black">
+              <Label htmlFor="nickName" className="text-right text-blue-500">
                 Nickname
               </Label>
               <Input
@@ -113,7 +113,7 @@ export default function DialogCadastrarCliente() {
           </div>
           <div>
             <div className="items-center gap-4">
-              <Label htmlFor="anuncio" className="text-right text-black">
+              <Label htmlFor="anuncio" className="text-right text-blue-500">
                 Observacao
               </Label>
               <Input
@@ -125,7 +125,7 @@ export default function DialogCadastrarCliente() {
               />
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="observacoes" className="text-right text-black">
+              <Label htmlFor="observacoes" className="text-right text-blue-500">
                 Valor das Fichas
               </Label>
               <Input
@@ -161,7 +161,7 @@ export default function DialogCadastrarCliente() {
               </DropdownMenu>
             </div>
             <div className="items-center gap-4">
-              <Label htmlFor="ultimaAtualizacao" className="text-right text-black">
+              <Label htmlFor="ultimaAtualizacao" className="text-right text-blue-500">
                 Ultima Atualizacao
               </Label>
               <Input
