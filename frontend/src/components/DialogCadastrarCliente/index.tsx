@@ -62,7 +62,7 @@ export default function DialogCadastrarCliente() {
               <Input
                 id="dataInicio"
                 type="date"
-                className=""
+                className="bg-black"
                 value={dataInicio}
                 onChange={(e) => setDataInicio(e.target.value)}
                 required
@@ -74,7 +74,7 @@ export default function DialogCadastrarCliente() {
               </Label>
               <Input
                 id="nome"
-                className=""
+                className="bg-black"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 required
@@ -103,7 +103,7 @@ export default function DialogCadastrarCliente() {
               </Label>
               <Input
                 id="nickName"
-                className=""
+                className="bg-black"
                 value={nickName}
                 onChange={(e) => setNickName(e.target.value)}
                 required
@@ -118,7 +118,7 @@ export default function DialogCadastrarCliente() {
               </Label>
               <Input
                 id="observacao"
-                className=""
+                className="bg-black"
                 value={observacao}
                 onChange={(e) => setObservacao(e.target.value)}
                 required
@@ -130,7 +130,7 @@ export default function DialogCadastrarCliente() {
               </Label>
               <Input
                 id="valorFicha"
-                className=""
+                className="bg-black"
                 onKeyDown={(e) => {
                       if(e.key === ",") {
                         e.preventDefault()
@@ -167,7 +167,7 @@ export default function DialogCadastrarCliente() {
               <Input
                 id="ultimaAtualizacao"
                 type="date"
-                className=""
+                className="bg-black"
                 value={ultimaAtualizacao}
                 onChange={(e) => setUltimaAtualizacao(e.target.value)}
                 required
