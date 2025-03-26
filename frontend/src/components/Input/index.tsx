@@ -47,7 +47,7 @@ export const Input = ({
             {label && <label htmlFor={rest.id}>{label}</label>}
 
             <div
-              className={`flex text-sm text-inherit border bg-white border-bgLoginPage rounded focus:outline-none ${
+              className={`flex text-sm text-inherit border border-bgLoginPage rounded focus:outline-none ${
                 Icon ? 'gap-2 items-center' : ''
               } ${showError ? '!border-red-300' : ''} ${className || ''}`}
             >
