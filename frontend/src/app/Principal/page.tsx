@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { IoSend } from "react-icons/io5";
@@ -18,24 +18,27 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import React from "react";
 import { Item, Historico, Deposito } from "@/models/types/userTypes";
 
 export default function VerCliente() {
-  return (
-    <main>
-      <Header />
+@@ -28,18 +27,15 @@ export default function VerCliente() {
       <div className="flex">
         <Navbar />
         <div className="w-full min-h-[94vh] text-black bg-gradient-to-l from-black via-black/90 to-black/85">
-          <PageContent />
+          {/* Adicionando Suspense para evitar erro com useSearchParams */}
+          <Suspense fallback={<p>Carregando...</p>}>
+            <PageContent />
+          </Suspense>
         </div>
       </div>
     </main>
   );
 }
 
+
 function PageContent() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // ✅ Agora está dentro de um Client Component com Suspense
   const [data, setData] = useState<Item[]>([]);
   const [dataHistorico, setDataHistorico] = useState<Historico[]>([]);
   const [dataDeposito, setDeposito] = useState<Deposito[]>([]);
@@ -48,7 +51,7 @@ function PageContent() {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [dataHistorico]);
 
@@ -85,13 +88,11 @@ function PageContent() {
         console.error("Erro ao cadastrar histórico:", res.statusText);
       }
     } catch (error) {
-      console.error("Erro ao inserir histórico:", error);
+      console.error("Erro ao inserir historico:", error);
     }
   };
 
-  const filtrarDepositos = async (id: number) => {
-    try {
-      const res = await axios.get(`/api/filtrarDeposito?id_cliente=${id}`);
+  const res = await axios.get(`/api/filtrarDeposito?id_cliente=${id}`);
       setDeposito(res.data);
     } catch (error) {
       console.error("Erro ao exibir depósitos:", error);
