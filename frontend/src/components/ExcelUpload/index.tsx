@@ -1,4 +1,4 @@
-import { useState } from 'react';
+mport { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import axios from 'axios';
 import * as XLSX from 'xlsx'; // Importando a biblioteca xlsx
@@ -41,24 +41,34 @@ export function ExcelUpload() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      
+
       alert('Planilha importada com sucesso!');
       setFile(null);
-      setData([]); // Limpa os dados após o upload
+
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       alert('Erro ao importar planilha');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="flex flex-col gap-4 p-4">
-      <label htmlFor="excel-upload" className="text-white">
-        Selecione a planilha Excel
-      </label>
-      <input
+@@ -61,23 +62,3 @@
         id="excel-upload"
         type="file"
         accept=".xlsx,.xls"
+        onChange={handleFileChange}
+        className="text-white"
+        aria-label="Upload de arquivo Excel"
+      />
+      <Button 
+        onClick={handleUpload}
+        disabled={!file || loading}
+      >
+        {loading ? 'Importando...' : 'Importar Planilha'}
+      </Button>
+      {/* Exibindo os dados importados */}
+      {data.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-white">Dados Importados:</h3>
+          <pre className="text-white">{JSON.stringify(data, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
