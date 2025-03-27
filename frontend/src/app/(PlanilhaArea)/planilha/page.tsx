@@ -1,3 +1,5 @@
+'use client'
+
 // components/ExcelUpload.js
 import React, { useState } from "react";
 import * as XLSX from "xlsx"; // Certifique-se de ter a biblioteca `xlsx` instalada
