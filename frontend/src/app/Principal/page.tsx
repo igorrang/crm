@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { IoSend } from "react-icons/io5";
@@ -18,7 +18,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { Item, Historico, Deposito } from "@/models/types/userTypes";
 
 export default function VerCliente() {
@@ -28,10 +27,7 @@ export default function VerCliente() {
       <div className="flex">
         <Navbar />
         <div className="w-full min-h-[94vh] text-black bg-gradient-to-l from-black via-black/90 to-black/85">
-          {/* Adicionando Suspense para evitar erro com useSearchParams */}
-          <Suspense fallback={<p>Carregando...</p>}>
-            <PageContent />
-          </Suspense>
+          <PageContent />
         </div>
       </div>
     </main>
@@ -39,7 +35,7 @@ export default function VerCliente() {
 }
 
 function PageContent() {
-  const searchParams = useSearchParams(); // ✅ Agora está dentro de um Client Component com Suspense
+  const searchParams = useSearchParams();
   const [data, setData] = useState<Item[]>([]);
   const [dataHistorico, setDataHistorico] = useState<Historico[]>([]);
   const [dataDeposito, setDeposito] = useState<Deposito[]>([]);
@@ -98,7 +94,7 @@ function PageContent() {
       const res = await axios.get(`/api/filtrarDeposito?id_cliente=${id}`);
       setDeposito(res.data);
     } catch (error) {
-      console.error("Erro ao exibir histórico:", error);
+      console.error("Erro ao exibir depósitos:", error);
     }
   };
 
@@ -107,7 +103,7 @@ function PageContent() {
       const res = await axios.get(`/api/deposito?id_deposito=${id}`);
       setDepositoEscolhido(res.data);
     } catch (error) {
-      console.error("Erro ao exibir histórico:", error);
+      console.error("Erro ao exibir depósitos:", error);
     }
   };
 
@@ -132,7 +128,7 @@ function PageContent() {
       </div>
 
       <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-start py-10 lg:px-20">
-        <div className="w-[90%] max-w-[650px] lg:max-w-[500px]  py-5 relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
+        <div className="w-[90%] max-w-[650px] lg:max-w-[500px] py-5 relative bg-secondary border border-white/70 shadow-md rounded-2xl lg:rounded-r-none">
           <form onSubmit={filtrarCliente} className="flex flex-col items-end px-5">
             <Input
               placeholder="Filtrar por nome ou nickname"
@@ -173,8 +169,8 @@ function PageContent() {
           </div>
         </div>
 
-        <div className=" w-[90%] max-w-[1000px] flex flex-col items-center lg:mr-5 mt-5 lg:mt-0">
-          <div className=" bg-secondary w-full p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
+        <div className="w-[90%] max-w-[1000px] flex flex-col items-center lg:mr-5 mt-5 lg:mt-0">
+          <div className="bg-secondary w-full p-5 pt-0 rounded-2xl lg:rounded-l-none border border-white/70 shadow-md">
             <div ref={containerRef} className="h-[501px] overflow-auto">
               {dataHistorico.map((item) => (
                 <div key={item.id_historico}>
