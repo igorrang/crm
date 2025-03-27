@@ -8,7 +8,7 @@ import { IoSend } from "react-icons/io5";
 import CardFiltroCliente from "@/components/CardFiltroCliente";
 import CardMensagemHistorico from "@/components/CardMensagemHistorico";
 import Header from "@/components/Header";
-import Narbar from "@/components/Narbar";
+import Navbar from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
 import {
   Breadcrumb,
