@@ -1,7 +1,7 @@
 import { Box } from '@/components/Box';
 import { NextResponse } from 'next/server';
-import * as XLSX from 'xlsx';
 import PlanilhaService from '@/service/PlanilhaService';
+import * as XLSX from 'xlsx';
 
 interface ExcelRow {
   'Nome': string;
@@ -11,21 +11,20 @@ interface ExcelRow {
   'Apelido': string;
   'Valor Fichas': string | number;
   'Observações': string;
-  'Bônus':string;
-  'Anuncio':string;
-  '@instagra':string;
-  'contato':string ;
-
+  'Bônus': string;
+  'Anuncio': string;
+  '@instagra': string;
+  'contato': string;
 }
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    
+
     // Debug: Log do nome do arquivo
-    console.log('Arquivo recebido:', file.name);
-    
+    console.log('Arquivo recebido:', file?.name);
+
     if (!file) {
       return NextResponse.json(
         { error: 'Nenhum arquivo enviado' },
@@ -36,14 +35,14 @@ export async function POST(request: Request) {
     // Lê o arquivo Excel
     const buffer = await file.arrayBuffer();
     const workbook = XLSX.read(buffer);
-    
+
     // Debug: Log das worksheets e suas colunas
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const headers = XLSX.utils.sheet_to_json(worksheet, { header: 1 })[0];
     console.log('Colunas encontradas:', headers);
-    
+
     const jsonData = XLSX.utils.sheet_to_json<ExcelRow>(worksheet, { raw: false });
-    
+
     // Debug: Log da primeira linha de dados
     console.log('Primeira linha de dados:', jsonData[0]);
 
@@ -69,20 +68,8 @@ export async function POST(request: Request) {
         };
 
         console.log('Tentando salvar linha:', planilhaData);
-        
-        const result = await PlanilhaService.createLeed({
-          nome: planilhaData.nome,
-          origem: planilhaData.origem,
-          status: planilhaData.status,
-          datainicio: planilhaData.datainicio,
-          nickname: planilhaData.apelido,
-          valorFicha: planilhaData.valordasfichas,
-          observacoes: planilhaData.observacoes,
-          bonus: planilhaData.bonus,
-          anuncio: planilhaData.anuncio,
-          instagram: planilhaData.instagram,
-          contato: planilhaData.contato,
-        });
+
+        const result = await PlanilhaService.createLeed(planilhaData);
 
         savedRecords.push(result.data);
       } catch (error: any) {
@@ -91,8 +78,8 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: `${savedRecords.length} registros importados com sucesso`,
       savedRecords,
       errors: errors.length > 0 ? errors : undefined
