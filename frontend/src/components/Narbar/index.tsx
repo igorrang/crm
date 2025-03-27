@@ -9,7 +9,7 @@ import { PiUsersThreeLight, PiTableThin } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
 import { MdOutlineDashboard } from "react-icons/md";
 
-export default function Navbar() {
+export default function Narbar() {
   return (
     <div className="min-w-[80px] hidden xl:flex flex-col  items-center  bg-gradient-to-t from-black/90 via-black/85 to-black/80 shadow-xl">
       <div className="fixed top-1/2 transform -translate-y-1/2">
