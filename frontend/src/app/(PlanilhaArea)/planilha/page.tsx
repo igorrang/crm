@@ -1,40 +1,34 @@
 'use client'
 
-// components/ExcelUpload.js
-import React, { useState } from "react";
-import * as XLSX from "xlsx"; // Certifique-se de ter a biblioteca `xlsx` instalada
+import DialogCadastrarCliente from "@/components/DialogCadastrarCliente";
+import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
+import { DataTable } from "@/components/DataTable";
+import { ExcelUpload } from "@/components/ExcelUpload";
 
-const ExcelUpload = () => {
-  const [data, setData] = useState([]);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const binaryStr = e.target.result;
-        const workbook = XLSX.read(binaryStr, { type: "binary" });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        setData(jsonData);
-        console.log(jsonData); // Exibe os dados importados no console
-      };
-      reader.readAsBinaryString(file);
-    }
-  };
 
+
+export default function Planilha() {
   return (
-    <div>
-      <input
-        type="file"
-        accept=".xls,.xlsx"
-        onChange={handleFileChange}
-      />
-      {/* Aqui você pode renderizar a tabela ou qualquer outra coisa com os dados importados */}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-  );
-};
+    <main>
+      <Header></Header>
+      <div className="flex">
+        <Navbar></Navbar>
 
-export default ExcelUpload;
+        <div className="w-full min-h-[94vh] text-black bg-gradient-to-l from-black via-black/90 to-black/85">
+          <div className="hidden lg:flex w-full py-4 px-10">
+           
+           
+          </div>
+          
+          <div className="container mx-auto py-10">
+            <DialogCadastrarCliente></DialogCadastrarCliente>
+            <ExcelUpload />
+            <DataTable></DataTable>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
